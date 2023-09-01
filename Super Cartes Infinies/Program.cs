@@ -45,6 +45,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+//Mettre HttpOnly false pour angular
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = false;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -61,6 +68,8 @@ else
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors("AllowAlmostAll");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
