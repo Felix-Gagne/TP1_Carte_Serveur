@@ -29,6 +29,29 @@ builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
 
+//Ajout de la permission des cookies
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAlmostAll", policy =>
+    {
+        //Spécifier les origines autorisés
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
+
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+
+        //Permettre l'utilisation des cookies
+        policy.AllowCredentials();
+    });
+});
+
+
+//Mettre HttpOnly false pour angular
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = false;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,6 +68,8 @@ else
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors("AllowAlmostAll");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
