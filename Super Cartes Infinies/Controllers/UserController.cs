@@ -29,7 +29,6 @@ namespace Super_Cartes_Infinies.Controllers
 
             IdentityUser user = new IdentityUser()
             {
-                UserName = register.Username,
                 Email = register.Email,
             };
 
