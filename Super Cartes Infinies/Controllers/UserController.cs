@@ -5,7 +5,7 @@ using Super_Cartes_Infinies.Models.Dtos;
 
 namespace Super_Cartes_Infinies.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
