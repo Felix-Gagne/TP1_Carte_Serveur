@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Super_Cartes_Infinies.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
