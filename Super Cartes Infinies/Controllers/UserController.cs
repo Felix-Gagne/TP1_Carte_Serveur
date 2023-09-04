@@ -52,23 +52,14 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginDTO login)
         {
-            var user = await userManager.FindByNameAsync(login.Username);
+            var signInResult = await signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
-            if (user == null)
+            if (signInResult.Succeeded)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized,
-                    new { Error = "Nom d'utilisateur incorrect" });
+                return Ok();
             }
 
-            var signInResult = await signInManager.PasswordSignInAsync(user, login.Password, false, false);
-
-            if (!signInResult.Succeeded)
-            {
-                return StatusCode(StatusCodes.Status401Unauthorized,
-                    new { Error = "Mot de passe incorrect" });
-            }
-
-            return RedirectToAction("Index", "Home");
+            return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."});
         }
 
 
