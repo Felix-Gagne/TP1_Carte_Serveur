@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Super_Cartes_Infinies.Data;
 
@@ -11,9 +12,11 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906202225_addStartingCards")]
+    partial class addStartingCards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,15 +157,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "40b9e815-afd5-402c-ac1c-d353bcd9c660",
+                            ConcurrencyStamp = "5b83abc0-5f25-4f86-9104-940f8cac764c",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELsKFvHALSba1PJ0odaXykDNSwNwYdiZuhl3KvwSC38kBpyr7XTVwrDCQ952fP6t+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP52d6IMz/D7dPxlLvy50NZKIPUlxQkXndYu2A/Okr8udoJbzxQNzfrnEkbfLM4gHA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bed9d666-9012-447b-9583-4ec055564cf8",
+                            SecurityStamp = "be687b6a-91aa-48a6-9cf1-ad74fe1b2cb9",
                             TwoFactorEnabled = false,
                             UserName = "asd@gmail.com"
                         });
@@ -588,11 +591,6 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = 10,
                             CardId = 10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CardId = 1
                         });
                 });
 

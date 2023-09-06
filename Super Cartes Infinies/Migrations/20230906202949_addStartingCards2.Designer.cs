@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Super_Cartes_Infinies.Data;
 
@@ -11,9 +12,11 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906202949_addStartingCards2")]
+    partial class addStartingCards2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,15 +157,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "40b9e815-afd5-402c-ac1c-d353bcd9c660",
+                            ConcurrencyStamp = "68d7053a-9685-4a83-bf94-d67e76898cea",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELsKFvHALSba1PJ0odaXykDNSwNwYdiZuhl3KvwSC38kBpyr7XTVwrDCQ952fP6t+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBLsfupNjWLBEgghaZS/Q0xh2DWvK9VDiiriGxKNeA5gVsn03Ouc+EAvOV7EvBM7vQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bed9d666-9012-447b-9583-4ec055564cf8",
+                            SecurityStamp = "390593a4-2950-4431-a03f-d28aa596663b",
                             TwoFactorEnabled = false,
                             UserName = "asd@gmail.com"
                         });

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class addStartingCards : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,6 +80,19 @@ namespace Super_Cartes_Infinies.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MatchPlayersData", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StartingCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CardId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StartingCards", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -311,7 +324,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "35e423a1-1a8f-4336-bbe3-85d786b95927", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEJ/lWz6XxamkLw1Rc5aHWuboByK4/Mzl8/4dQnw3BdCRcfYWKCeRaibx0wPTkajUQQ==", null, false, "b151cd89-529e-40dc-9c2b-76559f92f59a", false, "asd@gmail.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "5b83abc0-5f25-4f86-9104-940f8cac764c", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEP52d6IMz/D7dPxlLvy50NZKIPUlxQkXndYu2A/Okr8udoJbzxQNzfrnEkbfLM4gHA==", null, false, "be687b6a-91aa-48a6-9cf1-ad74fe1b2cb9", false, "asd@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
@@ -328,6 +341,23 @@ namespace Super_Cartes_Infinies.Migrations
                     { 8, 4, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", "Scribble Sam" },
                     { 9, 6, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", "Inkwell Ivan" },
                     { 10, 5, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", "Paintbrush Penny" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "StartingCards",
+                columns: new[] { "Id", "CardId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 5 },
+                    { 6, 6 },
+                    { 7, 7 },
+                    { 8, 8 },
+                    { 9, 9 },
+                    { 10, 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -446,6 +476,9 @@ namespace Super_Cartes_Infinies.Migrations
 
             migrationBuilder.DropTable(
                 name: "SerializedMatchEvent");
+
+            migrationBuilder.DropTable(
+                name: "StartingCards");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

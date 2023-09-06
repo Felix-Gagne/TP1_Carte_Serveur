@@ -12,8 +12,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230906184025_initialCreate")]
-    partial class initialCreate
+    [Migration("20230906203559_addStartingCards3")]
+    partial class addStartingCards3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,15 +157,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35e423a1-1a8f-4336-bbe3-85d786b95927",
+                            ConcurrencyStamp = "40b9e815-afd5-402c-ac1c-d353bcd9c660",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ/lWz6XxamkLw1Rc5aHWuboByK4/Mzl8/4dQnw3BdCRcfYWKCeRaibx0wPTkajUQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELsKFvHALSba1PJ0odaXykDNSwNwYdiZuhl3KvwSC38kBpyr7XTVwrDCQ952fP6t+Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b151cd89-529e-40dc-9c2b-76559f92f59a",
+                            SecurityStamp = "bed9d666-9012-447b-9583-4ec055564cf8",
                             TwoFactorEnabled = false,
                             UserName = "asd@gmail.com"
                         });
@@ -524,6 +524,79 @@ namespace Super_Cartes_Infinies.Migrations
                     b.HasIndex("MatchId");
 
                     b.ToTable("SerializedMatchEvent");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.StartingCards", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StartingCards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CardId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CardId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CardId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CardId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CardId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CardId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CardId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CardId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CardId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CardId = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CardId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

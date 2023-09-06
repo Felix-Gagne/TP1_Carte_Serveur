@@ -9,6 +9,7 @@ namespace Super_Cartes_Infinies.Models
     {
 		public Player()
 		{
+			
 		}
 
 		public int Id { get; set; }

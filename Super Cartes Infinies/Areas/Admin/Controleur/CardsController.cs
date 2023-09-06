@@ -14,6 +14,7 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
 {
     [Area("Admin")]
     [Route("Admin/[controller]/[action]")]
+    
     public class CardsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +23,7 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Admin/Cards
         public async Task<IActionResult> Index()
         {
