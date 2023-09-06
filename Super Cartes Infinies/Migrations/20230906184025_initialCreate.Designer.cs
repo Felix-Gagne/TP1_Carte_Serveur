@@ -12,8 +12,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230906183320_ModifiactionDataseed")]
-    partial class ModifiactionDataseed
+    [Migration("20230906184025_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,15 +157,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c0f51721-bfb8-4068-a664-019d88705774",
+                            ConcurrencyStamp = "35e423a1-1a8f-4336-bbe3-85d786b95927",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBlDPGYDjaVrwnDcXcwTqYUOEzgRzr+3Ozg55Spwq1KY7rvaL2GUpxH2RDkp7cJrug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ/lWz6XxamkLw1Rc5aHWuboByK4/Mzl8/4dQnw3BdCRcfYWKCeRaibx0wPTkajUQQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "90913964-38d9-4c86-a363-f252b800fbde",
+                            SecurityStamp = "b151cd89-529e-40dc-9c2b-76559f92f59a",
                             TwoFactorEnabled = false,
                             UserName = "asd@gmail.com"
                         });
