@@ -196,6 +196,5 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
 
-    public DbSet<Super_Cartes_Infinies.Models.StartingCards> StartingCards { get; set; } = default!;
 }
 
