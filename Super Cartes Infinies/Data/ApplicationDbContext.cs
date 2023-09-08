@@ -169,7 +169,7 @@ public class ApplicationDbContext : IdentityDbContext
             StartingCards startingCards = new StartingCards
             {
                 Id = i,
-                CardId = card.Id,
+                CardId = card.Id
             };
             i++;
             builder.Entity<StartingCards>().HasData(startingCards);
@@ -177,7 +177,7 @@ public class ApplicationDbContext : IdentityDbContext
         StartingCards startingCards2 = new StartingCards
         {
             Id = 11,
-            CardId = C1.Id,
+            CardId = C1.Id
         };
         builder.Entity<StartingCards>().HasData(startingCards2);
 
@@ -187,6 +187,8 @@ public class ApplicationDbContext : IdentityDbContext
 
 
     public DbSet<Card> Cards { get; set; } = default!;
+
+    public DbSet<StartingCards> StartingCards { get; set; } = default!;
 
     public DbSet<Player> Players { get; set; } = default!;
 
