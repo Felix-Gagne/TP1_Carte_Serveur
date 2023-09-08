@@ -20,7 +20,7 @@ public class ApplicationDbContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
 
-        // TODO: Générer le seed
+        // TODO: G?n?rer le seed
 
         //Ajout de admin
         builder.Entity<IdentityRole>().HasData(
@@ -34,7 +34,7 @@ public class ApplicationDbContext : IdentityDbContext
             Id = "11111111-1111-1111-1111-111111111111",
             UserName = "admin@admin.com",
             Email = "admin@admin.com",
-            // La comparaison d'identity se fait avec les versions normalisés
+            // La comparaison d'identity se fait avec les versions normalis?s
             NormalizedEmail = "ADMIN@ADMIN.COM",
             NormalizedUserName = "ADMIN@ADMIN.COM",
             EmailConfirmed = true
@@ -165,11 +165,11 @@ public class ApplicationDbContext : IdentityDbContext
 
         int i = 1;
         foreach (Card card in cards)
-        {   
+        {
             StartingCards startingCards = new StartingCards
             {
                 Id = i,
-                CardId = card.Id,
+                CardId = card.Id
             };
             i++;
             builder.Entity<StartingCards>().HasData(startingCards);
@@ -177,7 +177,7 @@ public class ApplicationDbContext : IdentityDbContext
         StartingCards startingCards2 = new StartingCards
         {
             Id = 11,
-            CardId = C1.Id,
+            CardId = C1.Id
         };
         builder.Entity<StartingCards>().HasData(startingCards2);
 
@@ -193,5 +193,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Match> Matches { get; set; } = default!;
 
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
+
+    public DbSet<Super_Cartes_Infinies.Models.StartingCards> StartingCards { get; set; } = default!;
 }
 
