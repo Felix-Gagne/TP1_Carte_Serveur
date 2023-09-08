@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
+using Super_Cartes_Infinies.Data;
+using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,6 +20,7 @@ namespace Super_Cartes_Infinies.Controllers
     {
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
+        private readonly ApplicationDbContext _context; 
 
         public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -45,6 +49,27 @@ namespace Super_Cartes_Infinies.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
+
+            List<StartingCards> list = await _context.StartingCards.ToListAsync();
+
+            Player player = new Player
+            {
+                IdentityUserId = user.Id
+            }; 
+
+            foreach(StartingCards startingCard in list)
+            {
+                if(startingCard != null)
+                {
+                    player.DeckCard.Add(await _context.Cards.Where(x => x.Id == startingCard.Id).SingleOrDefaultAsync());
+                }
+                else
+                {
+                    return NotFound(new { Error = "Aucune carte n'existe" });
+
+                }
+            }
+
 
             return Ok();
         }

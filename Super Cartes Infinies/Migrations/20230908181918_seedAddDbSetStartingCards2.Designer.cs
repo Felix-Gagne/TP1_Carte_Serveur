@@ -12,8 +12,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230906203559_addStartingCards3")]
-    partial class addStartingCards3
+    [Migration("20230908181918_seedAddDbSetStartingCards2")]
+    partial class seedAddDbSetStartingCards2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,17 +157,17 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "40b9e815-afd5-402c-ac1c-d353bcd9c660",
+                            ConcurrencyStamp = "cdf12773-2eb2-45e5-a9e6-5901064d5573",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELsKFvHALSba1PJ0odaXykDNSwNwYdiZuhl3KvwSC38kBpyr7XTVwrDCQ952fP6t+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFsAE2PARc9uB6IXM9RztBkw4A9VPllvhpnKKX5dLKCFmUNevAfFVO7E/uQGiZuN8A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bed9d666-9012-447b-9583-4ec055564cf8",
+                            SecurityStamp = "26f8a401-b5e3-4438-8349-bc01c5f9ae95",
                             TwoFactorEnabled = false,
-                            UserName = "asd@gmail.com"
+                            UserName = "admin@admin.com"
                         });
                 });
 
@@ -285,7 +285,12 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Cards");
 
@@ -539,6 +544,8 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CardId");
+
                     b.ToTable("StartingCards");
 
                     b.HasData(
@@ -650,6 +657,13 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", null)
+                        .WithMany("DeckCard")
+                        .HasForeignKey("PlayerId");
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.MatchPlayerData", "PlayerDataA")
@@ -714,6 +728,17 @@ namespace Super_Cartes_Infinies.Migrations
                         .HasForeignKey("MatchId");
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.StartingCards", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
                 {
                     b.Navigation("SerializedEvents");
@@ -728,6 +753,11 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
+                {
+                    b.Navigation("DeckCard");
                 });
 #pragma warning restore 612, 618
         }

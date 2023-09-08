@@ -154,15 +154,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f659b472-2ccf-4a22-805f-3fd14d6a0b78",
+                            ConcurrencyStamp = "cdf12773-2eb2-45e5-a9e6-5901064d5573",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBn4oE1egmgJVOhG0N+8aZCvBiSjNGpHeKeELXKjp+n05zp87HcVOE9e3/lGIN1sCg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFsAE2PARc9uB6IXM9RztBkw4A9VPllvhpnKKX5dLKCFmUNevAfFVO7E/uQGiZuN8A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8ca8d61b-8f91-4f0d-9b5a-c0845024174a",
+                            SecurityStamp = "26f8a401-b5e3-4438-8349-bc01c5f9ae95",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -541,6 +541,8 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CardId");
+
                     b.ToTable("StartingCards");
 
                     b.HasData(
@@ -721,6 +723,17 @@ namespace Super_Cartes_Infinies.Migrations
                     b.HasOne("Super_Cartes_Infinies.Models.Match", null)
                         .WithMany("SerializedEvents")
                         .HasForeignKey("MatchId");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.StartingCards", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
