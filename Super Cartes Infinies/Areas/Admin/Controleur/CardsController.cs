@@ -14,7 +14,7 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
 {
     [Area("Admin")]
     [Route("Admin/[controller]/[action]")]
-    
+    //[Authorize(Roles = "Admin")]
     public class CardsController : Controller
     {
         private readonly ApplicationDbContext _context;

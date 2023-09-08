@@ -32,7 +32,7 @@ public class ApplicationDbContext : IdentityDbContext
         IdentityUser admin = new IdentityUser
         {
             Id = "11111111-1111-1111-1111-111111111111",
-            UserName = "asd@gmail.com",
+            UserName = "admin@admin.com",
             Email = "admin@admin.com",
             // La comparaison d'identity se fait avec les versions normalisés
             NormalizedEmail = "ADMIN@ADMIN.COM",
