@@ -11,7 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseLazyLoadingProxies();
-    options.UseSqlServer(connectionString);
+    options.UseSqlite(connectionString);
     // Ajouter Microsoft.EntityFrameworkCore.Sqlite
     //options.UseSqlite(connectionString);
 });
