@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseLazyLoadingProxies();
     options.UseSqlServer(connectionString);
+    // Ajouter Microsoft.EntityFrameworkCore.Sqlite
+    //options.UseSqlite(connectionString);
 });
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -51,6 +53,7 @@ builder.Services.AddCors(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = false;
+    options.Cookie.SameSite = SameSiteMode.None;
 });
 
 var app = builder.Build();

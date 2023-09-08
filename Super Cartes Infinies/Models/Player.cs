@@ -9,6 +9,7 @@ namespace Super_Cartes_Infinies.Models
     {
 		public Player()
 		{
+			
 		}
 
 		public int Id { get; set; }
@@ -18,6 +19,7 @@ namespace Super_Cartes_Infinies.Models
 		[JsonIgnore]
 		public virtual IdentityUser? IdentityUser { get; set; }
 		// TODO: Ajouter les cartes du joueur
+		public virtual List<Card> DeckCard { get; set; }
 	}
 }
 

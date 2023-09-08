@@ -32,7 +32,7 @@ public class ApplicationDbContext : IdentityDbContext
         IdentityUser admin = new IdentityUser
         {
             Id = "11111111-1111-1111-1111-111111111111",
-            UserName = "asd@gmail.com",
+            UserName = "admin@admin.com",
             Email = "admin@admin.com",
             // La comparaison d'identity se fait avec les versions normalisés
             NormalizedEmail = "ADMIN@ADMIN.COM",
@@ -60,6 +60,8 @@ public class ApplicationDbContext : IdentityDbContext
         //Cartes de jeu
         const String imageUrlBase = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png";
 
+        List<Card> cards = new List<Card>();
+
         Card C1 = new Card
         {
             Id = 1,
@@ -68,6 +70,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 3,
             ImageUrl = imageUrlBase
         };
+        cards.Add( C1 );
         builder.Entity<Card>().HasData(C1);
         Card C2 = new Card
         {
@@ -77,6 +80,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 4,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C2);
         builder.Entity<Card>().HasData(C2);
         Card C3 = new Card
         {
@@ -86,6 +90,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 2,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C3);
         builder.Entity<Card>().HasData(C3);
         Card C4 = new Card
         {
@@ -95,6 +100,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 5,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C4);
         builder.Entity<Card>().HasData(C4);
         Card C5 = new Card
         {
@@ -104,6 +110,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 4,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C5);
         builder.Entity<Card>().HasData(C5);
         Card C6 = new Card
         {
@@ -113,6 +120,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 6,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C6);
         builder.Entity<Card>().HasData(C6);
         Card C7 = new Card
         {
@@ -122,6 +130,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 3,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C7);
         builder.Entity<Card>().HasData(C7);
         Card C8 = new Card
         {
@@ -131,6 +140,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 5,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C8);
         builder.Entity<Card>().HasData(C8);
         Card C9 = new Card
         {
@@ -140,6 +150,7 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 2,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C9);
         builder.Entity<Card>().HasData(C9);
         Card C10 = new Card
         {
@@ -149,10 +160,32 @@ public class ApplicationDbContext : IdentityDbContext
             Defense = 4,
             ImageUrl = imageUrlBase
         };
+        cards.Add(C10);
         builder.Entity<Card>().HasData(C10);
+
+        int i = 1;
+        foreach (Card card in cards)
+        {   
+            StartingCards startingCards = new StartingCards
+            {
+                Id = i,
+                CardId = card.Id,
+            };
+            i++;
+            builder.Entity<StartingCards>().HasData(startingCards);
+        }
+        StartingCards startingCards2 = new StartingCards
+        {
+            Id = 11,
+            CardId = C1.Id,
+        };
+        builder.Entity<StartingCards>().HasData(startingCards2);
 
 
     }
+
+
+
     public DbSet<Card> Cards { get; set; } = default!;
 
     public DbSet<Player> Players { get; set; } = default!;
