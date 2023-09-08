@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,88 +12,91 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
 {
     [Area("Admin")]
     [Route("Admin/[controller]/[action]")]
-    //[Authorize(Roles = "Admin")]
-    public class CardsController : Controller
+    public class StartingCardsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CardsController(ApplicationDbContext context)
+        public StartingCardsController(ApplicationDbContext context)
         {
             _context = context;
         }
-        //[Authorize(Roles = "Admin")]
-        // GET: Admin/Cards
+
+        // GET: Admin/StartingCards
         public async Task<IActionResult> Index()
         {
-            return _context.Cards != null ?
-                        View(await _context.Cards.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Cards'  is null.");
+            var applicationDbContext = _context.StartingCards.Include(s => s.Card);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Admin/Cards/Details/5
+        // GET: Admin/StartingCards/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Cards == null)
+            if (id == null || _context.StartingCards == null)
             {
                 return NotFound();
             }
 
-            var card = await _context.Cards
+            var startingCards = await _context.StartingCards
+                .Include(s => s.Card)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (card == null)
+            if (startingCards == null)
             {
                 return NotFound();
             }
 
-            return View(card);
+            return View(startingCards);
         }
 
-        // GET: Admin/Cards/Create
+        // GET: Admin/StartingCards/Create
         public IActionResult Create()
         {
+            ViewBag.ExistingCards = _context.Cards.ToList();
             return View();
         }
 
-        // POST: Admin/Cards/Create
+        // POST: Admin/StartingCards/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Attack,Defense,ImageUrl")] Card card)
+        public async Task<IActionResult> Create([Bind("Id,CardId")] StartingCards startingCards)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(card);
+                var selectedCard = _context.Cards.Find(startingCards.CardId);
+                startingCards.Card = selectedCard;
+                _context.StartingCards.Add(startingCards);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(card);
+            return View(startingCards);
         }
 
-        // GET: Admin/Cards/Edit/5
+        // GET: Admin/StartingCards/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Cards == null)
+            if (id == null || _context.StartingCards == null)
             {
                 return NotFound();
             }
 
-            var card = await _context.Cards.FindAsync(id);
-            if (card == null)
+            var startingCards = await _context.StartingCards.FindAsync(id);
+            if (startingCards == null)
             {
                 return NotFound();
             }
-            return View(card);
+            ViewData["CardId"] = new SelectList(_context.Cards, "Id", "Id", startingCards.CardId);
+            return View(startingCards);
         }
 
-        // POST: Admin/Cards/Edit/5
+        // POST: Admin/StartingCards/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Attack,Defense,ImageUrl")] Card card)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CardId")] StartingCards startingCards)
         {
-            if (id != card.Id)
+            if (id != startingCards.Id)
             {
                 return NotFound();
             }
@@ -104,12 +105,12 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
             {
                 try
                 {
-                    _context.Update(card);
+                    _context.Update(startingCards);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CardExists(card.Id))
+                    if (!StartingCardsExists(startingCards.Id))
                     {
                         return NotFound();
                     }
@@ -120,49 +121,51 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(card);
+            ViewData["CardId"] = new SelectList(_context.Cards, "Id", "Id", startingCards.CardId);
+            return View(startingCards);
         }
 
-        // GET: Admin/Cards/Delete/5
+        // GET: Admin/StartingCards/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Cards == null)
+            if (id == null || _context.StartingCards == null)
             {
                 return NotFound();
             }
 
-            var card = await _context.Cards
+            var startingCards = await _context.StartingCards
+                .Include(s => s.Card)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (card == null)
+            if (startingCards == null)
             {
                 return NotFound();
             }
 
-            return View(card);
+            return View(startingCards);
         }
 
-        // POST: Admin/Cards/Delete/5
+        // POST: Admin/StartingCards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Cards == null)
+            if (_context.StartingCards == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Cards'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.StartingCards'  is null.");
             }
-            var card = await _context.Cards.FindAsync(id);
-            if (card != null)
+            var startingCards = await _context.StartingCards.FindAsync(id);
+            if (startingCards != null)
             {
-                _context.Cards.Remove(card);
+                _context.StartingCards.Remove(startingCards);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CardExists(int id)
+        private bool StartingCardsExists(int id)
         {
-            return (_context.Cards?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.StartingCards?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
