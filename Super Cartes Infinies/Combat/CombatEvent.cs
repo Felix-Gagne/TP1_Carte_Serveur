@@ -13,6 +13,19 @@ namespace Super_Cartes_Infinies.Combat
             // Pour chaque carte sur le BattleField du joueur courrant, il faut créer un CardActivationEvent
             // L'opposingCard c'est la carte qui a le même index sur le BattleField de l'adversaire
             // Si il n'y en a pas, on passe simplement null
+
+            for (int i = 0; i < currentPlayerData.BattleField.Count; i++)
+            {
+                var currentCard = currentPlayerData.BattleField[i];
+                var opposingCard = (dynamic)null;
+                if (i <= opposingPlayerData.BattleField.Count)
+                {
+                    opposingCard = opposingPlayerData.BattleField[i];
+                }
+
+                Events.Add(new CardActivationEvent(match, currentCard, opposingCard, currentPlayerData, opposingPlayerData));
+
+            }
         }
     }
 }
