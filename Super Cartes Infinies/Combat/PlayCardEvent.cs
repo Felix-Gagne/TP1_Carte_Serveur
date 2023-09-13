@@ -18,6 +18,7 @@ namespace Super_Cartes_Infinies.Combat
             if(playableCardId != 0)
             {
                 // TODO: Déplacer la carte sur le BattleField
+                currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
             }
 
             // Pour l'instant le joueur ne peut jouer qu'une seule carte, alors on termine le tour!

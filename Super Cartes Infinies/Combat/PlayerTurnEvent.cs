@@ -15,6 +15,10 @@ namespace Super_Cartes_Infinies.Combat
 
             // TODO: Faire piger une carte à l'adversaire
             // TODO: C'est la fin du tour du joueurCourrant, il faut mettre match à jour!
+            var nextcard = opposingPlayerData.CardsPile.FirstOrDefault();
+            opposingPlayerData.Hand.Add(nextcard);
+            opposingPlayerData.CardsPile.Remove(nextcard);
+
         }
 
     }
