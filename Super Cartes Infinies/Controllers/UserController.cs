@@ -20,20 +20,21 @@ namespace Super_Cartes_Infinies.Controllers
     {
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
-        private readonly ApplicationDbContext _context; 
+        ApplicationDbContext _context;
 
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this._context = context;
         }
 
         [HttpPost]
         public async Task<ActionResult> Register(RegisterDTO register)
         {
-            if(register.Password != register.PasswordConfirm)
+            if (register.Password != register.PasswordConfirm)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identique" });
             }
 
@@ -45,7 +46,7 @@ namespace Super_Cartes_Infinies.Controllers
 
             IdentityResult identityResult = await this.userManager.CreateAsync(user, register.Password);
 
-            if(!identityResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
@@ -54,12 +55,16 @@ namespace Super_Cartes_Infinies.Controllers
 
             Player player = new Player
             {
-                IdentityUserId = user.Id
-            }; 
+                IdentityUserId = user.Id,
+                IdentityUser = user,
+                Name = register.Username,
+                DeckCard = new List<Card>(),
+                Money = 0
+            };
 
-            foreach(StartingCards startingCard in list)
+            foreach (StartingCards startingCard in list)
             {
-                if(startingCard != null)
+                if (startingCard != null)
                 {
                     player.DeckCard.Add(await _context.Cards.Where(x => x.Id == startingCard.Id).SingleOrDefaultAsync());
                 }
@@ -70,29 +75,33 @@ namespace Super_Cartes_Infinies.Controllers
                 }
             }
 
+            await _context.Players.AddAsync(player);
+            await _context.SaveChangesAsync();
+
 
             return Ok();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginDTO login)
+        public async Task<ActionResult<MonDTO>> Login(LoginDTO login)
         {
             var signInResult = await signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
             if (signInResult.Succeeded)
             {
-                return Ok();
+                MonDTO test = new MonDTO()
+                {
+                    Name = login.Username
+                };
+                return Ok(test);
             }
 
             return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."});
         }
+    }
 
-
-
-
-
-
-
-
+    public class MonDTO
+    {
+        public string Name { get; set; }
     }
 }
