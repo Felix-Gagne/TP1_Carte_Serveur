@@ -51,6 +51,8 @@ namespace Super_Cartes_Infinies.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
 
+            await _context.SaveChangesAsync();
+
             List<StartingCards> list = await _context.StartingCards.ToListAsync();
 
             Player player = new Player
