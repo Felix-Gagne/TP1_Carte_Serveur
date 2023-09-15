@@ -17,15 +17,14 @@ namespace Super_Cartes_Infinies.Combat
 
             // TODO: Implémenter la logique de combat du jeu (Il faut créer de nombreux énênements comme CardDamageEvent, PlayerDamageEvent, etc...)
 
-            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData));
-
             if (opposingCard == null)
             {
-                Events.Add(new PlayerDamageEvent(match, opposingCard, opposingPlayerData));
+                Events.Add(new PlayerDamageEvent(match, playableCard,currentPlayerData, opposingPlayerData));
             }
             else
             {
-                Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData));
+                Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
             }
         }
     }

@@ -7,14 +7,15 @@ namespace Super_Cartes_Infinies.Combat
         public int PlayableCardId { get; set; }
         public int Damage { get; set; }
 
-        public PlayerDamageEvent(Match match, PlayableCard? playableCard, MatchPlayerData opposingPlayerData)
+        public PlayerDamageEvent(Match match, PlayableCard? playableCard,MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData)
         {
             Events = new List<Event>();
             Damage = playableCard.Attack;
 
             if (Damage >= opposingPlayerData.Health)
             {
-                Events.Add(new PlayerDeathEvent(match, opposingPlayerData));
+                opposingPlayerData.Health = 0;
+                Events.Add(new PlayerDeathEvent(match, currentPlayerData));
             }
             else
             {
