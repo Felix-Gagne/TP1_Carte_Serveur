@@ -156,9 +156,11 @@ namespace Super_Cartes_Infinies.Services
             //   - Créer un PlayCardEvent pour déclencher la création de tous les évênements
             Match? match = await _context.Matches.FindAsync(matchId);
             Card card = await _context.Cards.FindAsync(cardId);
-            MatchPlayerData playerData = await _context.MatchPlayersData.FindAsync(userId);
             PlayableCard playableCard = new PlayableCard(card);
-            MatchPlayerData opposingPlayerData = await _context.MatchPlayersData.FindAsync(match.UserBId);
+            MatchPlayerData currentPlayerData;
+            MatchPlayerData opposingPlayerData;
+
+           
 
 
             if (match == null)
@@ -171,17 +173,28 @@ namespace Super_Cartes_Infinies.Services
                 throw new Exception("Le match est terminer il est impossible de jouer une carte");
             }
 
-            if(playerData == null)
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+                opposingPlayerData = match.PlayerDataB;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+                opposingPlayerData = match.PlayerDataA;
+            }
+
+            if (currentPlayerData == null)
             {
                 throw new Exception("L'utilisateur qui veut jouer n'est plus la");
             }
 
-            if (playerData.Health == 0)
+            if (currentPlayerData.Health == 0)
             {
                 throw new Exception("Il n'y a acune carte a jouer");
             }
 
-            if (playerData.Hand.Count == 0)
+            if (currentPlayerData.Hand.Count == 0)
             {
                 throw new Exception("Il n'y a acune carte a jouer");
             }
@@ -196,7 +209,7 @@ namespace Super_Cartes_Infinies.Services
                 throw new Exception("Le jouer adverse n'est plus la");
             }
 
-            var playCardEvent = new PlayCardEvent(match, opposingPlayerData, playerData, playableCard.Id);
+            var playCardEvent = new PlayCardEvent(match, opposingPlayerData, currentPlayerData, playableCard.Id);
             string serializedEvent = match.AddEvent(playCardEvent);
 
             await _context.SaveChangesAsync();
