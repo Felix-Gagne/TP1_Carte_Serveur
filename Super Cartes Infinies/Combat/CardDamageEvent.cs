@@ -9,7 +9,7 @@ namespace Super_Cartes_Infinies.Combat
         public int OppositeCardId { get; set; }
         public int Damage { get; set; }
 
-        public CardDamageEvent( PlayableCard playableCard, PlayableCard? opposingCard, MatchPlayerData opposingPlayerData)
+        public CardDamageEvent( PlayableCard playableCard, PlayableCard? opposingCard, MatchPlayerData opposingPlayerData, MatchPlayerData currentPlayerData)
         {
             Events = new List<Event>();
             PlayableCardId = playableCard.Id;
@@ -18,15 +18,13 @@ namespace Super_Cartes_Infinies.Combat
 
             if (Damage >= opposingCard.Health)
             {
+                opposingCard.Health = 0;
                 Events.Add(new CardDeathEvent(opposingCard, opposingPlayerData));
             }
             else
             {
                 opposingCard.Health = opposingCard.Health - Damage;
             }
-
-
-
         }
     }
 }
