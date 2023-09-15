@@ -66,7 +66,7 @@ namespace Super_Cartes_Infinies.Controllers
             {
                 if (startingCard != null)
                 {
-                    player.DeckCard.Add(await _context.Cards.Where(x => x.Id == startingCard.Id).SingleOrDefaultAsync());
+                    player.DeckCard.Add(startingCard.Card);
                 }
                 else
                 {
