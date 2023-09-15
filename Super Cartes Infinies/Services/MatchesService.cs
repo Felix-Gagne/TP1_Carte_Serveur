@@ -155,8 +155,53 @@ namespace Super_Cartes_Infinies.Services
             //   - Faire toutes les vérifications (Est-ce que ce user peut jouer cette carte)
             //   - Créer un PlayCardEvent pour déclencher la création de tous les évênements
             Match? match = await _context.Matches.FindAsync(matchId);
+            Card card = await _context.Cards.FindAsync(cardId);
+            MatchPlayerData playerData = await _context.MatchPlayersData.FindAsync(userId);
+            PlayableCard playableCard = new PlayableCard(card);
+            MatchPlayerData opposingPlayerData = await _context.MatchPlayersData.FindAsync(match.UserBId);
 
-            return "Le JSon du PlayCardEvent";
+
+            if (match == null)
+            {
+                throw new Exception("Aucun match n'est en cours donc impossible de jouer une carte");
+            }
+
+            if(match.IsMatchCompleted == true)
+            {
+                throw new Exception("Le match est terminer il est impossible de jouer une carte");
+            }
+
+            if(playerData == null)
+            {
+                throw new Exception("L'utilisateur qui veut jouer n'est plus la");
+            }
+
+            if (playerData.Health == 0)
+            {
+                throw new Exception("Il n'y a acune carte a jouer");
+            }
+
+            if (playerData.Hand.Count == 0)
+            {
+                throw new Exception("Il n'y a acune carte a jouer");
+            }
+
+            if(playableCard == null)
+            {
+                throw new Exception("Acune carte ne fut selectioner");
+            }
+
+            if(opposingPlayerData == null)
+            {
+                throw new Exception("Le jouer adverse n'est plus la");
+            }
+
+            var playCardEvent = new PlayCardEvent(match, opposingPlayerData, playerData, playableCard.Id);
+            string serializedEvent = match.AddEvent(playCardEvent);
+
+            await _context.SaveChangesAsync();
+
+            return serializedEvent;
         }
     }
 }

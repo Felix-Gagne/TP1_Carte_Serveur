@@ -17,6 +17,8 @@ namespace Super_Cartes_Infinies.Models
 				(c.Id, c.Name, c.Attack, c.Defense, c.ImageUrl)
 					.Equals((Id, Name, Attack, Defense, ImageUrl));
         }
+
+		public virtual List<Player> Players { get; set; }
     }
 			
 }
