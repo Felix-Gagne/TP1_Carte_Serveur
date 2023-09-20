@@ -23,7 +23,11 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpGet]
         public List<Card> GetPlayerDeck()
         {
-            return playersService.GetPlayerFromUserId(UserId).DeckCard;
+            List<Card> result = new List<Card>();
+
+            result = playersService.GetPlayerFromUserId(UserId).DeckCard;
+
+            return result;
         }
     }
 }
