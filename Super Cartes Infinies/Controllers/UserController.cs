@@ -65,6 +65,14 @@ namespace Super_Cartes_Infinies.Controllers
                 return Ok(loginResult.MonDTO);
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SignOut()
+        {
+            await signInManager.SignOutAsync();
+
+            return Ok();
+        }
     }
 
     public class MonDTO
