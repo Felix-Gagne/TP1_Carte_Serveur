@@ -69,7 +69,19 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpPost]
         public async Task<ActionResult> SignOut()
         {
-            await signInManager.SignOutAsync();
+            if (!User.Identity.IsAuthenticated)
+            {
+                // If the user is still authenticated, sign-out failed
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "You can't sign out" });
+            }
+
+            await _userService.SignOut();
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                // If the user is still authenticated, sign-out failed
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Sign-out failed." });
+            }
 
             return Ok();
         }

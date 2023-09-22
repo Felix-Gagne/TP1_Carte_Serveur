@@ -86,6 +86,12 @@ namespace Super_Cartes_Infinies.Services
             };
         }
 
-        
+        [HttpPost]
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+
     }
 }
