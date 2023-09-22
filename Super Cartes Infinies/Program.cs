@@ -31,6 +31,8 @@ builder.Services.AddScoped<PlayersService>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
+builder.Services.AddScoped<UserService>();
+
 
 //Ajout de la permission des cookies
 builder.Services.AddCors(options =>

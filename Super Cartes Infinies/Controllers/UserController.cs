@@ -8,6 +8,7 @@ using Moq;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
+using Super_Cartes_Infinies.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,15 +19,14 @@ namespace Super_Cartes_Infinies.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        UserManager<IdentityUser> userManager;
-        SignInManager<IdentityUser> signInManager;
-        ApplicationDbContext _context;
 
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
+        readonly UserService _userService;
+
+
+        public UserController(UserService userService)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this._context = context;
+           
+            this._userService = userService;
         }
 
         [HttpPost]
@@ -38,73 +38,50 @@ namespace Super_Cartes_Infinies.Controllers
                     new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identique" });
             }
 
-            IdentityUser user = new IdentityUser()
-            {
-                UserName = register.Username,
-                Email = register.Email,
-            };
+            var registrationResult = await _userService.RegisterUserAsync(register);
 
-            IdentityResult identityResult = await this.userManager.CreateAsync(user, register.Password);
-
-            if (!identityResult.Succeeded)
+            if(registrationResult.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
+                return Ok();
             }
-
-            await _context.SaveChangesAsync();
-
-            List<StartingCards> list = await _context.StartingCards.ToListAsync();
-
-            Player player = new Player
+            else
             {
-                IdentityUserId = user.Id,
-                IdentityUser = user,
-                Name = register.Username,
-                DeckCard = new List<Card>(),
-                Money = 0
-            };
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = registrationResult.Errors });
 
-            foreach (StartingCards startingCard in list)
-            {
-                if (startingCard != null)
-                {
-                    player.DeckCard.Add(startingCard.Card);
-                }
-                else
-                {
-                    return NotFound(new { Error = "Aucune carte n'existe" });
-
-                }
             }
-
-            await _context.Players.AddAsync(player);
-            await _context.SaveChangesAsync();
-
-
-            return Ok();
         }
 
         [HttpPost]
         public async Task<ActionResult<MonDTO>> Login(LoginDTO login)
         {
-            var signInResult = await signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
+            var loginResult = await _userService.LoginUserAsync(login);
 
-            if (signInResult.Succeeded)
+            if (!loginResult.Success)
             {
-                MonDTO test = new MonDTO()
-                {
-                    Name = login.Username
-                };
-                return Ok(test);
+                return NotFound(new { Error = loginResult.Error });
             }
-
-            return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."});
+            else
+            {
+                return Ok(loginResult.MonDTO);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> SignOut()
         {
-            await signInManager.SignOutAsync();
+            if (!User.Identity.IsAuthenticated)
+            {
+                // If the user is still authenticated, sign-out failed
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "You can't sign out" });
+            }
+
+            await _userService.SignOut();
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                // If the user is still authenticated, sign-out failed
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Sign-out failed." });
+            }
 
             return Ok();
         }
