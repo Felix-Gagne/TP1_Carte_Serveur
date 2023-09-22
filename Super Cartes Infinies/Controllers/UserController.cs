@@ -100,6 +100,14 @@ namespace Super_Cartes_Infinies.Controllers
 
             return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."});
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SignOut()
+        {
+            await signInManager.SignOutAsync();
+
+            return Ok();
+        }
     }
 
     public class MonDTO
