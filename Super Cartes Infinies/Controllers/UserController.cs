@@ -90,5 +90,6 @@ namespace Super_Cartes_Infinies.Controllers
     public class MonDTO
     {
         public string Name { get; set; }
+        public string Id { get; set; }
     }
 }

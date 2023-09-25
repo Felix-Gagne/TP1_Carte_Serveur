@@ -72,11 +72,15 @@ namespace Super_Cartes_Infinies.Services
 
             if (signInResult.Succeeded)
             {
-                return new LoginResult
+                var user = await _userManager.FindByNameAsync(login.Username);
+                if(user != null)
                 {
-                    Success = true,
-                    MonDTO = new MonDTO { Name = login.Username }
-                };
+                    return new LoginResult
+                    {
+                        Success = true,
+                        MonDTO = new MonDTO { Name = login.Username, Id = user.Id }
+                    };
+                }
             }
 
             return new LoginResult
