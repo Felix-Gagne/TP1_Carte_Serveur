@@ -15,35 +15,16 @@ namespace Super_Cartes_Infinies.Services
     {
 
         private ApplicationDbContext _context;
-        private UserManager<IdentityUser> _userManager;
-        private SignInManager<IdentityUser> _signInManager;
+
         
-        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
+        public UserService(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
 
-        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register)
+        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register, IdentityUser user, IdentityResult result)
         {
           
-
-            IdentityUser user = new IdentityUser()
-            {
-                UserName = register.Username,
-                Email = register.Email,
-            };
-
-            IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
-
-            if (!identityResult.Succeeded)
-            {
-                return identityResult;
-            }
-
-            await _context.SaveChangesAsync();
-
             var list = await _context.StartingCards.ToListAsync();
 
             var player = new Player
@@ -60,13 +41,17 @@ namespace Super_Cartes_Infinies.Services
                  player.DeckCard.Add(startingCard.Card);          
             }
 
-            await _context.Players.AddAsync(player);
-            await _context.SaveChangesAsync();
+            if(result.Succeeded)
+            {
+                await _context.Players.AddAsync(player);
+                await _context.SaveChangesAsync();
+                return IdentityResult.Success;
+            }
+            return result;
 
-            return IdentityResult.Success;
         }
 
-        public async Task<LoginResult> LoginUserAsync(LoginDTO login)
+        /*public async Task<LoginResult> LoginUserAsync(LoginDTO login)
         {
             var signInResult = await _signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
@@ -88,13 +73,13 @@ namespace Super_Cartes_Infinies.Services
                 Success = false,
                 Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."
             };
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task SignOut()
         {
             await _signInManager.SignOutAsync();
-        }
+        }*/
 
 
     }

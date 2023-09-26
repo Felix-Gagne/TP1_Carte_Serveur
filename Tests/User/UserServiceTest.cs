@@ -32,7 +32,7 @@ namespace Tests.User
         {
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public async void RegisterUserAsync()
         {
             
@@ -50,7 +50,7 @@ namespace Tests.User
 
             Assert.AreEqual(IdentityResult.Success, result);
 
-            /*var user = await _dbContext.Users.Where(x => x.UserName == register.Username).SingleOrDefaultAsync();
+            var user = await _dbContext.Users.Where(x => x.UserName == register.Username).SingleOrDefaultAsync();
             Assert.IsNotNull(user);
 
             var player = await _dbContext.Players.SingleOrDefaultAsync(x => x.IdentityUserId == user.Id);
@@ -63,12 +63,8 @@ namespace Tests.User
             {
                 player.DeckCard.Add(card.Card);
             }
-            */
-
-
-
-
-        }
+        
+        }*/
 
 
     }

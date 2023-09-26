@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -21,12 +22,15 @@ namespace Super_Cartes_Infinies.Controllers
     {
 
         readonly UserService _userService;
+        private UserManager<IdentityUser> _userManager;
+        private SignInManager<IdentityUser> _signInManager;
 
-
-        public UserController(UserService userService)
+        public UserController(UserService userService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
            
             this._userService = userService;
+            this._userManager = userManager;    
+            this._signInManager = signInManager;
         }
 
         [HttpPost]
@@ -35,23 +39,33 @@ namespace Super_Cartes_Infinies.Controllers
             if (register.Password != register.PasswordConfirm)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identique" });
+                    new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identiques" });
             }
 
-            var registrationResult = await _userService.RegisterUserAsync(register);
+            IdentityUser user = new IdentityUser()
+            {
+                UserName = register.Username,
+                Email = register.Email,
+            };
 
-            if(registrationResult.Succeeded)
+            IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
+
+            var registrationResult = await _userService.RegisterUserAsync(register, user, identityResult);
+
+            if (identityResult.Succeeded && registrationResult.Succeeded)
             {
                 return Ok();
             }
             else
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = registrationResult.Errors });
-
+                // Handle registration errors from both UserManager and UserService
+                var errors = identityResult.Errors.Concat(registrationResult.Errors);
+                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "vous avez rentrez les mauvaise information" });
             }
         }
 
-        [HttpPost]
+
+        /*[HttpPost]
         public async Task<ActionResult<MonDTO>> Login(LoginDTO login)
         {
             var loginResult = await _userService.LoginUserAsync(login);
@@ -64,9 +78,9 @@ namespace Super_Cartes_Infinies.Controllers
             {
                 return Ok(loginResult.MonDTO);
             }
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult> SignOut()
         {
             if (!User.Identity.IsAuthenticated)
@@ -84,7 +98,7 @@ namespace Super_Cartes_Infinies.Controllers
             }
 
             return Ok();
-        }
+        }*/
     }
 
     public class MonDTO
