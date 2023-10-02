@@ -22,7 +22,7 @@ namespace Super_Cartes_Infinies.Services
             _context = context;
         }
 
-        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register, IdentityUser user, IdentityResult result)
+        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register, IdentityUser user)
         {
           
             var list = await _context.StartingCards.ToListAsync();
@@ -41,13 +41,20 @@ namespace Super_Cartes_Infinies.Services
                  player.DeckCard.Add(startingCard.Card);          
             }
 
-            if(result.Succeeded)
+            try
             {
                 await _context.Players.AddAsync(player);
                 await _context.SaveChangesAsync();
+
+                // Return IdentityResult.Success to indicate success.
                 return IdentityResult.Success;
             }
-            return result;
+            catch (Exception ex)
+            {
+                // If there was an exception during the database operation, create an IdentityResult
+                // with the error message.
+                return IdentityResult.Failed(new IdentityError { Description = ex.Message });
+            }
 
         }
 

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1706.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Super Cartes Infinies", "Super Cartes Infinies\Super Cartes Infinies.csproj", "{EED0E3D2-DCF5-4797-9A58-E6736455A951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Super Cartes Infinies", "Super Cartes Infinies\Super Cartes Infinies.csproj", "{EED0E3D2-DCF5-4797-9A58-E6736455A951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{FD547583-F4EF-45B8-9BCD-2C2AF6049B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{FD547583-F4EF-45B8-9BCD-2C2AF6049B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Super Cartes InfiniesTests1", "Super Cartes InfiniesTests1\Super Cartes InfiniesTests1.csproj", "{BD557D48-2166-434D-B883-B3B026CCDAF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FD547583-F4EF-45B8-9BCD-2C2AF6049B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD547583-F4EF-45B8-9BCD-2C2AF6049B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD547583-F4EF-45B8-9BCD-2C2AF6049B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD557D48-2166-434D-B883-B3B026CCDAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD557D48-2166-434D-B883-B3B026CCDAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD557D48-2166-434D-B883-B3B026CCDAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD557D48-2166-434D-B883-B3B026CCDAF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

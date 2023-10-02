@@ -50,17 +50,23 @@ namespace Super_Cartes_Infinies.Controllers
 
             IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
 
-            var registrationResult = await _userService.RegisterUserAsync(register, user, identityResult);
-
-            if (identityResult.Succeeded && registrationResult.Succeeded)
+            if(identityResult.Succeeded)
             {
-                return Ok();
+                var registrationResult = await _userService.RegisterUserAsync(register, user);
+                if (registrationResult.Succeeded)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    var errors = identityResult.Errors.Concat(registrationResult.Errors);
+                    return StatusCode(StatusCodes.Status400BadRequest, new { Message = "vous avez rentrez les mauvaise information" });
+                }
             }
             else
             {
-                // Handle registration errors from both UserManager and UserService
-                var errors = identityResult.Errors.Concat(registrationResult.Errors);
-                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "vous avez rentrez les mauvaise information" });
+                // Handle the case where user creation failed
+                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Failed to create user" });
             }
         }
 
