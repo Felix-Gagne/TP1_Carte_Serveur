@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Super_Cartes_Infinies.Services.Tests
 {
     [TestClass()]
-    public class UserServiceTests
+    public class UserServiceTests 
     {
         DbContextOptions<ApplicationDbContext> options;
         public UserServiceTests()
@@ -26,11 +26,47 @@ namespace Super_Cartes_Infinies.Services.Tests
                 .Options;
         }
 
+        [TestInitialize]
+        public void Init()
+        {
+            // TODO avoir la durée de vie d'un context la plus petite possible
+            using ApplicationDbContext db = new ApplicationDbContext(options);
+            // TODO on ajoute des données de tests
+            var cardList = new List<Card>
+            {
+                new Card { Id = 1, Attack = 10, Defense = 10, ImageUrl = "allo", Name = "yo"},
+                new Card { Id = 2, Attack = 11, Defense = 10, ImageUrl = "allo", Name = "yo"},
+            };
+            db.Cards.Add(cardList[0]);
+            db.Cards.Add(cardList[1]);
+            db.SaveChanges();
+
+
+            var startingCardsList = new List<StartingCards>
+            {
+                new StartingCards {Id = 1, Card = cardList.First(), CardId = 1},
+                new StartingCards {Id = 2, Card = cardList.Last(), CardId = 2},
+            };
+            db.StartingCards.Add(startingCardsList[0]);
+            db.StartingCards.Add(startingCardsList[1]);
+            db.SaveChanges();
+        }
+        [TestCleanup]
+        public void Dispose()
+        {
+            //TODO on efface les données de tests pour remettre la BD dans son état initial
+            using ApplicationDbContext db = new ApplicationDbContext(options);
+            db.Cards.RemoveRange(db.Cards);
+            db.SaveChanges();
+        }
+
         [TestMethod()]
-        public async void RegisterUserAsyncTest()
+        public async Task RegisterUserAsyncTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
             UserService userService = new UserService(db);
+
+            var cardList = db.StartingCards.ToList();
 
             var register = new RegisterDTO
             {
@@ -55,7 +91,14 @@ namespace Super_Cartes_Infinies.Services.Tests
                 Money = 0
             };
 
-            Assert.Fail();
+            foreach(var card in cardList)
+            {
+                player.DeckCard.Add(card.Card);
+            }
+
+            IdentityResult result = await userService.RegisterUserAsync(register, user);
+
+            Assert.IsTrue(result.Succeeded); // Check if the registration was successful
         }
     }
 }
