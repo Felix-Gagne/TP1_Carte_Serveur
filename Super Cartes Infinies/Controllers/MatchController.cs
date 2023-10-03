@@ -40,5 +40,11 @@ namespace Super_Cartes_Infinies.Controllers
         {
             return await _matchesService.UpdateMatch(UserId, matchId, turnIndex);
         }
+
+        [HttpGet("{matchId}")]
+        public async Task<ActionResult<string>> EndMatch(int matchId)
+        {
+            return await _matchesService.EndMatch(matchId);
+        }
     }
 }
