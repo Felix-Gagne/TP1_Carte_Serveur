@@ -71,20 +71,31 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<ActionResult<MonDTO>> Login(LoginDTO login)
         {
-            var loginResult = await _userService.LoginUserAsync(login);
+            var signInResult = await _signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
-            if (!loginResult.Success)
+            if (signInResult.Succeeded)
             {
-                return NotFound(new { Error = loginResult.Error });
+                var user = await _userManager.FindByNameAsync(login.Username);
+                var loginResult = await _userService.LoginUserAsync(login, user);
+
+                if (!loginResult.Success)
+                {
+                    return NotFound(new { Error = loginResult.Error });
+                }
+                else
+                {
+                    return Ok(loginResult.MonDTO);
+                }
             }
             else
             {
-                return Ok(loginResult.MonDTO);
+                // Return a 401 Unauthorized status code with an error message
+                return Unauthorized(new { Error = "Invalid username or password." });
             }
-        }*/
+        }
 
         /*[HttpPost]
         public async Task<ActionResult> SignOut()

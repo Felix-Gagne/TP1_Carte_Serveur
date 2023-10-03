@@ -16,7 +16,7 @@ namespace Super_Cartes_Infinies.Services
 
         private ApplicationDbContext _context;
 
-        
+
         public UserService(ApplicationDbContext context)
         {
             _context = context;
@@ -24,7 +24,7 @@ namespace Super_Cartes_Infinies.Services
 
         public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register, IdentityUser user)
         {
-          
+
             var list = await _context.StartingCards.ToListAsync();
 
             var player = new Player
@@ -37,11 +37,12 @@ namespace Super_Cartes_Infinies.Services
             };
 
             foreach (StartingCards startingCard in list)
-            {              
-                 player.DeckCard.Add(startingCard.Card);          
+            {
+                player.DeckCard.Add(startingCard.Card);
             }
 
-            try
+
+            if (user.UserName != null && user.Email != null)
             {
                 await _context.Players.AddAsync(player);
                 await _context.SaveChangesAsync();
@@ -49,27 +50,28 @@ namespace Super_Cartes_Infinies.Services
                 // Return IdentityResult.Success to indicate success.
                 return IdentityResult.Success;
             }
-            catch (Exception ex)
+            else
             {
-                // If there was an exception during the database operation, create an IdentityResult
-                // with the error message.
-                return IdentityResult.Failed(new IdentityError { Description = ex.Message });
+                return IdentityResult.Failed();
             }
+
+
 
         }
 
-        /*public async Task<LoginResult> LoginUserAsync(LoginDTO login)
-        {
-            var signInResult = await _signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
-            if (signInResult.Succeeded)
+
+
+        public async Task<LoginResult> LoginUserAsync(LoginDTO login, IdentityUser user)
+        {
+            if (user != null)
             {
-                var user = await _userManager.FindByNameAsync(login.Username);
-                if(user != null)
+                if(login.Username != null && login.Password != null)
                 {
                     return new LoginResult
                     {
                         Success = true,
+
                         MonDTO = new MonDTO { Name = login.Username, Id = user.Id }
                     };
                 }
@@ -80,7 +82,7 @@ namespace Super_Cartes_Infinies.Services
                 Success = false,
                 Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."
             };
-        }*/
+        }
 
         /*[HttpPost]
         public async Task SignOut()
@@ -91,3 +93,4 @@ namespace Super_Cartes_Infinies.Services
 
     }
 }
+
