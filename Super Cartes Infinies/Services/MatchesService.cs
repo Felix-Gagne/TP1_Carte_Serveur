@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Combat;
+﻿using Microsoft.AspNetCore.Razor.Language;
+using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
@@ -215,6 +216,15 @@ namespace Super_Cartes_Infinies.Services
             await _context.SaveChangesAsync();
 
             return serializedEvent;
+        }
+
+        public async Task<string> EndMatch(int matchId)
+        {
+            Match? match = await _context.Matches.FindAsync(matchId);
+            match.IsMatchCompleted = true;
+            _context.SaveChangesAsync();
+
+            return "match finito";
         }
     }
 }
