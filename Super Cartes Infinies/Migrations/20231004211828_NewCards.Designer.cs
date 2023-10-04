@@ -11,8 +11,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230915185121_CardPlayer")]
-    partial class CardPlayer
+    [Migration("20231004211828_NewCards")]
+    partial class NewCards
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,15 +164,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "53c61fe2-e216-483a-b00e-7feebf28984d",
+                            ConcurrencyStamp = "363d065b-5088-4972-8df1-98c3a3e13679",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDnkDUTKXdsd9wFG6a+5yM6to3yfnItDLphE9ANAXIZT7QjuDyZ+dpYb8TcMSKJ3Ug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENT17jMVaH7y/3mvwDk5yNRilCoBSuFseGvMT29bTjVIImySiH/jmNguRUXxh+OvFw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b94edcf5-1e1a-42bc-9aca-8ea64035b3e7",
+                            SecurityStamp = "92f94218-313a-4845-b6c0-31bb433d55ff",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -372,6 +372,326 @@ namespace Super_Cartes_Infinies.Migrations
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             Name = "Paintbrush Penny"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Attack = 4,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sketchpad Sally"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Attack = 6,
+                            Defense = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Chalkboard Chuck"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Attack = 5,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Notebook Ned"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Attack = 7,
+                            Defense = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Penelope Pencil"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Attack = 3,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Highlighter Hank"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Attack = 6,
+                            Defense = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Marker Mary"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Attack = 7,
+                            Defense = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Crayola Carl"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Attack = 5,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Paperclip Paula"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Attack = 8,
+                            Defense = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Paint Paddy"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Attack = 6,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Pencil Shavings Pete"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Attack = 7,
+                            Defense = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sticky Stan"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Attack = 5,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Charcoal Charlie"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Attack = 8,
+                            Defense = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Watercolor Wendy"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Attack = 6,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Notebook Nikki"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Attack = 9,
+                            Defense = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Etch-a-Sketch Eddie"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Attack = 4,
+                            Defense = 8,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Glitter Glenda"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Attack = 7,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Crayonbox Casey"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Attack = 8,
+                            Defense = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sketchbook Simon"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Attack = 6,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Quill Quentin"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Attack = 9,
+                            Defense = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sidewalk Chalk Chloe"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Attack = 7,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Canvas Cathy"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Attack = 8,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Fountain Pen Fred"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Attack = 6,
+                            Defense = 8,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sticky Note Steve"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Attack = 9,
+                            Defense = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Doodle Pad Donna"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Attack = 7,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Paint Can Patrick"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Attack = 5,
+                            Defense = 9,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Marker Maze Max"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Attack = 8,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Etch-a-Sketch Emma"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Attack = 9,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Charcoal Chip"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Attack = 6,
+                            Defense = 9,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Graphite Gabby"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Attack = 10,
+                            Defense = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Inkwell Ike"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Attack = 7,
+                            Defense = 8,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sketchbook Skyler"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Attack = 10,
+                            Defense = 5,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Chalky Charles"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Attack = 8,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Color Wheel Casey"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Attack = 9,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Canvas Cleo"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Attack = 6,
+                            Defense = 10,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Sticker Sue"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Attack = 7,
+                            Defense = 9,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Glue Gun Gary"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Attack = 10,
+                            Defense = 6,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Markerboard Molly"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Attack = 8,
+                            Defense = 8,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Pixel Pete"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Attack = 9,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Lithography Lily"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Attack = 10,
+                            Defense = 7,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            Name = "Silkscreening Simon"
                         });
                 });
 
