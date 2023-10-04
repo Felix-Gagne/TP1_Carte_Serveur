@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -14,13 +13,11 @@ namespace Super_Cartes_Infinies.Controllers
     {
         UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public CardService _cardService;
 
-        public DeckController(UserManager<IdentityUser> userManager, ApplicationDbContext context, PlayersService playersService, CardService cardsService) : base(playersService)
+        public DeckController(UserManager<IdentityUser> userManager, ApplicationDbContext context, PlayersService playersService) : base(playersService)
         {
             this._userManager = userManager;
             _context = context;
-            _cardService = cardsService;
         }
 
         [HttpGet]
@@ -29,26 +26,6 @@ namespace Super_Cartes_Infinies.Controllers
             List<Card> result = new List<Card>();
 
             result = playersService.GetPlayerFromUserId(UserId).DeckCard;
-
-            return result;
-        }
-
-        [HttpGet]
-        public List<Card> GetAllCards()
-        {
-            List<Card> result = new List<Card>();
-
-            result = _cardService.GetAllCards().ToList();
-
-            return result;
-        }
-
-        [HttpGet]
-        public List<Card> GetFilteredCards(string FiltreChoisi)
-        {
-            List<Card> result = new List<Card>();
-
-            result = _cardService.GetFilteredCards(FiltreChoisi).ToList();
 
             return result;
         }
