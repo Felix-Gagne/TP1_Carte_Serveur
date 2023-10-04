@@ -42,7 +42,7 @@ namespace Super_Cartes_Infinies.Services
             }
 
 
-            if (user.UserName != null && user.Email != null)
+            if (user.UserName != null && user.Email != null && player != null && _context.StartingCards.Count() != 0)
             {
                 await _context.Players.AddAsync(player);
                 await _context.SaveChangesAsync();
@@ -83,13 +83,6 @@ namespace Super_Cartes_Infinies.Services
                 Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas."
             };
         }
-
-        /*[HttpPost]
-        public async Task SignOut()
-        {
-            await _signInManager.SignOutAsync();
-        }*/
-
 
     }
 }

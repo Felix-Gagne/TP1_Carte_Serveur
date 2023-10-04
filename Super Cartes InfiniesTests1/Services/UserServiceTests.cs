@@ -57,6 +57,7 @@ namespace Super_Cartes_Infinies.Services.Tests
             using ApplicationDbContext db = new ApplicationDbContext(options);
             db.Cards.RemoveRange(db.Cards);
             db.StartingCards.RemoveRange(db.StartingCards);
+            db.Players.RemoveRange(db.Players);
             db.SaveChanges();
         }
 
@@ -66,8 +67,8 @@ namespace Super_Cartes_Infinies.Services.Tests
             ApplicationDbContext db = new ApplicationDbContext(options);
             UserService userService = new UserService(db);
 
-            var cardList2 = db.StartingCards.ToList();
-            var cardList = db.StartingCards.Include(sc => sc.Card).ToList();
+            var cardListDepart = db.StartingCards.ToList();
+            var deck = db.StartingCards.Select(x => x.Card).ToList();
 
             var register = new RegisterDTO
             {
@@ -82,23 +83,14 @@ namespace Super_Cartes_Infinies.Services.Tests
                 UserName = register.Username,
                 Email = register.Email,
             };
-
-            Player player = new Player()
-            {
-                IdentityUserId = user.Id,
-                IdentityUser = user,
-                Name = register.Username,
-                DeckCard = new List<Card>(),
-                Money = 0
-            };
-
-            foreach (var card in cardList)
-            {
-                player.DeckCard.Add(card.Card);
-            }
-
+            
             IdentityResult result = await userService.RegisterUserAsync(register, user);
 
+            Player player = await db.Players.Where(x => x.IdentityUserId == user.Id).FirstOrDefaultAsync();
+
+            Assert.IsNotNull(player);
+            Assert.AreNotEqual(cardListDepart, 0);
+            Assert.AreEqual(player.DeckCard.Count, deck.Count);
             Assert.IsTrue(result.Succeeded); // Check if the registration was successful
         }
 
@@ -120,15 +112,6 @@ namespace Super_Cartes_Infinies.Services.Tests
             {
                 UserName = register.Username,
                 Email = register.Email,
-            };
-
-            Player player = new Player()
-            {
-                IdentityUserId = user.Id,
-                IdentityUser = user,
-                Name = register.Username,
-                DeckCard = new List<Card>(),
-                Money = 0
             };
 
             IdentityResult result = await userService.RegisterUserAsync(register, user);
@@ -161,6 +144,28 @@ namespace Super_Cartes_Infinies.Services.Tests
             Assert.IsTrue(result.Success); // Check that the login was successful
             Assert.AreEqual(login.Username, result.MonDTO.Name); // Check that the returned name matches the login username
             Assert.AreEqual(user.Id, result.MonDTO.Id);
+        }
+
+
+        [TestMethod()]
+        public async Task LoginUserFailTest()
+        {
+            ApplicationDbContext db = new ApplicationDbContext(options);
+            UserService userService = new UserService(db);
+
+            IdentityUser user = null;
+
+            // Act
+            LoginDTO login = new LoginDTO
+            {
+                Username = "",
+                Password = "Password",
+            };
+
+            LoginResult result = await userService.LoginUserAsync(login, user);
+
+            Assert.IsFalse(result.Success); // Check that the login was not successful
+            Assert.AreEqual(result.Error, "L'utilisateur est introuvable ou le mot de passe ne concorde pas."); // check that we return the good error
         }
     }
 }

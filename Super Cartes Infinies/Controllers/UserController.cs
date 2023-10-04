@@ -97,7 +97,7 @@ namespace Super_Cartes_Infinies.Controllers
             }
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<ActionResult> SignOut()
         {
             if (!User.Identity.IsAuthenticated)
@@ -106,7 +106,8 @@ namespace Super_Cartes_Infinies.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "You can't sign out" });
             }
 
-            await _userService.SignOut();
+            await _signInManager.SignOutAsync();
+
 
             if (!User.Identity.IsAuthenticated)
             {
@@ -115,7 +116,7 @@ namespace Super_Cartes_Infinies.Controllers
             }
 
             return Ok();
-        }*/
+        }
     }
 
     public class MonDTO
