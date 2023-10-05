@@ -13,11 +13,12 @@ namespace Super_Cartes_Infinies.Services
 
         public IEnumerable<Card> GetAllCards()
         {
-            return _context.Cards;
+            return _context.Cards.OrderBy(c => c.Id);
         }
 
         public IEnumerable<Card> GetFilteredCards(string filtre)
         {
+
             if (filtre == "Attack")
             {
                 return _context.Cards.OrderBy(c => c.Attack);
@@ -30,7 +31,7 @@ namespace Super_Cartes_Infinies.Services
             {
                 return _context.Cards.OrderBy(c => c.Name);
             }
-            return _context.Cards;
+            return _context.Cards.OrderBy(c => c.Id);
         }
     }
 }
