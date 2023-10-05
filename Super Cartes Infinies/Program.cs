@@ -27,10 +27,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Injection de dépendance
+builder.Services.AddScoped<CardService>();
 builder.Services.AddScoped<PlayersService>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
+builder.Services.AddScoped<UserService>();
+
 
 //Ajout de la permission des cookies
 builder.Services.AddCors(options =>
@@ -38,7 +41,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAlmostAll", policy =>
     {
         //Spécifier les origines autorisés
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:64726");
 
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();

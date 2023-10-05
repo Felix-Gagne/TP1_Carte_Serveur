@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Super_Cartes_Infinies.Services.Interfaces;
 
 namespace Super_Cartes_Infinies.Models
@@ -18,6 +19,8 @@ namespace Super_Cartes_Infinies.Models
 					.Equals((Id, Name, Attack, Defense, ImageUrl));
         }
 
+
+		[JsonIgnore]
 		public virtual List<Player> Players { get; set; }
     }
 			
