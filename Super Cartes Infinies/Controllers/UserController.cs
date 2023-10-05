@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -21,12 +22,15 @@ namespace Super_Cartes_Infinies.Controllers
     {
 
         readonly UserService _userService;
+        private UserManager<IdentityUser> _userManager;
+        private SignInManager<IdentityUser> _signInManager;
 
-
-        public UserController(UserService userService)
+        public UserController(UserService userService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
            
             this._userService = userService;
+            this._userManager = userManager;    
+            this._signInManager = signInManager;
         }
 
         [HttpPost]
@@ -35,34 +39,61 @@ namespace Super_Cartes_Infinies.Controllers
             if (register.Password != register.PasswordConfirm)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identique" });
+                    new { Error = "Le mot de passe et le mot de passe de confirmation ne sont pas identiques" });
             }
 
-            var registrationResult = await _userService.RegisterUserAsync(register);
-
-            if(registrationResult.Succeeded)
+            IdentityUser user = new IdentityUser()
             {
-                return Ok();
+                UserName = register.Username,
+                Email = register.Email,
+            };
+
+            IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
+
+            if(identityResult.Succeeded)
+            {
+                var registrationResult = await _userService.RegisterUserAsync(register, user);
+                if (registrationResult.Succeeded)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    var errors = identityResult.Errors.Concat(registrationResult.Errors);
+                    return StatusCode(StatusCodes.Status400BadRequest, new { Message = "vous avez rentrez les mauvaise information" });
+                }
             }
             else
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = registrationResult.Errors });
-
+                // Handle the case where user creation failed
+                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Failed to create user" });
             }
         }
+
 
         [HttpPost]
         public async Task<ActionResult<MonDTO>> Login(LoginDTO login)
         {
-            var loginResult = await _userService.LoginUserAsync(login);
+            var signInResult = await _signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
-            if (!loginResult.Success)
+            if (signInResult.Succeeded)
             {
-                return NotFound(new { Error = loginResult.Error });
+                var user = await _userManager.FindByNameAsync(login.Username);
+                var loginResult = await _userService.LoginUserAsync(login, user);
+
+                if (!loginResult.Success)
+                {
+                    return NotFound(new { Error = loginResult.Error });
+                }
+                else
+                {
+                    return Ok(loginResult.MonDTO);
+                }
             }
             else
             {
-                return Ok(loginResult.MonDTO);
+                // Return a 401 Unauthorized status code with an error message
+                return Unauthorized(new { Error = "Invalid username or password." });
             }
         }
 
@@ -75,7 +106,8 @@ namespace Super_Cartes_Infinies.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "You can't sign out" });
             }
 
-            await _userService.SignOut();
+            await _signInManager.SignOutAsync();
+
 
             if (!User.Identity.IsAuthenticated)
             {

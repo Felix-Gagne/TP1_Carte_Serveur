@@ -15,34 +15,15 @@ namespace Super_Cartes_Infinies.Services
     {
 
         private ApplicationDbContext _context;
-        private UserManager<IdentityUser> _userManager;
-        private SignInManager<IdentityUser> _signInManager;
-        
-        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
+
+
+        public UserService(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
 
-        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register)
+        public async Task<IdentityResult> RegisterUserAsync(RegisterDTO register, IdentityUser user)
         {
-          
-
-            IdentityUser user = new IdentityUser()
-            {
-                UserName = register.Username,
-                Email = register.Email,
-            };
-
-            IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
-
-            if (!identityResult.Succeeded)
-            {
-                return identityResult;
-            }
-
-            await _context.SaveChangesAsync();
 
             var list = await _context.StartingCards.ToListAsync();
 
@@ -56,28 +37,41 @@ namespace Super_Cartes_Infinies.Services
             };
 
             foreach (StartingCards startingCard in list)
-            {              
-                 player.DeckCard.Add(startingCard.Card);          
+            {
+                player.DeckCard.Add(startingCard.Card);
             }
 
-            await _context.Players.AddAsync(player);
-            await _context.SaveChangesAsync();
 
-            return IdentityResult.Success;
+            if (user.UserName != null && user.Email != null && player != null && _context.StartingCards.Count() != 0)
+            {
+                await _context.Players.AddAsync(player);
+                await _context.SaveChangesAsync();
+
+                // Return IdentityResult.Success to indicate success.
+                return IdentityResult.Success;
+            }
+            else
+            {
+                return IdentityResult.Failed();
+            }
+
+
+
         }
 
-        public async Task<LoginResult> LoginUserAsync(LoginDTO login)
-        {
-            var signInResult = await _signInManager.PasswordSignInAsync(login.Username, login.Password, true, lockoutOnFailure: false);
 
-            if (signInResult.Succeeded)
+
+
+        public async Task<LoginResult> LoginUserAsync(LoginDTO login, IdentityUser user)
+        {
+            if (user != null)
             {
-                var user = await _userManager.FindByNameAsync(login.Username);
-                if(user != null)
+                if(login.Username != null && login.Password != null)
                 {
                     return new LoginResult
                     {
                         Success = true,
+
                         MonDTO = new MonDTO { Name = login.Username, Id = user.Id }
                     };
                 }
@@ -90,12 +84,6 @@ namespace Super_Cartes_Infinies.Services
             };
         }
 
-        [HttpPost]
-        public async Task SignOut()
-        {
-            await _signInManager.SignOutAsync();
-        }
-
-
     }
 }
+
