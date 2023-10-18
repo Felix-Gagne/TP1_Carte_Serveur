@@ -21,6 +21,6 @@ namespace Super_Cartes_Infinies.Models
         public const int CUSTOMPOWER2_ID = 6;
 
         [ValidateNever]
-        public List<CardPower> cardPowers { get; set; }
+        public virtual List<CardPower> cardPowers { get; set; }
     }
 }

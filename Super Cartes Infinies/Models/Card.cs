@@ -39,7 +39,7 @@ namespace Super_Cartes_Infinies.Models
 		public virtual List<Player> Players { get; set; }
 
 		[ValidateNever]
-		public List<CardPower> cardPowers { get; set; }
+		public virtual List<CardPower> cardPowers { get; set; }
 	}
 			
 }
