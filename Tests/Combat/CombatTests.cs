@@ -46,14 +46,16 @@ namespace Tests.Services
             {
                 Id = 42,
                 Attack = 2,
-                Defense = 3
+                Defense = 3,
+                ManaCost = 1
             };
 
             var cardB = new Card
             {
                 Id = 43,
                 Attack = 1,
-                Defense = 5
+                Defense = 5,
+                ManaCost = 1
             };
 
             var playableCardA = new PlayableCard(cardA)
@@ -75,6 +77,9 @@ namespace Tests.Services
             // Les 2 joueurs ne sont pas blessés
             Assert.AreEqual(1, opposingPlayerData.Health);
             Assert.AreEqual(1, currentPlayerData.Health);
+
+            //Le mana à été utilisé
+            Assert.AreEqual(1, currentPlayerData.Mana);
 
             Assert.AreEqual(3, playableCardA.Health);
             Assert.AreEqual(5, playableCardB.Health);
