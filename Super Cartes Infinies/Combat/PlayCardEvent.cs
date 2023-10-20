@@ -23,7 +23,7 @@ namespace Super_Cartes_Infinies.Combat
             }
 
             // Pour l'instant le joueur ne peut jouer qu'une seule carte, alors on termine le tour!
-            this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
+            //this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
         }
     }
 }
