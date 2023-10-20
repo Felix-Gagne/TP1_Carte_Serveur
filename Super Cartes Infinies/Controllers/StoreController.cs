@@ -27,7 +27,7 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SellCard()
+        public async Task<ActionResult<StoreCard>> SellCard()
         {
             return null;
         }

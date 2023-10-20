@@ -33,7 +33,7 @@ namespace Super_Cartes_Infinies.Services
                 IdentityUser = user,
                 Name = register.Username,
                 DeckCard = new List<Card>(),
-                Money = 0
+                Money = 500
             };
 
             foreach (StartingCards startingCard in list)
