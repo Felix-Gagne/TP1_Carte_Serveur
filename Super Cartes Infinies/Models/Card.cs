@@ -9,6 +9,7 @@ namespace Super_Cartes_Infinies.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } = "";
+		public int ManaCost { get; set; }
 		public int Attack { get; set; }
 		public int Defense { get; set; }
 		public string ImageUrl { get; set; } = "";
