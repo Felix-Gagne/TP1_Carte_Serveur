@@ -59,6 +59,52 @@ public class ApplicationDbContext : IdentityDbContext
 
         //Cartes de jeu
         const String imageUrlBase = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png";
+        const String iconPower = "https://static.thenounproject.com/png/1776468-200.png";
+
+        #region Powers
+
+        List<Power> powers = new List<Power>();
+
+        Power Charge = new Power
+        {
+            Id = Power.CHARGE_ID,
+            Name = "Charge",
+            Icon = iconPower
+        };
+        powers.Add( Charge );
+        builder.Entity<Power>().HasData(Charge);
+
+        Power FirstStrike = new Power
+        {
+            Id = Power.FIRSTSTRIKE_ID,
+            Name = "First Strike",
+            Icon = iconPower
+        };
+        powers.Add( FirstStrike );
+        builder.Entity<Power>().HasData(FirstStrike);
+
+        Power Thorns = new Power
+        {
+            Id = Power.THORNS_ID,
+            Name = "Thorns",
+            Icon = iconPower
+        };
+        powers.Add( Thorns );
+        builder.Entity<Power>().HasData(Thorns);
+
+        Power Heal = new Power
+        {
+            Id = Power.HEAL_ID,
+            Name = "Heal",
+            Icon = iconPower
+        };
+        powers.Add(Heal);
+        builder.Entity<Power>().HasData(Heal);
+
+        #endregion
+
+        #region SeedCarte
+
 
         List<Card> cards = new List<Card>();
 
@@ -603,6 +649,10 @@ public class ApplicationDbContext : IdentityDbContext
         cards.Add(C50);
         builder.Entity<Card>().HasData(C50);
 
+        #endregion
+
+        #region CardPower
+        #endregion
 
         for (int i = 1; i <= 10; i++){
             StartingCards startingCards = new StartingCards
@@ -625,6 +675,8 @@ public class ApplicationDbContext : IdentityDbContext
 
 
     public DbSet<Card> Cards { get; set; } = default!;
+
+    public DbSet<Power> Powers { get; set; } = default!;
 
     public DbSet<StartingCards> StartingCards { get; set; } = default!;
 
