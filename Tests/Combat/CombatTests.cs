@@ -21,8 +21,8 @@ namespace Tests.Services
         }
 
         [TestMethod]
-        // Un combat simple entre 2 cartes qui recoivent des dégâts toutes les 2
-        public void TurnWithBasicFightTest()
+        // Une invocation de Carte (NE FAIT PAS DE COMBAT)
+        public void CardsDoNotAttackBeforePlayerTurnEvent()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -71,7 +71,73 @@ namespace Tests.Services
             var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA.Id);
 
             Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
-            Assert.AreEqual(playableCardA.Id, playCardEvent.PlayableCardId);
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            Assert.AreEqual(3, playableCardA.Health);
+            Assert.AreEqual(5, playableCardB.Health);
+
+            // Les 2 cartes sont encore en vie et doivent rester sur le BattleField            
+            Assert.AreEqual(1, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(0, currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(0, currentPlayerData.Hand.Count);
+            Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
+        }
+
+        [TestMethod]
+        // Un combat simple entre 2 cartes qui recoivent des dégâts toutes les 2
+        public void TurnWithBasicFightTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 5
+            };
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+
+            currentPlayerData.BattleField.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
 
             // Les 2 joueurs ne sont pas blessés
             Assert.AreEqual(1, opposingPlayerData.Health);
@@ -86,6 +152,7 @@ namespace Tests.Services
             Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
             Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
         }
+
 
         [TestMethod]
         // Un combat entre 2 cartes qui recoivent des dégâts toutes les 2 et la carte de l'adversaire qui est tuée 
@@ -131,13 +198,12 @@ namespace Tests.Services
                 Id = 2
             };
 
-            currentPlayerData.Hand.Add(playableCardA);
+            currentPlayerData.BattleField.Add(playableCardA);
             opposingPlayerData.BattleField.Add(playableCardB);
 
-            var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA.Id);
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
 
-            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
-            Assert.AreEqual(playableCardA.Id, playCardEvent.PlayableCardId);
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
 
             // Les 2 joueurs ne sont pas blessés
             Assert.AreEqual(1, opposingPlayerData.Health);
@@ -156,9 +222,9 @@ namespace Tests.Services
         }
 
         [TestMethod]
-        // Le joueur A joue une carte dans ses mains alors que son adversaire a seulement 1 point de vie
+        // Le joueur A fini son tour alors que son adversaire a seulement 1 point de vie
         // Lorsque le tour s'effectue, le joueur B perd son dernier point de vie et la victoire va au joueur A
-        public void PlayCardAndKillPlayerTest()
+        public void CombatAndKillPlayerTest()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -189,12 +255,11 @@ namespace Tests.Services
                 Id = 1
             };
 
-            currentPlayerData.Hand.Add(playableCard);
+            currentPlayerData.BattleField.Add(playableCard);
 
-            var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCard.Id);
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
 
-            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
-            Assert.AreEqual(playableCard.Id, playCardEvent.PlayableCardId);
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
             Assert.AreEqual(0, opposingPlayerData.Health);
             Assert.AreEqual(1, currentPlayerData.Health);
             Assert.AreEqual(true, match.IsMatchCompleted);
