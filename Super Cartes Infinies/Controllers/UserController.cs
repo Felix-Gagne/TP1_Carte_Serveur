@@ -26,10 +26,9 @@ namespace Super_Cartes_Infinies.Controllers
         private SignInManager<IdentityUser> _signInManager;
 
         public UserController(UserService userService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-        {
-           
+        {           
             this._userService = userService;
-            this._userManager = userManager;    
+            this._userManager = userManager;
             this._signInManager = signInManager;
         }
 

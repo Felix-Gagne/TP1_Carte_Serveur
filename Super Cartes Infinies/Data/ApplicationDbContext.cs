@@ -619,7 +619,38 @@ public class ApplicationDbContext : IdentityDbContext
         };
         builder.Entity<StartingCards>().HasData(startingCards2);
 
+        List<StoreCard> StoreCards = new List<StoreCard>();
 
+        StoreCard Sc1 = new StoreCard
+        {
+            Id = 1,
+            BuyAmount = 500,
+            SellAmount = 200,
+            CardId = C1.Id,
+        };
+        StoreCards.Add(Sc1);
+        builder.Entity<StoreCard>().HasData(Sc1);
+
+        StoreCard Sc2 = new StoreCard
+        {
+            Id = 2,
+            BuyAmount = 500,
+            SellAmount = 200,
+            CardId = C2.Id,
+            
+        };
+        StoreCards.Add(Sc2);
+        builder.Entity<StoreCard>().HasData(Sc2);
+        
+        StoreCard Sc3 = new StoreCard
+        {
+            Id = 3,
+            BuyAmount = 500,
+            SellAmount = 200,
+            CardId = C3.Id,
+        };
+        StoreCards.Add(Sc3);
+        builder.Entity<StoreCard>().HasData(Sc3);
     }
 
 
@@ -633,6 +664,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Match> Matches { get; set; } = default!;
 
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
+
+    public DbSet<StoreCard> StoreCards { get; set; } = default!;
 
 }
 

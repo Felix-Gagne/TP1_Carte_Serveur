@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4e7c8ce-9222-4ac5-a31b-a88ec21e64e6",
+                            ConcurrencyStamp = "0aa45f9b-ce19-4706-ae63-2ab5a254b917",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMn7OuzlHNoHRJnwhevZM0ozyG0Vserb058MrP5qOv14HxrMPtRQ9OBuMH5x4dv0Hg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDAfgfx4kR6Mj/Xxtxl12Wu50Kck0as0KoB6/tToPkcsnF4yqU2BJYNA016/YM0oNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "49ab4129-c64f-460c-8246-ee3c8a83dd0f",
+                            SecurityStamp = "aeabe684-df5e-4e09-b88b-6fa967d1ce29",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -952,6 +952,51 @@ namespace Super_Cartes_Infinies.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.StoreCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BuyAmount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SellAmount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("StoreCards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BuyAmount = 500,
+                            CardId = 1,
+                            SellAmount = 200
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BuyAmount = 500,
+                            CardId = 2,
+                            SellAmount = 200
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BuyAmount = 500,
+                            CardId = 3,
+                            SellAmount = 200
+                        });
+                });
+
             modelBuilder.Entity("CardPlayer", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", null)
@@ -1102,6 +1147,17 @@ namespace Super_Cartes_Infinies.Migrations
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.StartingCards", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.StoreCard", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
                         .WithMany()

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial_Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,6 +80,20 @@ namespace Super_Cartes_Infinies.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MatchPlayersData", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Power",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Icon = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Power", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,6 +243,27 @@ namespace Super_Cartes_Infinies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StoreCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BuyAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    SellAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StoreCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StoreCards_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Matches",
                 columns: table => new
                 {
@@ -303,6 +338,33 @@ namespace Super_Cartes_Infinies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CardPower",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PowerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    value = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardPower", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CardPower_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CardPower_Power_PowerId",
+                        column: x => x.PowerId,
+                        principalTable: "Power",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CardPlayer",
                 columns: table => new
                 {
@@ -354,7 +416,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "c2c00dab-52aa-41b7-bbc1-483996d966e0", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEDU6k2T5mjFSdTiqUYpAxnu8gQhHg/qgRqnUUaGMWuM6vBcUjIm3oWkwx5+YPs4jeg==", null, false, "900df794-266d-41b7-83f6-04deb5850df1", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "0aa45f9b-ce19-4706-ae63-2ab5a254b917", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEDAfgfx4kR6Mj/Xxtxl12Wu50Kck0as0KoB6/tToPkcsnF4yqU2BJYNA016/YM0oNA==", null, false, "aeabe684-df5e-4e09-b88b-6fa967d1ce29", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
@@ -436,6 +498,16 @@ namespace Super_Cartes_Infinies.Migrations
                     { 11, 1 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "StoreCards",
+                columns: new[] { "Id", "BuyAmount", "CardId", "SellAmount" },
+                values: new object[,]
+                {
+                    { 1, 500, 1, 200 },
+                    { 2, 500, 2, 200 },
+                    { 3, 500, 3, 200 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -477,6 +549,16 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "IX_CardPlayer_PlayersId",
                 table: "CardPlayer",
                 column: "PlayersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardPower_CardId",
+                table: "CardPower",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardPower_PowerId",
+                table: "CardPower",
+                column: "PowerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Matches_PlayerDataAId",
@@ -527,6 +609,11 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "IX_StartingCards_CardId",
                 table: "StartingCards",
                 column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreCards_CardId",
+                table: "StoreCards",
+                column: "CardId");
         }
 
         /// <inheritdoc />
@@ -551,6 +638,9 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "CardPlayer");
 
             migrationBuilder.DropTable(
+                name: "CardPower");
+
+            migrationBuilder.DropTable(
                 name: "PlayableCard");
 
             migrationBuilder.DropTable(
@@ -560,10 +650,16 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "StartingCards");
 
             migrationBuilder.DropTable(
+                name: "StoreCards");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "Power");
 
             migrationBuilder.DropTable(
                 name: "Matches");
