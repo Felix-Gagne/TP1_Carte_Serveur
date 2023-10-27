@@ -36,6 +36,7 @@ namespace Super_Cartes_Infinies.Models
         public int Id { get; set; }
 		public int Health { get; set; }
 
+        public virtual Player Player { get; set; }
         public int PlayerId { get; set; }
 
         public virtual List<PlayableCard> CardsPile { get; set; }
