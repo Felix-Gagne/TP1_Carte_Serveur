@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -13,11 +14,13 @@ namespace Super_Cartes_Infinies.Controllers
     {
         private readonly ApplicationDbContext _context;
         public StoreService _storeService;
+        UserManager<IdentityUser> _userManager;
 
-        public StoreController(ApplicationDbContext context, StoreService storeService) 
+        public StoreController(ApplicationDbContext context, StoreService storeService, UserManager<IdentityUser> userManager) 
         {
             _context = context;
             _storeService = storeService;
+            _userManager = userManager;
         }
 
         [HttpPost]
