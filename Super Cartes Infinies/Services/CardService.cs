@@ -12,7 +12,7 @@ namespace Super_Cartes_Infinies.Services
             _context = context;
         }
 
-        public IEnumerable<Card> GetAllCards(int playerId)
+        public IEnumerable<Card> GetInventory(int playerId)
         {
             List<OwnedCard> owned = _context.OwnedCards.Where(x => x.PlayerId == playerId).ToList();
             List<Card> returnedCards = new List<Card>();

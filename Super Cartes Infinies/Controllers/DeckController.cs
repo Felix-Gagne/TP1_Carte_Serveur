@@ -34,13 +34,13 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpGet]
-        public List<Card> GetAllCards()
+        public List<Card> GetInventory()
         {
             Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefault();
 
             List<Card> result = new List<Card>();
 
-            result = _cardService.GetAllCards(currentPlayer.Id).ToList();
+            result = _cardService.GetInventory(currentPlayer.Id).ToList();
 
             return result;
         }

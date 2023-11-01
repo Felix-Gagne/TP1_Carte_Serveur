@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_create : Migration
+    public partial class Initial_Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -442,7 +442,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "2a2a8c6f-742c-47e3-8eac-bd531725b735", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEK+ZkGCZvsnS/MSteeJDF+w1o0DC1Qs8KSes0TFNCQppSTvYx6WgZKV7cq8GNF3VTQ==", null, false, "4ed0bada-15f8-4818-9698-4bc278e12805", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "c0ab33b8-9137-4bee-90c8-b09ba400a4ab", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEPQe0CM9aHLc1bRXrnGzQy+T1AFplXEErDvkHYWQWDHOThtn8LMubmhw3UCy7/FPug==", null, false, "74be4a6e-b1e1-49fc-9a55-c262ad19cf80", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
