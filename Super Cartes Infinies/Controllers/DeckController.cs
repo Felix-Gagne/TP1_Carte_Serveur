@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
@@ -33,11 +34,13 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpGet]
-        public List<Card> GetAllCards()
+        public List<OwnedCard> GetAllCards()
         {
-            List<Card> result = new List<Card>();
+            Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefault();
 
-            result = _cardService.GetAllCards().ToList();
+            List<OwnedCard> result = new List<OwnedCard>();
+
+            result = _cardService.GetAllCards(currentPlayer.Id).ToList();
 
             return result;
         }

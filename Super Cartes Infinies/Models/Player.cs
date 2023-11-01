@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+ using System;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Super_Cartes_Infinies.Services.Interfaces;
@@ -18,8 +19,9 @@ namespace Super_Cartes_Infinies.Models
 		public required string IdentityUserId { get; set; }
 		[JsonIgnore]
 		public virtual IdentityUser? IdentityUser { get; set; }
-		// TODO: Ajouter les cartes du joueur
+		// TODO: Ajouter les cartes du joueur	
 		public virtual List<Card> DeckCard { get; set; }
+		public virtual List<OwnedCard> OwnedCard { get; set;}
 	}
 }
 

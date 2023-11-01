@@ -38,7 +38,13 @@ namespace Super_Cartes_Infinies.Services
 
             foreach (StartingCards startingCard in list)
             {
-                player.DeckCard.Add(startingCard.Card);
+                OwnedCard card = new OwnedCard
+                {
+                    PlayerId = player.Id,
+                    CardId = startingCard.Id,
+                };
+
+                player.OwnedCard.Add(card);
             }
 
 

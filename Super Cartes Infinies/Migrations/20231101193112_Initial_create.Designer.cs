@@ -11,8 +11,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231020173542_Initial_Create")]
-    partial class Initial_Create
+    [Migration("20231101193112_Initial_create")]
+    partial class Initial_create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,15 +164,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0aa45f9b-ce19-4706-ae63-2ab5a254b917",
+                            ConcurrencyStamp = "2a2a8c6f-742c-47e3-8eac-bd531725b735",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDAfgfx4kR6Mj/Xxtxl12Wu50Kck0as0KoB6/tToPkcsnF4yqU2BJYNA016/YM0oNA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK+ZkGCZvsnS/MSteeJDF+w1o0DC1Qs8KSes0TFNCQppSTvYx6WgZKV7cq8GNF3VTQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aeabe684-df5e-4e09-b88b-6fa967d1ce29",
+                            SecurityStamp = "4ed0bada-15f8-4818-9698-4bc278e12805",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -774,7 +774,28 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PlayerId");
+
                     b.ToTable("MatchPlayersData");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("OwnedCards");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
@@ -1104,6 +1125,26 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("PlayerDataB");
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.MatchPlayerData", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", null)
+                        .WithMany("OwnedCard")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
@@ -1190,6 +1231,11 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
+                {
+                    b.Navigation("OwnedCard");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Power", b =>

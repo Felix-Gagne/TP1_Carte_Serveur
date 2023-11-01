@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 
@@ -14,55 +15,53 @@ namespace Super_Cartes_Infinies.Services
             _context = context;
         }
 
-        public IEnumerable<StoreCard> GetBuyableCards()
+        public IEnumerable<StoreCard> GetBuyableCards(String userId)
         {
             return _context.StoreCards.OrderBy(x => x.Id);
         }
 
-        public Task<ActionResult> BuyCard(string userId, StoreCard storeCard)
+        public async Task<ActionResult<String>> BuyCard(string userId, StoreCard storeCard)
         {
-            Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
 
             //If the player doesn't have enough money
             if (currentPlayer.Money < storeCard.BuyAmount)
             {
                 throw new Exception("Not enough money to buy this card brokie. Go get your money up.");
             }
-
-            //If the player already pocesses the card
-            else if(currentPlayer.DeckCard.Contains(storeCard.Card))
-            {
-                throw new Exception("You already got this card dummy. Sell it and buy it again if it makes you happy.");
-            }
-
-            //Add the card to the player's deck
+            //Add the card to the player's Owned Card
             else
             {
                 //Ajouter la logique pour ajouter une carte dans l'inventaire du joueur.
-                currentPlayer.DeckCard.Add(storeCard.Card);
+                OwnedCard carteAcheter = new OwnedCard
+                {
+                    PlayerId = currentPlayer.Id,
+                    CardId = storeCard.CardId
+                };
+                currentPlayer.OwnedCard.Add(carteAcheter);
                 currentPlayer.Money -= storeCard.BuyAmount;
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
 
-            return null;
+            return "Card successfully bought";
         }
 
-        public Task<ActionResult> SellCard(string userId, StoreCard storeCard) 
+        public async Task<ActionResult<String>> SellCard(string userId, OwnedCard ownedCard) 
         {
-            Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+            StoreCard sellPriceCard = await _context.StoreCards.Where(x => x.CardId == ownedCard.CardId).FirstOrDefaultAsync();
 
-            Card card = _context.Cards.Where(x => x.Id == storeCard.CardId).FirstOrDefault();
-            
-            if(card == null)
+            if (sellPriceCard == null)
             {
-                return null;
+                throw new Exception("T'est null");
             }
 
-            currentPlayer.Money += storeCard.SellAmount;
-            currentPlayer.DeckCard.Remove(card);
-            _context.SaveChangesAsync();
+            _context.OwnedCards.Remove(ownedCard);
+            currentPlayer.OwnedCard.Remove(ownedCard);
+            currentPlayer.Money += sellPriceCard.SellAmount;
+            await _context.SaveChangesAsync();
 
-            return null;
+            return "Card succefully sold.";
         }
     }
 }

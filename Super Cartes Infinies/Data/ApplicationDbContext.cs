@@ -667,5 +667,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<StoreCard> StoreCards { get; set; } = default!;
 
+    public DbSet<OwnedCard> OwnedCards { get; set;} = default!;
+
 }
 

@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Services
@@ -11,9 +12,9 @@ namespace Super_Cartes_Infinies.Services
             _context = context;
         }
 
-        public IEnumerable<Card> GetAllCards()
+        public async IEnumerable<OwnedCard> GetAllCards(int playerId)
         {
-            return _context.Cards.OrderBy(c => c.Id);
+            return await _context.OwnedCards.Where(x => x.PlayerId == playerId).OrderBy(c => c.Id).ToListAsync();
         }
 
         public IEnumerable<Card> GetFilteredCards(string filtre)
