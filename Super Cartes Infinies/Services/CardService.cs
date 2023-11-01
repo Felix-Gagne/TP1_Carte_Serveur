@@ -12,9 +12,18 @@ namespace Super_Cartes_Infinies.Services
             _context = context;
         }
 
-        public async IEnumerable<OwnedCard> GetAllCards(int playerId)
+        public IEnumerable<Card> GetAllCards(int playerId)
         {
-            return await _context.OwnedCards.Where(x => x.PlayerId == playerId).OrderBy(c => c.Id).ToListAsync();
+            List<OwnedCard> owned = _context.OwnedCards.Where(x => x.PlayerId == playerId).ToList();
+            List<Card> returnedCards = new List<Card>();
+
+            foreach (var item in owned)
+            {
+                returnedCards.Add(_context.Cards.Where(x => x.Id == item.CardId).FirstOrDefault());
+            }
+
+
+            return returnedCards;
         }
 
         public IEnumerable<Card> GetFilteredCards(string filtre)
