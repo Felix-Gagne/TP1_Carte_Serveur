@@ -23,16 +23,18 @@ namespace Super_Cartes_Infinies.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> BuyCard()
+        [HttpPost("{cardId}")]
+        public async Task<ActionResult<String>> BuyCard(int cardId)
         {
-            return null;
+            StoreCard card = _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefault();
+            return null; //_storeService.BuyCard(, card);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<StoreCard>> SellCard()
+        [HttpPost("{cardId}")]
+        public async Task<ActionResult<String>> SellCard(int cardId)
         {
-            return null;
+            StoreCard card = _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefault();
+            return null; //_storeService.SellCard(,card);
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 
@@ -25,13 +26,13 @@ namespace Super_Cartes_Infinies.Services
             //If the player doesn't have enough money
             if (currentPlayer.Money < storeCard.BuyAmount)
             {
-                throw new Exception("Not enough money to buy this card brokie");
+                throw new Exception("Not enough money to buy this card brokie. Go get your money up.");
             }
 
             //If the player already pocesses the card
             else if(currentPlayer.DeckCard.Contains(storeCard.Card))
             {
-                throw new Exception("You already got this card dummy");
+                throw new Exception("You already got this card dummy. Sell it and buy it again if it makes you happy.");
             }
 
             //Add the card to the player's deck
@@ -46,11 +47,11 @@ namespace Super_Cartes_Infinies.Services
             return null;
         }
 
-        public Task<ActionResult> SellCard(string userId, Card card) 
+        public Task<ActionResult> SellCard(string userId, StoreCard storeCard) 
         {
             Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefault();
 
-            StoreCard storeCard = _context.StoreCards.Where(x => x.CardId == card.Id).FirstOrDefault();
+            Card card = _context.Cards.Where(x => x.Id == storeCard.CardId).FirstOrDefault();
             
             if(card == null)
             {
