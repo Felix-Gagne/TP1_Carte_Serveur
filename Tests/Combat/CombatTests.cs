@@ -481,7 +481,7 @@ namespace Tests.Services
         #region PowerTests
         [TestMethod]
         // Test d'un combat de une carte avec First Strike contre une carte normale.
-        public void AbilityFirstStrike()
+        public void AbilityFirstStrikeTest()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -571,7 +571,7 @@ namespace Tests.Services
 
         [TestMethod]
         // Test d'un combat de une carte avec Charge contre une carte normale.
-        public void AbilityCharge()
+        public void AbilityChargeTest()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -668,7 +668,7 @@ namespace Tests.Services
 
         [TestMethod]
         //Test d'un combat de une carte avec Thorns 1 contre une carte normale
-        public void AbilityThorn1()
+        public void AbilityThorn1Test()
         {
 
             var currentPlayerData = new MatchPlayerData(1)
@@ -761,7 +761,7 @@ namespace Tests.Services
 
         [TestMethod]
         //Test d'un combat de une carte avec Thorns 5 contre une carte normale
-        public void AbilityThorn5()
+        public void AbilityThorn5Test()
         {
 
             var currentPlayerData = new MatchPlayerData(1)
@@ -856,7 +856,7 @@ namespace Tests.Services
         #region HealTests
 
         [TestMethod]
-        public void AbilityHeal1()
+        public void AbilityHeal1Test()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -970,7 +970,7 @@ namespace Tests.Services
 
 
         [TestMethod]
-        public void AbilityHeal2()
+        public void AbilityHeal2Test()
         {
             var currentPlayerData = new MatchPlayerData(1)
             {
@@ -1080,6 +1080,222 @@ namespace Tests.Services
             Assert.AreEqual(0, currentPlayerData.Graveyard.Count);
             Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
             Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
+        }
+
+        #endregion
+
+        #region ExplosionTest
+
+        public void AbilityExplosionTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3,
+                ManaCost = 1
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 2,
+                ManaCost = 1
+            };
+
+            var cardC = new Card
+            {
+                Id = 44,
+                Attack = 2,
+                Defense = 5,
+                ManaCost = 1
+            };
+
+            var cardD = new Card
+            {
+                Id = 45,
+                Attack = 1,
+                Defense = 6,
+                ManaCost = 1
+            };
+
+            var Explosion = new Power
+            {
+                Id = Power.EXPLOSION_ID,
+                Name = "Explosion",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 43,
+                PowerId = Power.EXPLOSION_ID,
+                value = 0
+            };
+
+            cardB.cardPowers.Add(cardPower);
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+            var playableCardC = new PlayableCard(cardC)
+            {
+                Id = 3
+            };
+            var playableCardD = new PlayableCard(cardD)
+            {
+                Id = 4
+            };
+
+            currentPlayerData.BattleField.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+            currentPlayerData.BattleField.Add(playableCardC);
+            opposingPlayerData.BattleField.Add(playableCardD);
+
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
+
+            // Test que la carte A possède le power Charge.
+            Assert.IsTrue(playableCardB.Card.HasPower(Power.EXPLOSION_ID));
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            Assert.AreEqual(2, playableCardA.Health);
+            Assert.AreEqual(0, playableCardB.Health);
+
+            // Explosion fait 5 damage a tout les monstres donc les deux monstres de currentPlayer sont morts.           
+            Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(2, currentPlayerData.Graveyard.Count);
+
+            // Comme playableCardB n'a plus de Health, elle est morte et doit se retrouver dans le Graveyard (Activant son ability)
+            // Vu que playableCardD a plus que 5 points de vie elle ne meurt pas.
+            Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(1, opposingPlayerData.Graveyard.Count);
+        }
+
+        #endregion
+
+        #region GreedTest
+
+        public void AbilityGreedTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3,
+                ManaCost = 2
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 5,
+                ManaCost = 1
+            };
+
+            var Greed = new Power
+            {
+                Id = Power.GREED_ID,
+                Name = "Greed",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 42,
+                PowerId = Power.GREED_ID,
+                value = 0
+            };
+
+            cardA.cardPowers.Add(cardPower);
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+
+            currentPlayerData.Hand.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+
+            var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA.Id);
+
+            currentPlayerData.Hand.Add(playableCardB);
+            currentPlayerData.Hand.Add(playableCardA);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
+
+            // Test que la carte A possède le power Greed.
+            Assert.IsTrue(playableCardA.Card.HasPower(Power.GREED_ID));
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            //Le mana à été utilisé
+            Assert.AreEqual(0, currentPlayerData.Mana);
+
+            Assert.AreEqual(3, playableCardA.Health);
+            Assert.AreEqual(5, playableCardB.Health);
+
+            // Les 2 cartes sont encore en vie et doivent rester sur le BattleField
+            // En plus le currentPlayer doit avoir recu 2 cartes de plus a sa main grace a Greed
+            Assert.AreEqual(1, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(2, currentPlayerData.Hand.Count);
+            Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
         }
 
         #endregion
