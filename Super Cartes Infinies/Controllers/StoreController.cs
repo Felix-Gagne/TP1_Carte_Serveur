@@ -22,7 +22,7 @@ namespace Super_Cartes_Infinies.Controllers
             _storeService = storeService;
         }
 
-        [HttpPost]
+        [HttpPost("{cardId}")]
         public async Task<ActionResult<String>> BuyCard(int cardId)
         {
             StoreCard card = await _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefaultAsync();

@@ -11,7 +11,7 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231101230003_Initial_Create")]
+    [Migration("20231101233434_Initial_Create")]
     partial class Initial_Create
     {
         /// <inheritdoc />
@@ -164,15 +164,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c0ab33b8-9137-4bee-90c8-b09ba400a4ab",
+                            ConcurrencyStamp = "180d8540-1912-485d-bfa2-e2ff7bdee56c",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPQe0CM9aHLc1bRXrnGzQy+T1AFplXEErDvkHYWQWDHOThtn8LMubmhw3UCy7/FPug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA7BZlsetZsaqLSNl2YYXKPIYYhEpE9i2VhIN7MkNI7rJivOgHAJUKFBf5nMPfvGag==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "74be4a6e-b1e1-49fc-9a55-c262ad19cf80",
+                            SecurityStamp = "ccc25b2e-c428-49dd-b32e-ff9906817d46",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -1018,6 +1018,13 @@ namespace Super_Cartes_Infinies.Migrations
                             BuyAmount = 500,
                             CardId = 3,
                             SellAmount = 200
+                        },
+                        new
+                        {
+                            Id = 15,
+                            BuyAmount = 250,
+                            CardId = 15,
+                            SellAmount = 100
                         });
                 });
 

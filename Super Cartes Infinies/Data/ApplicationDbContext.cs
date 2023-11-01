@@ -651,6 +651,16 @@ public class ApplicationDbContext : IdentityDbContext
         };
         StoreCards.Add(Sc3);
         builder.Entity<StoreCard>().HasData(Sc3);
+
+        StoreCard Sc15 = new StoreCard
+        {
+            Id = 15,
+            BuyAmount = 250,
+            SellAmount = 100,
+            CardId = C15.Id,
+        };
+        StoreCards.Add(Sc15);
+        builder.Entity<StoreCard>().HasData(Sc15);
     }
 
 
