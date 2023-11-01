@@ -17,13 +17,15 @@ namespace Super_Cartes_Infinies.Combat
 
             if(playableCardId != 0)
             {
+                // TODO: Utiliser le mana du joueur pour jouer la carte.
                 // TODO: Déplacer la carte sur le BattleField
                 currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
                 currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
+                
             }
 
             // Pour l'instant le joueur ne peut jouer qu'une seule carte, alors on termine le tour!
-            //this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
+            this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
         }
     }
 }

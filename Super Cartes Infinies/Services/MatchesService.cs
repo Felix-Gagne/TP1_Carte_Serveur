@@ -218,12 +218,41 @@ namespace Super_Cartes_Infinies.Services
             return serializedEvent;
         }
 
-        /*public async Task<string> EndTurn(string userId, int matchId)
+        public async Task<string> EndTurn(string userId, int matchId)
         {
             Match? match = await _context.Matches.FindAsync(matchId);
             MatchPlayerData currentPlayerData;
             MatchPlayerData opposingPlayerData;
-        }*/
+
+            if (match == null)
+            {
+                throw new Exception("Aucun match n'est en cours donc impossible de finir le tour.");
+            }
+
+            if (match.IsMatchCompleted == true)
+            {
+                throw new Exception("Le match est terminer il est impossible de finir le tour.");
+            }
+
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+                opposingPlayerData = match.PlayerDataB;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+                opposingPlayerData = match.PlayerDataA;
+            }
+
+            var EndturnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            string serializedEvent = match.AddEvent(EndturnEvent);
+
+            await _context.SaveChangesAsync();
+
+            return serializedEvent;
+        }
 
         public async Task<string> EndMatch(int matchId)
         {

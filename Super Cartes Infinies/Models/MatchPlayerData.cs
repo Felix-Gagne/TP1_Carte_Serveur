@@ -5,6 +5,8 @@ namespace Super_Cartes_Infinies.Models
 	public class MatchPlayerData
     {
 		private const int STARTING_HEALTH = 20;
+        private const int STARTING_MANA = 2;
+        private const int GAINING_MANA = 3;
 
         public MatchPlayerData()
         {
@@ -15,6 +17,7 @@ namespace Super_Cartes_Infinies.Models
 		{
             PlayerId = playerId;
             Health = STARTING_HEALTH;
+            Mana = STARTING_MANA;
             CardsPile = new List<PlayableCard>();
             Hand = new List<PlayableCard>();
             BattleField = new List<PlayableCard>();
@@ -35,6 +38,7 @@ namespace Super_Cartes_Infinies.Models
 
         public int Id { get; set; }
 		public int Health { get; set; }
+        public int Mana { get; set; }
 
         public int PlayerId { get; set; }
 

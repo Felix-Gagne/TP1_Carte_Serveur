@@ -15,10 +15,10 @@ namespace Super_Cartes_Infinies.Models
         public const int THORNS_ID = 3;
         public const int HEAL_ID = 4;
 
-        //Voici les ids pour les power que nous on décide
-        //Les noms sont à changer (on choisi les powers et leurs effets)
-        public const int CUSTOMPOWER1_ID = 5;
-        public const int CUSTOMPOWER2_ID = 6;
+        // Explosion fait 5 damage a tout les monstres lorsque le monstre (qui possede la ability) meurt.
+        public const int EXPLOSION_ID = 5;
+        // Lorsque le monstre est jouer. Le joueur peut piger 2 cartes depuis son deck.
+        public const int GREED_ID = 6;
 
         [ValidateNever]
         public virtual List<CardPower> cardPowers { get; set; }

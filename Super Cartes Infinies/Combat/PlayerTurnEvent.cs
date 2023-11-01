@@ -16,6 +16,7 @@ namespace Super_Cartes_Infinies.Combat
             // TODO: Faire piger une carte à l'adversaire
             Events.Add(new DrawCardEvent(currentPlayerData));
             // TODO: C'est la fin du tour du joueurCourrant, il faut mettre match à jour!
+            // TODO: Le joueur qui commence son tour gagne du Mana. (Voir MatchPlayerData)
             if (!match.IsPlayerATurn)
             {
                 match.IsPlayerATurn = true;
