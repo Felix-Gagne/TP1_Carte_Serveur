@@ -18,16 +18,19 @@ namespace Super_Cartes_Infinies.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
 
         readonly UserService _userService;
         private UserManager<IdentityUser> _userManager;
         private SignInManager<IdentityUser> _signInManager;
+        private ApplicationDbContext _context;
 
-        public UserController(UserService userService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+
+        public UserController(UserService userService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
+            PlayersService playersService, ApplicationDbContext context) : base(playersService)
         {
-           
+            _context = context;
             this._userService = userService;
             this._userManager = userManager;    
             this._signInManager = signInManager;
@@ -116,6 +119,13 @@ namespace Super_Cartes_Infinies.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<int> GetMoney()
+        {
+            Player player = await _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefaultAsync();
+            return player.Money;
         }
     }
 
