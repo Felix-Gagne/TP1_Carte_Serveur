@@ -46,9 +46,10 @@ namespace Super_Cartes_Infinies.Services
             return "Card successfully bought";
         }
 
-        public async Task<ActionResult<String>> SellCard(string userId, OwnedCard ownedCard) 
+        public async Task<ActionResult<String>> SellCard(string userId, int ownedCardId) 
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+            OwnedCard ownedCard = await _context.OwnedCards.Where(x => x.Id == ownedCardId).FirstOrDefaultAsync();
             StoreCard sellPriceCard = await _context.StoreCards.Where(x => x.CardId == ownedCard.CardId).FirstOrDefaultAsync();
 
             if (sellPriceCard == null)

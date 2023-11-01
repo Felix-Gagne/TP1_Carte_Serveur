@@ -22,18 +22,18 @@ namespace Super_Cartes_Infinies.Controllers
             _storeService = storeService;
         }
 
-        [HttpPost("{cardId}/{userName}")]
-        public async Task<ActionResult<String>> BuyCard(int cardId, String userName)
+        [HttpPost]
+        public async Task<ActionResult<String>> BuyCard(int cardId)
         {
             StoreCard card = await _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefaultAsync();
             return await _storeService.BuyCard(UserId, card);
         }
 
-        [HttpPost("{cardId}")]
+        [HttpPost]
         public async Task<ActionResult<String>> SellCard(int cardId)
         {
             StoreCard card = _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefault();
-            return await _storeService.SellCard(UserId, card);
+            return await _storeService.SellCard(UserId, cardId);
         }
 
         [HttpGet]
