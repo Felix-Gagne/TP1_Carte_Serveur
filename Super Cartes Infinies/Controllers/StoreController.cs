@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +22,8 @@ namespace Super_Cartes_Infinies.Controllers
             _storeService = storeService;
         }
 
-        [HttpPost("{cardId}")]
-        public async Task<ActionResult<String>> BuyCard(int cardId)
+        [HttpPost("{cardId}/{userName}")]
+        public async Task<ActionResult<String>> BuyCard(int cardId, String userName)
         {
             StoreCard card = await _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefaultAsync();
             return await _storeService.BuyCard(UserId, card);

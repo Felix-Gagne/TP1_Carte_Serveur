@@ -33,6 +33,7 @@ builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<StoreService>();
 
 
 //Ajout de la permission des cookies
