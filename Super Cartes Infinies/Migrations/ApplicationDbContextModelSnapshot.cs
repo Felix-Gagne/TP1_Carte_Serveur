@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "180d8540-1912-485d-bfa2-e2ff7bdee56c",
+                            ConcurrencyStamp = "638cb8aa-7ffe-4e70-8822-00612076d70b",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA7BZlsetZsaqLSNl2YYXKPIYYhEpE9i2VhIN7MkNI7rJivOgHAJUKFBf5nMPfvGag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECJbeYnbmHl0rHP52gDA6aM3u1aMeJA9v6K7lMlgDK55V1PotkRK8HRmBZMmEKIwuQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ccc25b2e-c428-49dd-b32e-ff9906817d46",
+                            SecurityStamp = "2cca4b05-1a60-447a-a228-c92a537aa0d5",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -716,6 +716,20 @@ namespace Super_Cartes_Infinies.Migrations
                     b.ToTable("CardPower");
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Deck", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Decks");
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
                 {
                     b.Property<int>("Id")
@@ -785,10 +799,15 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("DeckId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeckId");
 
                     b.HasIndex("PlayerId");
 
@@ -1142,6 +1161,10 @@ namespace Super_Cartes_Infinies.Migrations
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
                 {
+                    b.HasOne("Super_Cartes_Infinies.Models.Deck", null)
+                        .WithMany("Cards")
+                        .HasForeignKey("DeckId");
+
                     b.HasOne("Super_Cartes_Infinies.Models.Player", null)
                         .WithMany("OwnedCard")
                         .HasForeignKey("PlayerId")
@@ -1219,6 +1242,11 @@ namespace Super_Cartes_Infinies.Migrations
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
                 {
                     b.Navigation("cardPowers");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Deck", b =>
+                {
+                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>

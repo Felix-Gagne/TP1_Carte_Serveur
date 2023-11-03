@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Create : Migration
+    public partial class Initial_create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,19 @@ namespace Super_Cartes_Infinies.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cards", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Decks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,11 +340,17 @@ namespace Super_Cartes_Infinies.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DeckId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OwnedCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OwnedCards_Decks_DeckId",
+                        column: x => x.DeckId,
+                        principalTable: "Decks",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OwnedCards_Players_PlayerId",
                         column: x => x.PlayerId,
@@ -442,7 +461,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "180d8540-1912-485d-bfa2-e2ff7bdee56c", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEA7BZlsetZsaqLSNl2YYXKPIYYhEpE9i2VhIN7MkNI7rJivOgHAJUKFBf5nMPfvGag==", null, false, "ccc25b2e-c428-49dd-b32e-ff9906817d46", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "638cb8aa-7ffe-4e70-8822-00612076d70b", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAECJbeYnbmHl0rHP52gDA6aM3u1aMeJA9v6K7lMlgDK55V1PotkRK8HRmBZMmEKIwuQ==", null, false, "2cca4b05-1a60-447a-a228-c92a537aa0d5", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
@@ -603,6 +622,11 @@ namespace Super_Cartes_Infinies.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OwnedCards_DeckId",
+                table: "OwnedCards",
+                column: "DeckId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OwnedCards_PlayerId",
                 table: "OwnedCards",
                 column: "PlayerId");
@@ -697,6 +721,9 @@ namespace Super_Cartes_Infinies.Migrations
 
             migrationBuilder.DropTable(
                 name: "Power");
+
+            migrationBuilder.DropTable(
+                name: "Decks");
 
             migrationBuilder.DropTable(
                 name: "Matches");
