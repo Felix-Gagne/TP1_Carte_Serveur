@@ -44,7 +44,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetAllCardsTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
 
             Player player = new Player {
                 Id = 100,
@@ -104,7 +104,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetFilteredCardsTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
             List<Card> cards = new List<Card>();
 
             Card carte1 = new Card
@@ -155,7 +155,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetFilteredCardsAttackTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
             List<Card> cards = new List<Card>();
 
             Card carte1 = new Card
@@ -206,7 +206,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetFilteredCardsDefenseTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
             List<Card> cards = new List<Card>();
 
             Card carte1 = new Card
@@ -257,7 +257,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetFilteredCardsNameTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
             List<Card> cards = new List<Card>();
 
             Card carte1 = new Card
@@ -309,7 +309,7 @@ namespace Super_Cartes_Infinies.Services.Tests
         public void GetFilteredCardsAnyOtherStringTest()
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
-            CardService cardService = new CardService(db);
+            DeckService cardService = new DeckService(db);
             List<Card> cards = new List<Card>();
 
             Card carte1 = new Card

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
+using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
 
 namespace Super_Cartes_Infinies.Controllers
@@ -12,16 +13,23 @@ namespace Super_Cartes_Infinies.Controllers
     [ApiController]
     public class DeckController : BaseController
     {
+
+        #region Controller
+
         UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public CardService _cardService;
+        public DeckService _deckService;
 
-        public DeckController(UserManager<IdentityUser> userManager, ApplicationDbContext context, PlayersService playersService, CardService cardsService) : base(playersService)
+        public DeckController(UserManager<IdentityUser> userManager, ApplicationDbContext context, PlayersService playersService, DeckService deckService) : base(playersService)
         {
             this._userManager = userManager;
             _context = context;
-            _cardService = cardsService;
+            _deckService = deckService;
         }
+
+        #endregion
+
+        #region Deck
 
         [HttpGet]
         public List<Card> GetPlayerDeck()
@@ -34,13 +42,34 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpGet]
+        public List<Deck> GetDecks()
+        {
+            return _deckService.GetDecks(UserId);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<String>> CreateDeck(DeckDTO deck)
+        {
+            return "";
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<String>> DeleteDeck()
+        {
+            return "";
+        }
+
+        #endregion
+
+        #region Inventory
+        [HttpGet]
         public List<Card> GetInventory()
         {
             Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefault();
 
             List<Card> result = new List<Card>();
 
-            result = _cardService.GetInventory(currentPlayer.Id).ToList();
+            result = _deckService.GetInventory(currentPlayer.Id).ToList();
 
             return result;
         }
@@ -50,9 +79,11 @@ namespace Super_Cartes_Infinies.Controllers
         {
             List<Card> result = new List<Card>();
 
-            result = _cardService.GetFilteredCards(FiltreChoisi).ToList();
+            result = _deckService.GetFilteredCards(FiltreChoisi).ToList();
 
             return result;
         }
+        #endregion
+
     }
 }
