@@ -11,8 +11,8 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231018203252_CardPower")]
-    partial class CardPower
+    [Migration("20231103182528_initialeCreate")]
+    partial class initialeCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,15 +164,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4e7c8ce-9222-4ac5-a31b-a88ec21e64e6",
+                            ConcurrencyStamp = "73f6993d-8f76-4523-9920-e27ada8327b2",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMn7OuzlHNoHRJnwhevZM0ozyG0Vserb058MrP5qOv14HxrMPtRQ9OBuMH5x4dv0Hg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKBHY5ZdmRJXvAxiCJOAhjZ7Zvdj7eudcAPVDwJ6KGrxUWbeUXe+dBh9nNT47lI6kg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "49ab4129-c64f-460c-8246-ee3c8a83dd0f",
+                            SecurityStamp = "985dcbf8-d481-46d2-9fc4-79d807b23948",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -284,6 +284,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ManaCost")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -299,6 +302,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 3,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Stickly Steve"
                         },
                         new
@@ -307,6 +311,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 2,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 1,
                             Name = "Sketchy Sarah"
                         },
                         new
@@ -315,6 +320,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 4,
                             Defense = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Doodle Dave"
                         },
                         new
@@ -323,6 +329,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 3,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Pencil Pete"
                         },
                         new
@@ -331,6 +338,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 4,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Marker Mike"
                         },
                         new
@@ -339,6 +347,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 2,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Eraser Edith"
                         },
                         new
@@ -347,6 +356,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Crayon Carla"
                         },
                         new
@@ -355,6 +365,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 4,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Scribble Sam"
                         },
                         new
@@ -363,6 +374,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Inkwell Ivan"
                         },
                         new
@@ -371,6 +383,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Paintbrush Penny"
                         },
                         new
@@ -379,6 +392,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 4,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Sketchpad Sally"
                         },
                         new
@@ -387,6 +401,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Chalkboard Chuck"
                         },
                         new
@@ -395,6 +410,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Notebook Ned"
                         },
                         new
@@ -403,6 +419,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Penelope Pencil"
                         },
                         new
@@ -411,6 +428,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 3,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Highlighter Hank"
                         },
                         new
@@ -419,6 +437,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Marker Mary"
                         },
                         new
@@ -427,6 +446,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Crayola Carl"
                         },
                         new
@@ -435,6 +455,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Paperclip Paula"
                         },
                         new
@@ -443,6 +464,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Paint Paddy"
                         },
                         new
@@ -451,6 +473,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Pencil Shavings Pete"
                         },
                         new
@@ -459,6 +482,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Sticky Stan"
                         },
                         new
@@ -467,6 +491,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Charcoal Charlie"
                         },
                         new
@@ -475,6 +500,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 2,
                             Name = "Watercolor Wendy"
                         },
                         new
@@ -483,6 +509,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Notebook Nikki"
                         },
                         new
@@ -491,6 +518,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 9,
                             Defense = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 3,
                             Name = "Etch-a-Sketch Eddie"
                         },
                         new
@@ -499,6 +527,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 4,
                             Defense = 8,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Glitter Glenda"
                         },
                         new
@@ -507,6 +536,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Crayonbox Casey"
                         },
                         new
@@ -515,6 +545,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Sketchbook Simon"
                         },
                         new
@@ -523,6 +554,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Quill Quentin"
                         },
                         new
@@ -531,6 +563,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 9,
                             Defense = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Sidewalk Chalk Chloe"
                         },
                         new
@@ -539,14 +572,16 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Canvas Cathy"
                         },
                         new
                         {
                             Id = 32,
-                            Attack = 8,
-                            Defense = 5,
+                            Attack = 11,
+                            Defense = 10,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 8,
                             Name = "Fountain Pen Fred"
                         },
                         new
@@ -555,6 +590,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 8,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 6,
                             Name = "Sticky Note Steve"
                         },
                         new
@@ -563,6 +599,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 9,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Doodle Pad Donna"
                         },
                         new
@@ -571,6 +608,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Paint Can Patrick"
                         },
                         new
@@ -579,6 +617,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 5,
                             Defense = 9,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Marker Maze Max"
                         },
                         new
@@ -587,6 +626,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 4,
                             Name = "Etch-a-Sketch Emma"
                         },
                         new
@@ -595,14 +635,16 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 9,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Charcoal Chip"
                         },
                         new
                         {
                             Id = 39,
-                            Attack = 6,
+                            Attack = 8,
                             Defense = 9,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 10,
                             Name = "Graphite Gabby"
                         },
                         new
@@ -611,6 +653,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 10,
                             Defense = 4,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Inkwell Ike"
                         },
                         new
@@ -619,6 +662,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 8,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Sketchbook Skyler"
                         },
                         new
@@ -627,6 +671,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 10,
                             Defense = 5,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Chalky Charles"
                         },
                         new
@@ -635,6 +680,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 6,
                             Name = "Color Wheel Casey"
                         },
                         new
@@ -643,6 +689,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 9,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Canvas Cleo"
                         },
                         new
@@ -651,6 +698,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 6,
                             Defense = 10,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 8,
                             Name = "Sticker Sue"
                         },
                         new
@@ -659,6 +707,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 7,
                             Defense = 9,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 5,
                             Name = "Glue Gun Gary"
                         },
                         new
@@ -667,6 +716,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 10,
                             Defense = 6,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Markerboard Molly"
                         },
                         new
@@ -675,14 +725,16 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 8,
                             Defense = 8,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 7,
                             Name = "Pixel Pete"
                         },
                         new
                         {
                             Id = 49,
-                            Attack = 9,
-                            Defense = 7,
+                            Attack = 15,
+                            Defense = 15,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 20,
                             Name = "Lithography Lily"
                         },
                         new
@@ -691,6 +743,7 @@ namespace Super_Cartes_Infinies.Migrations
                             Attack = 10,
                             Defense = 7,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
+                            ManaCost = 8,
                             Name = "Silkscreening Simon"
                         });
                 });
@@ -716,7 +769,233 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasIndex("PowerId");
 
-                    b.ToTable("CardPower");
+                    b.ToTable("CardPowers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CardId = 1,
+                            PowerId = 1,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CardId = 3,
+                            PowerId = 2,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CardId = 5,
+                            PowerId = 4,
+                            value = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CardId = 6,
+                            PowerId = 3,
+                            value = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CardId = 7,
+                            PowerId = 1,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CardId = 7,
+                            PowerId = 6,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CardId = 9,
+                            PowerId = 5,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CardId = 11,
+                            PowerId = 3,
+                            value = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CardId = 12,
+                            PowerId = 4,
+                            value = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CardId = 13,
+                            PowerId = 2,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CardId = 13,
+                            PowerId = 6,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CardId = 15,
+                            PowerId = 3,
+                            value = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CardId = 15,
+                            PowerId = 4,
+                            value = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CardId = 18,
+                            PowerId = 3,
+                            value = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CardId = 22,
+                            PowerId = 3,
+                            value = 10
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CardId = 24,
+                            PowerId = 2,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CardId = 32,
+                            PowerId = 3,
+                            value = 5
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CardId = 32,
+                            PowerId = 2,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CardId = 33,
+                            PowerId = 3,
+                            value = 3
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CardId = 35,
+                            PowerId = 5,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CardId = 35,
+                            PowerId = 4,
+                            value = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CardId = 36,
+                            PowerId = 6,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CardId = 36,
+                            PowerId = 4,
+                            value = 2
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CardId = 39,
+                            PowerId = 5,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CardId = 39,
+                            PowerId = 1,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CardId = 42,
+                            PowerId = 6,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CardId = 42,
+                            PowerId = 5,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CardId = 45,
+                            PowerId = 3,
+                            value = 5
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CardId = 45,
+                            PowerId = 1,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CardId = 49,
+                            PowerId = 2,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CardId = 49,
+                            PowerId = 1,
+                            value = 0
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CardId = 49,
+                            PowerId = 4,
+                            value = 5
+                        });
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
@@ -767,6 +1046,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Health")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Mana")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PlayerId")
@@ -856,7 +1138,45 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Power");
+                    b.ToTable("Powers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "Charge"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "First Strike"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "Thorns"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "Heal"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "Explosion"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Icon = "https://static.thenounproject.com/png/1776468-200.png",
+                            Name = "Greed"
+                        });
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.SerializedMatchEvent", b =>

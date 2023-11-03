@@ -1285,8 +1285,8 @@ namespace Tests.Services
             Assert.AreEqual(1, opposingPlayerData.Health);
             Assert.AreEqual(1, currentPlayerData.Health);
 
-            //Le mana à été utilisé
-            Assert.AreEqual(0, currentPlayerData.Mana);
+            //Le mana à été utilisé et reobtenu avec le ability Greed
+            Assert.AreEqual(3, currentPlayerData.Mana);
 
             Assert.AreEqual(3, playableCardA.Health);
             Assert.AreEqual(5, playableCardB.Health);
