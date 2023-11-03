@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using NuGet.Protocol.Plugins;
 using Super_Cartes_Infinies.Models;
+using System.Drawing;
 using System.Numerics;
 using System.Reflection.Emit;
 using static System.Net.WebRequestMethods;
@@ -101,6 +103,24 @@ public class ApplicationDbContext : IdentityDbContext
         powers.Add(Heal);
         builder.Entity<Power>().HasData(Heal);
 
+        Power Explosion = new Power
+        {
+            Id = Power.EXPLOSION_ID,
+            Name = "Explosion",
+            Icon = iconPower
+        };
+        powers.Add(Explosion);
+        builder.Entity <Power>().HasData(Explosion);
+
+        Power Greed = new Power
+        {
+            Id = Power.GREED_ID,
+            Name = "Greed",
+            Icon = iconPower
+        };
+        powers.Add(Greed);
+        builder.Entity<Power>().HasData(Greed);
+
         #endregion
 
         #region SeedCarte
@@ -114,6 +134,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Stickly Steve",
             Attack = 3,
             Defense = 3,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add( C1 );
@@ -124,6 +145,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sketchy Sarah",
             Attack = 2,
             Defense = 4,
+            ManaCost = 1,
             ImageUrl = imageUrlBase
         };
         cards.Add(C2);
@@ -134,6 +156,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Doodle Dave",
             Attack = 4,
             Defense = 2,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C3);
@@ -144,6 +167,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Pencil Pete",
             Attack = 3,
             Defense = 5,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C4);
@@ -154,6 +178,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Marker Mike",
             Attack = 4,
             Defense = 4,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C5);
@@ -164,6 +189,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Eraser Edith",
             Attack = 2,
             Defense = 6,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C6);
@@ -174,6 +200,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Crayon Carla",
             Attack = 5,
             Defense = 3,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C7);
@@ -184,6 +211,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Scribble Sam",
             Attack = 4,
             Defense = 5,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C8);
@@ -194,6 +222,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Inkwell Ivan",
             Attack = 6,
             Defense = 2,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C9);
@@ -204,6 +233,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Paintbrush Penny",
             Attack = 5,
             Defense = 4,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C10);
@@ -215,6 +245,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sketchpad Sally",
             Attack = 4,
             Defense = 6,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C11);
@@ -226,6 +257,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Chalkboard Chuck",
             Attack = 6,
             Defense = 3,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C12);
@@ -237,6 +269,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Notebook Ned",
             Attack = 5,
             Defense = 5,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C13);
@@ -248,6 +281,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Penelope Pencil",
             Attack = 7,
             Defense = 2,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C14);
@@ -259,6 +293,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Highlighter Hank",
             Attack = 3,
             Defense = 7,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C15);
@@ -270,6 +305,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Marker Mary",
             Attack = 6,
             Defense = 4,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C16);
@@ -281,6 +317,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Crayola Carl",
             Attack = 7,
             Defense = 3,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C17);
@@ -292,6 +329,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Paperclip Paula",
             Attack = 5,
             Defense = 6,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C18);
@@ -303,6 +341,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Paint Paddy",
             Attack = 8,
             Defense = 2,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C19);
@@ -314,6 +353,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Pencil Shavings Pete",
             Attack = 6,
             Defense = 5,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C20);
@@ -325,6 +365,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sticky Stan",
             Attack = 7,
             Defense = 4,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C21);
@@ -336,6 +377,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Charcoal Charlie",
             Attack = 5,
             Defense = 7,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C22);
@@ -347,6 +389,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Watercolor Wendy",
             Attack = 8,
             Defense = 3,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C23);
@@ -358,6 +401,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Notebook Nikki",
             Attack = 6,
             Defense = 6,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C24);
@@ -369,6 +413,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Etch-a-Sketch Eddie",
             Attack = 9,
             Defense = 2,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C25);
@@ -380,6 +425,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Glitter Glenda",
             Attack = 4,
             Defense = 8,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C26);
@@ -391,6 +437,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Crayonbox Casey",
             Attack = 7,
             Defense = 5,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C27);
@@ -402,6 +449,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sketchbook Simon",
             Attack = 8,
             Defense = 4,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C28);
@@ -413,6 +461,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Quill Quentin",
             Attack = 6,
             Defense = 7,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C29);
@@ -424,6 +473,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sidewalk Chalk Chloe",
             Attack = 9,
             Defense = 3,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C30);
@@ -435,6 +485,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Canvas Cathy",
             Attack = 7,
             Defense = 6,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C31);
@@ -444,8 +495,9 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 32,
             Name = "Fountain Pen Fred",
-            Attack = 8,
-            Defense = 5,
+            Attack = 11,
+            Defense = 10,
+            ManaCost = 8,
             ImageUrl = imageUrlBase
         };
         cards.Add(C32);
@@ -457,6 +509,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sticky Note Steve",
             Attack = 6,
             Defense = 8,
+            ManaCost = 6,
             ImageUrl = imageUrlBase
         };
         cards.Add(C33);
@@ -468,6 +521,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Doodle Pad Donna",
             Attack = 9,
             Defense = 4,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C34);
@@ -479,6 +533,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Paint Can Patrick",
             Attack = 7,
             Defense = 7,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C35);
@@ -490,6 +545,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Marker Maze Max",
             Attack = 5,
             Defense = 9,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C36);
@@ -501,6 +557,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Etch-a-Sketch Emma",
             Attack = 8,
             Defense = 6,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C37);
@@ -512,6 +569,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Charcoal Chip",
             Attack = 9,
             Defense = 5,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C38);
@@ -521,8 +579,9 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 39,
             Name = "Graphite Gabby",
-            Attack = 6,
+            Attack = 8,
             Defense = 9,
+            ManaCost = 10,
             ImageUrl = imageUrlBase
         };
         cards.Add(C39);
@@ -534,6 +593,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Inkwell Ike",
             Attack = 10,
             Defense = 4,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C40);
@@ -545,6 +605,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sketchbook Skyler",
             Attack = 7,
             Defense = 8,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C41);
@@ -556,6 +617,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Chalky Charles",
             Attack = 10,
             Defense = 5,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C42);
@@ -567,6 +629,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Color Wheel Casey",
             Attack = 8,
             Defense = 7,
+            ManaCost = 6,
             ImageUrl = imageUrlBase
         };
         cards.Add(C43);
@@ -578,6 +641,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Canvas Cleo",
             Attack = 9,
             Defense = 6,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C44);
@@ -589,6 +653,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sticker Sue",
             Attack = 6,
             Defense = 10,
+            ManaCost = 8,
             ImageUrl = imageUrlBase
         };
         cards.Add(C45);
@@ -600,6 +665,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Glue Gun Gary",
             Attack = 7,
             Defense = 9,
+            ManaCost = 5,
             ImageUrl = imageUrlBase
         };
         cards.Add(C46);
@@ -611,6 +677,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Markerboard Molly",
             Attack = 10,
             Defense = 6,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C47);
@@ -622,6 +689,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Pixel Pete",
             Attack = 8,
             Defense = 8,
+            ManaCost = 7,
             ImageUrl = imageUrlBase
         };
         cards.Add(C48);
@@ -631,8 +699,9 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 49,
             Name = "Lithography Lily",
-            Attack = 9,
-            Defense = 7,
+            Attack = 15,
+            Defense = 15,
+            ManaCost = 20,
             ImageUrl = imageUrlBase
         };
         cards.Add(C49);
@@ -644,6 +713,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Silkscreening Simon",
             Attack = 10,
             Defense = 7,
+            ManaCost = 8,
             ImageUrl = imageUrlBase
         };
         cards.Add(C50);
@@ -652,6 +722,331 @@ public class ApplicationDbContext : IdentityDbContext
         #endregion
 
         #region CardPower
+
+        List<CardPower> cardPowers = new List<CardPower>();
+
+        CardPower SticklySteveCharge = new CardPower
+        {
+            Id = 1,
+            CardId = C1.Id,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(SticklySteveCharge);
+        builder.Entity<CardPower>().HasData(SticklySteveCharge);
+
+        CardPower DoodleDaveFirstStrike = new CardPower
+        {
+            Id = 2,
+            CardId = C3.Id,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(DoodleDaveFirstStrike);
+        builder.Entity<CardPower>().HasData(DoodleDaveFirstStrike);
+
+        CardPower MarkerMikeHeal1 = new CardPower
+        {
+            Id = 3,
+            CardId = C5.Id,
+            PowerId = Power.HEAL_ID,
+            value = 1
+        };
+        cardPowers.Add(MarkerMikeHeal1);
+        builder.Entity<CardPower>().HasData(MarkerMikeHeal1);
+
+        CardPower EraserEdithThorns2 = new CardPower
+        {
+            Id = 4,
+            CardId = C6.Id,
+            PowerId = Power.THORNS_ID,
+            value = 2
+        };
+        cardPowers.Add(EraserEdithThorns2);
+        builder.Entity<CardPower>().HasData(EraserEdithThorns2);
+
+        CardPower CrayonCarlaCharge = new CardPower
+        {
+            Id = 5,
+            CardId = C7.Id,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(CrayonCarlaCharge);
+        builder.Entity<CardPower>().HasData(CrayonCarlaCharge);
+
+        CardPower CrayonCarlaGreed = new CardPower
+        {
+            Id = 6,
+            CardId = C7.Id,
+            PowerId = Power.GREED_ID,
+            value = 0
+        };
+        cardPowers.Add(CrayonCarlaGreed);
+        builder.Entity<CardPower>().HasData(CrayonCarlaGreed);
+
+        
+        CardPower InkwellIvanExplosion = new CardPower
+        {
+             Id = 7,
+             CardId = C9.Id,
+             PowerId = Power.EXPLOSION_ID,
+             value = 0
+        };
+        cardPowers.Add(InkwellIvanExplosion);
+        builder.Entity<CardPower>().HasData(InkwellIvanExplosion);
+
+        CardPower SketchpadSallyThorns3 = new CardPower
+        {
+            Id = 8,
+            CardId = C11.Id,
+            PowerId = Power.THORNS_ID,
+            value = 3
+        };
+        cardPowers.Add(SketchpadSallyThorns3);
+        builder.Entity<CardPower>().HasData(SketchpadSallyThorns3);
+
+        CardPower ChalkboardChuckHeal4 = new CardPower
+        {
+            Id = 9,
+            CardId = C12.Id,
+            PowerId = Power.HEAL_ID,
+            value = 4
+        };
+        cardPowers.Add(ChalkboardChuckHeal4);
+        builder.Entity<CardPower>().HasData(ChalkboardChuckHeal4);
+
+        CardPower NotebookNedFirstStrike = new CardPower
+        {
+            Id = 10,
+            CardId = C13.Id,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(NotebookNedFirstStrike);
+        builder.Entity<CardPower>().HasData(NotebookNedFirstStrike);
+
+        CardPower NotebookNedGreed = new CardPower
+        {
+            Id = 11,
+            CardId = C13.Id,
+            PowerId = Power.GREED_ID,
+            value = 0
+        };
+        cardPowers.Add(NotebookNedGreed);
+        builder.Entity<CardPower>().HasData(NotebookNedGreed);
+
+        CardPower HighlighterHankThorns2 = new CardPower
+        {
+            Id = 12,
+            CardId = C15.Id,
+            PowerId = Power.THORNS_ID,
+            value = 2
+        };
+        cardPowers.Add(HighlighterHankThorns2);
+        builder.Entity<CardPower>().HasData(HighlighterHankThorns2);
+
+        CardPower HighlighterHankHeal2 = new CardPower
+        {
+            Id = 13,
+            CardId = C15.Id,
+            PowerId = Power.HEAL_ID,
+            value = 2
+        };
+        cardPowers.Add(HighlighterHankHeal2);
+        builder.Entity<CardPower>().HasData(HighlighterHankHeal2);
+
+        CardPower PaperclipPaulaThorns3 = new CardPower
+        {
+            Id = 14,
+            CardId = C18.Id,
+            PowerId = Power.THORNS_ID,
+            value = 3
+        };
+        cardPowers.Add(PaperclipPaulaThorns3);
+        builder.Entity<CardPower>().HasData(PaperclipPaulaThorns3);
+
+        CardPower CharcoaCharlieThorns10 = new CardPower
+        {
+            Id = 15,
+            CardId = C22.Id,
+            PowerId = Power.THORNS_ID,
+            value = 10
+        };
+        cardPowers.Add(CharcoaCharlieThorns10);
+        builder.Entity<CardPower>().HasData(CharcoaCharlieThorns10);
+
+        CardPower NotebookNikkiFirstStrike = new CardPower
+        {
+            Id = 16,
+            CardId = C24.Id,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(NotebookNikkiFirstStrike);
+        builder.Entity<CardPower>().HasData(NotebookNikkiFirstStrike);
+
+        CardPower FountainPenFredThorns5 = new CardPower
+        {
+            Id = 17,
+            CardId = C32.Id,
+            PowerId = Power.THORNS_ID,
+            value = 5
+        };
+        cardPowers.Add(FountainPenFredThorns5);
+        builder.Entity<CardPower>().HasData(FountainPenFredThorns5);
+
+        CardPower FountainPenFredFirstStrike = new CardPower
+        {
+            Id = 18,
+            CardId = C32.Id,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(FountainPenFredFirstStrike);
+        builder.Entity<CardPower>().HasData(FountainPenFredFirstStrike);
+
+        CardPower StickyNoteSteveThorns3 = new CardPower
+        {
+            Id = 19,
+            CardId = C33.Id,
+            PowerId = Power.THORNS_ID,
+            value = 3
+        };
+        cardPowers.Add(StickyNoteSteveThorns3);
+        builder.Entity<CardPower>().HasData(StickyNoteSteveThorns3);
+
+
+        CardPower PaintCanPatrickExplosion = new CardPower
+        {
+            Id = 20,
+            CardId = C35.Id,
+            PowerId = Power.EXPLOSION_ID,
+            value = 0
+        };
+        cardPowers.Add(PaintCanPatrickExplosion);
+        builder.Entity<CardPower>().HasData(PaintCanPatrickExplosion);
+
+        CardPower PaintCanPatrickHeal2 = new CardPower
+        {
+            Id = 21,
+            CardId = C35.Id,
+            PowerId = Power.HEAL_ID,
+            value = 2
+        };
+        cardPowers.Add(PaintCanPatrickHeal2);
+        builder.Entity<CardPower>().HasData(PaintCanPatrickHeal2);
+
+        CardPower MarkerMazeMaxGreed = new CardPower
+        {
+            Id = 22,
+            CardId = C36.Id,
+            PowerId = Power.GREED_ID,
+            value = 0
+        };
+        cardPowers.Add(MarkerMazeMaxGreed);
+        builder.Entity<CardPower>().HasData(MarkerMazeMaxGreed);
+
+        CardPower MarkerMazeMaxHeal2 = new CardPower
+        {
+            Id = 23,
+            CardId = C36.Id,
+            PowerId = Power.HEAL_ID,
+            value = 2
+        };
+        cardPowers.Add(MarkerMazeMaxHeal2);
+        builder.Entity<CardPower>().HasData(MarkerMazeMaxHeal2);
+
+        CardPower GraphiteGabbyExplosion = new CardPower
+        {
+            Id = 24,
+            CardId = C39.Id,
+            PowerId = Power.EXPLOSION_ID,
+            value = 0
+        };
+        cardPowers.Add(GraphiteGabbyExplosion);
+        builder.Entity<CardPower>().HasData(GraphiteGabbyExplosion);
+
+        CardPower GraphiteGabbyCharge = new CardPower
+        {
+            Id = 25,
+            CardId = C39.Id,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(GraphiteGabbyCharge);
+        builder.Entity<CardPower>().HasData(GraphiteGabbyCharge);
+
+        CardPower ChalkyCharlesGreed = new CardPower
+        {
+            Id = 26,
+            CardId = C42.Id,
+            PowerId = Power.GREED_ID,
+            value = 0
+        };
+        cardPowers.Add(ChalkyCharlesGreed);
+        builder.Entity<CardPower>().HasData(ChalkyCharlesGreed);
+
+        CardPower ChalkyCharlesExplosion = new CardPower
+        {
+            Id = 27,
+            CardId = C42.Id,
+            PowerId = Power.EXPLOSION_ID,
+            value = 0
+        };
+        cardPowers.Add(ChalkyCharlesExplosion);
+        builder.Entity<CardPower>().HasData(ChalkyCharlesExplosion);
+
+        CardPower StickerSueThorns5 = new CardPower
+        {
+            Id = 28,
+            CardId = C45.Id,
+            PowerId = Power.THORNS_ID,
+            value = 5
+        };
+        cardPowers.Add(StickerSueThorns5);
+        builder.Entity<CardPower>().HasData(StickerSueThorns5);
+
+        CardPower StickerSueCharge = new CardPower
+        {
+            Id = 29,
+            CardId = C45.Id,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(StickerSueCharge);
+        builder.Entity<CardPower>().HasData(StickerSueCharge);
+
+        CardPower LithographyLilyFirstStrike = new CardPower
+        {
+            Id = 30,
+            CardId = C49.Id,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(LithographyLilyFirstStrike);
+        builder.Entity<CardPower>().HasData(LithographyLilyFirstStrike);
+
+        CardPower LithographyLilyCharge = new CardPower
+        {
+            Id = 31,
+            CardId = C49.Id,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(LithographyLilyCharge);
+        builder.Entity<CardPower>().HasData(LithographyLilyCharge);
+
+        CardPower LithographyLilyHeal5 = new CardPower
+        {
+            Id = 32,
+            CardId = C49.Id,
+            PowerId = Power.HEAL_ID,
+            value = 5
+        };
+        cardPowers.Add(LithographyLilyHeal5);
+        builder.Entity<CardPower>().HasData(LithographyLilyHeal5);
+
         #endregion
 
         for (int i = 1; i <= 10; i++){
@@ -677,6 +1072,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Card> Cards { get; set; } = default!;
 
     public DbSet<Power> Powers { get; set; } = default!;
+
+    public DbSet<CardPower> CardPowers { get; set; } = default!;
 
     public DbSet<StartingCards> StartingCards { get; set; } = default!;
 
