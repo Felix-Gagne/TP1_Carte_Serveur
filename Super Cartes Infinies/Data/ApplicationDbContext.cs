@@ -101,6 +101,24 @@ public class ApplicationDbContext : IdentityDbContext
         powers.Add(Heal);
         builder.Entity<Power>().HasData(Heal);
 
+        Power Explosion = new Power
+        {
+            Id = Power.EXPLOSION_ID,
+            Name = "Explosion",
+            Icon = iconPower
+        };
+        powers.Add(Explosion);
+        builder.Entity <Power>().HasData(Explosion);
+
+        Power Greed = new Power
+        {
+            Id = Power.GREED_ID,
+            Name = "Greed",
+            Icon = iconPower
+        };
+        powers.Add(Greed);
+        builder.Entity<Power>().HasData(Greed);
+
         #endregion
 
         #region SeedCarte
@@ -114,6 +132,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Stickly Steve",
             Attack = 3,
             Defense = 3,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add( C1 );
@@ -124,6 +143,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Sketchy Sarah",
             Attack = 2,
             Defense = 4,
+            ManaCost = 1,
             ImageUrl = imageUrlBase
         };
         cards.Add(C2);
@@ -134,6 +154,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Doodle Dave",
             Attack = 4,
             Defense = 2,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C3);
@@ -144,6 +165,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Pencil Pete",
             Attack = 3,
             Defense = 5,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C4);
@@ -154,6 +176,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Marker Mike",
             Attack = 4,
             Defense = 4,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C5);
@@ -164,6 +187,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Eraser Edith",
             Attack = 2,
             Defense = 6,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C6);
@@ -174,6 +198,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Crayon Carla",
             Attack = 5,
             Defense = 3,
+            ManaCost = 4,
             ImageUrl = imageUrlBase
         };
         cards.Add(C7);
@@ -184,6 +209,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Scribble Sam",
             Attack = 4,
             Defense = 5,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C8);
@@ -194,6 +220,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Inkwell Ivan",
             Attack = 6,
             Defense = 2,
+            ManaCost = 2,
             ImageUrl = imageUrlBase
         };
         cards.Add(C9);
@@ -204,6 +231,7 @@ public class ApplicationDbContext : IdentityDbContext
             Name = "Paintbrush Penny",
             Attack = 5,
             Defense = 4,
+            ManaCost = 3,
             ImageUrl = imageUrlBase
         };
         cards.Add(C10);
@@ -652,6 +680,69 @@ public class ApplicationDbContext : IdentityDbContext
         #endregion
 
         #region CardPower
+
+        List<CardPower> cardPowers = new List<CardPower>();
+
+        CardPower SticklySteveCharge = new CardPower
+        {
+            Id = 1,
+            CardId = 1,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(SticklySteveCharge);
+        builder.Entity<CardPower>().HasData(SticklySteveCharge);
+
+        CardPower DoodleDaveFirstStrike = new CardPower
+        {
+            Id = 2,
+            CardId = 3,
+            PowerId = Power.FIRSTSTRIKE_ID,
+            value = 0
+        };
+        cardPowers.Add(DoodleDaveFirstStrike);
+        builder.Entity<CardPower>().HasData(DoodleDaveFirstStrike);
+
+        CardPower MarkerMikeHeal1 = new CardPower
+        {
+            Id = 3,
+            CardId = 5,
+            PowerId = Power.HEAL_ID,
+            value = 1
+        };
+        cardPowers.Add(MarkerMikeHeal1);
+        builder.Entity<CardPower>().HasData(MarkerMikeHeal1);
+
+        CardPower EraserEdithThorns2 = new CardPower
+        {
+            Id = 4,
+            CardId = 6,
+            PowerId = Power.THORNS_ID,
+            value = 2
+        };
+        cardPowers.Add(EraserEdithThorns2);
+        builder.Entity<CardPower>().HasData(EraserEdithThorns2);
+
+        CardPower CrayonCarlaCharge = new CardPower
+        {
+            Id = 5,
+            CardId = 7,
+            PowerId = Power.CHARGE_ID,
+            value = 0
+        };
+        cardPowers.Add(CrayonCarlaCharge);
+        builder.Entity<CardPower>().HasData(CrayonCarlaCharge);
+
+        CardPower CrayonCarlaGreed = new CardPower
+        {
+            Id = 6,
+            CardId = 7,
+            PowerId = Power.GREED_ID,
+            value = 0
+        };
+        cardPowers.Add(CrayonCarlaGreed);
+        builder.Entity<CardPower>().HasData(CrayonCarlaGreed);
+
         #endregion
 
         for (int i = 1; i <= 10; i++){
@@ -677,6 +768,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Card> Cards { get; set; } = default!;
 
     public DbSet<Power> Powers { get; set; } = default!;
+
+    public DbSet<CardPower> CardPowers { get; set; } = default!;
 
     public DbSet<StartingCards> StartingCards { get; set; } = default!;
 
