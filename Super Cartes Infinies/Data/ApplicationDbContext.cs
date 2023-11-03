@@ -743,6 +743,17 @@ public class ApplicationDbContext : IdentityDbContext
         cardPowers.Add(CrayonCarlaGreed);
         builder.Entity<CardPower>().HasData(CrayonCarlaGreed);
 
+        
+        CardPower InkwellIvanExplosion = new CardPower
+        {
+             Id = 9,
+             CardId = 7,
+             PowerId = Power.EXPLOSION_ID,
+             value = 0
+        };
+        cardPowers.Add(CrayonCarlaGreed);
+        builder.Entity<CardPower>().HasData(CrayonCarlaGreed);
+
         #endregion
 
         for (int i = 1; i <= 10; i++){
