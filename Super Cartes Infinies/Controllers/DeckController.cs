@@ -50,13 +50,13 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpPost]
         public async Task<ActionResult<String>> CreateDeck(DeckDTO deck)
         {
-            return "";
+            return await _deckService.CreateDeck(deck, UserId);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<String>> DeleteDeck()
+        [HttpDelete("{deckId}")]
+        public async Task<ActionResult<String>> DeleteDeck(int deckId)
         {
-            return "";
+            return await _deckService.DeleteDeck(deckId, UserId);
         }
 
         #endregion

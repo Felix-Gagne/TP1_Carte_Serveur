@@ -52,9 +52,15 @@ namespace Super_Cartes_Infinies.Services
             return "Deck successfully created.";
         }
 
-        public async Task<ActionResult<Deck>> DeleteDeck()
+        public async Task<ActionResult<String>> DeleteDeck(int deckId, string userId)
         {
-            return null;
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+            Deck deleteDeck = await _context.Decks.Where(x => x.PlayerId == currentPlayer.Id).Where(x => x.Id == deckId).FirstOrDefaultAsync();
+
+            _context.Decks.Remove(deleteDeck);
+            _context.SaveChangesAsync();
+
+            return "Deck successfully deleted.";
         }
 
         #endregion
