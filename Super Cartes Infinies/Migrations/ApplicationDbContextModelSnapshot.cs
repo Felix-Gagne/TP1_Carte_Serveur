@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "638cb8aa-7ffe-4e70-8822-00612076d70b",
+                            ConcurrencyStamp = "5e0378e9-6f93-4a60-a65d-b54e407a3729",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECJbeYnbmHl0rHP52gDA6aM3u1aMeJA9v6K7lMlgDK55V1PotkRK8HRmBZMmEKIwuQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKeOVQUTzdM4m/65mfvyDvlVOLUQUh7FqDWErZMeWbjApqh5gTqfLhSyb7YhzCPgbg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2cca4b05-1a60-447a-a228-c92a537aa0d5",
+                            SecurityStamp = "17c05ef1-44e8-4c59-9de5-abcac68ea0ac",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -721,6 +721,10 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PlayerId")
                         .HasColumnType("INTEGER");

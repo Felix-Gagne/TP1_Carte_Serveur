@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_create : Migration
+    public partial class Initial_Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -74,7 +74,8 @@ namespace Super_Cartes_Infinies.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -461,7 +462,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "638cb8aa-7ffe-4e70-8822-00612076d70b", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAECJbeYnbmHl0rHP52gDA6aM3u1aMeJA9v6K7lMlgDK55V1PotkRK8HRmBZMmEKIwuQ==", null, false, "2cca4b05-1a60-447a-a228-c92a537aa0d5", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "5e0378e9-6f93-4a60-a65d-b54e407a3729", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEKeOVQUTzdM4m/65mfvyDvlVOLUQUh7FqDWErZMeWbjApqh5gTqfLhSyb7YhzCPgbg==", null, false, "17c05ef1-44e8-4c59-9de5-abcac68ea0ac", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
