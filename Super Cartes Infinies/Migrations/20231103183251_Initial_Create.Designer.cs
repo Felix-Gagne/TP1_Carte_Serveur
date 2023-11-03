@@ -11,7 +11,7 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231103165050_Initial_Create")]
+    [Migration("20231103183251_Initial_Create")]
     partial class Initial_Create
     {
         /// <inheritdoc />
@@ -37,6 +37,21 @@ namespace Super_Cartes_Infinies.Migrations
                     b.HasIndex("PlayersId");
 
                     b.ToTable("CardPlayer");
+                });
+
+            modelBuilder.Entity("DeckOwnedCard", b =>
+                {
+                    b.Property<int>("CardsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DecksId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CardsId", "DecksId");
+
+                    b.HasIndex("DecksId");
+
+                    b.ToTable("DeckOwnedCard");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -164,15 +179,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5e0378e9-6f93-4a60-a65d-b54e407a3729",
+                            ConcurrencyStamp = "d49248d8-97cb-44fd-a9e9-c0b710c04e64",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKeOVQUTzdM4m/65mfvyDvlVOLUQUh7FqDWErZMeWbjApqh5gTqfLhSyb7YhzCPgbg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENfk3fGUsRo/lUGyrOqXyC0y/WSZ//2QNJu5H4/5eRrlFHa9lCYuwVJweK2G6I9dyQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "17c05ef1-44e8-4c59-9de5-abcac68ea0ac",
+                            SecurityStamp = "76f5d519-b486-4492-94a5-b93d60767377",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -806,15 +821,10 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DeckId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("PlayerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DeckId");
 
                     b.HasIndex("PlayerId");
 
@@ -1066,6 +1076,21 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DeckOwnedCard", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.OwnedCard", null)
+                        .WithMany()
+                        .HasForeignKey("CardsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Super_Cartes_Infinies.Models.Deck", null)
+                        .WithMany()
+                        .HasForeignKey("DecksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1168,10 +1193,6 @@ namespace Super_Cartes_Infinies.Migrations
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
                 {
-                    b.HasOne("Super_Cartes_Infinies.Models.Deck", null)
-                        .WithMany("Cards")
-                        .HasForeignKey("DeckId");
-
                     b.HasOne("Super_Cartes_Infinies.Models.Player", null)
                         .WithMany("OwnedCard")
                         .HasForeignKey("PlayerId")
@@ -1249,11 +1270,6 @@ namespace Super_Cartes_Infinies.Migrations
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
                 {
                     b.Navigation("cardPowers");
-                });
-
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.Deck", b =>
-                {
-                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>

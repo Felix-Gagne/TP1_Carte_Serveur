@@ -341,17 +341,11 @@ namespace Super_Cartes_Infinies.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DeckId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OwnedCards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OwnedCards_Decks_DeckId",
-                        column: x => x.DeckId,
-                        principalTable: "Decks",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OwnedCards_Players_PlayerId",
                         column: x => x.PlayerId,
@@ -435,6 +429,30 @@ namespace Super_Cartes_Infinies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeckOwnedCard",
+                columns: table => new
+                {
+                    CardsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DecksId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeckOwnedCard", x => new { x.CardsId, x.DecksId });
+                    table.ForeignKey(
+                        name: "FK_DeckOwnedCard_Decks_DecksId",
+                        column: x => x.DecksId,
+                        principalTable: "Decks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeckOwnedCard_OwnedCards_CardsId",
+                        column: x => x.CardsId,
+                        principalTable: "OwnedCards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SerializedMatchEvent",
                 columns: table => new
                 {
@@ -462,7 +480,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "5e0378e9-6f93-4a60-a65d-b54e407a3729", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEKeOVQUTzdM4m/65mfvyDvlVOLUQUh7FqDWErZMeWbjApqh5gTqfLhSyb7YhzCPgbg==", null, false, "17c05ef1-44e8-4c59-9de5-abcac68ea0ac", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "d49248d8-97cb-44fd-a9e9-c0b710c04e64", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAENfk3fGUsRo/lUGyrOqXyC0y/WSZ//2QNJu5H4/5eRrlFHa9lCYuwVJweK2G6I9dyQ==", null, false, "76f5d519-b486-4492-94a5-b93d60767377", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
@@ -608,6 +626,11 @@ namespace Super_Cartes_Infinies.Migrations
                 column: "PowerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeckOwnedCard_DecksId",
+                table: "DeckOwnedCard",
+                column: "DecksId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Matches_PlayerDataAId",
                 table: "Matches",
                 column: "PlayerDataAId");
@@ -621,11 +644,6 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "IX_MatchPlayersData_PlayerId",
                 table: "MatchPlayersData",
                 column: "PlayerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OwnedCards_DeckId",
-                table: "OwnedCards",
-                column: "DeckId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OwnedCards_PlayerId",
@@ -703,7 +721,7 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "CardPower");
 
             migrationBuilder.DropTable(
-                name: "OwnedCards");
+                name: "DeckOwnedCard");
 
             migrationBuilder.DropTable(
                 name: "PlayableCard");
@@ -725,6 +743,9 @@ namespace Super_Cartes_Infinies.Migrations
 
             migrationBuilder.DropTable(
                 name: "Decks");
+
+            migrationBuilder.DropTable(
+                name: "OwnedCards");
 
             migrationBuilder.DropTable(
                 name: "Matches");

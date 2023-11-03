@@ -3,6 +3,6 @@
     public class DeckDTO
     {
         public string Name { get; set; }
-        public List<OwnedCard> Cards { get; set;}
+        public List<int> CardIds { get; set;}
     }
 }

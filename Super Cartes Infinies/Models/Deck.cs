@@ -1,4 +1,6 @@
-﻿namespace Super_Cartes_Infinies.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace Super_Cartes_Infinies.Models
 {
     public class Deck
     {
@@ -8,6 +10,7 @@
 
         public string Name { get; set; }
 
+        [ValidateNever]
         public virtual List<OwnedCard> Cards { get; set; }
     }
 }

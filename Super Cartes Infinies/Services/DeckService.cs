@@ -37,17 +37,24 @@ namespace Super_Cartes_Infinies.Services
                 throw new Exception("Pas de deck reçu.");
             }
             
-            Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+
+            List<OwnedCard> owned = new List<OwnedCard>();
+
+            foreach(int id in deckDTO.CardIds)
+            {
+                owned.Add(_context.OwnedCards.Where(x => x.Id == id).FirstOrDefault());
+            }
 
             Deck deck = new Deck
             {
                 PlayerId = currentPlayer.Id,
                 Name = deckDTO.Name,
-                Cards = deckDTO.Cards,
+                Cards = owned,
             };
 
             _context.Decks.Add(deck);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return "Deck successfully created.";
         }
