@@ -56,7 +56,7 @@ namespace Super_Cartes_Infinies.Services
             _context.Decks.Add(deck);
             await _context.SaveChangesAsync();
 
-            return "Deck successfully created.";
+            return "";
         }
 
         public async Task<ActionResult<String>> DeleteDeck(int deckId, string userId)
@@ -72,7 +72,7 @@ namespace Super_Cartes_Infinies.Services
             _context.Decks.Remove(deleteDeck);
             _context.SaveChangesAsync();
 
-            return "Deck successfully deleted.";
+            return "";
         }
 
         #endregion
