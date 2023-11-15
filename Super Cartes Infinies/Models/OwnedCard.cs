@@ -14,5 +14,7 @@ namespace Super_Cartes_Infinies.Models
         [JsonIgnore]
         [ValidateNever]
         public virtual List<Deck> Decks { get; set; }
+
+        public virtual Card Card { get; set; }
     }
 }
