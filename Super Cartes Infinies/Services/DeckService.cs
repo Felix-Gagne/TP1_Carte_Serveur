@@ -75,6 +75,15 @@ namespace Super_Cartes_Infinies.Services
             return "";
         }
 
+
+        public async Task<ActionResult<String>> EditDeck(int deckId, string userId)
+        {
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+            Deck editDeck = await _context.Decks.Where(x => x.Id == deckId).FirstOrDefaultAsync();
+
+            return "";
+        }
+
         #endregion
 
         #region Inventory
