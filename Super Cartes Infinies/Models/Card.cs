@@ -23,16 +23,31 @@ namespace Super_Cartes_Infinies.Models
 		}
 
 		//Cherche la valeur du power de la carte EX:(Thorn 2) dans ce cas si la méthode retuorne 2
-        public int GetPowerValue(int powerId)
-        {
-            return cardPowers.Single(c => c.PowerId == powerId && c.CardId == Id).value;
-        }
+		public int? GetPowerValue(int powerId)
+		{
+			var power = cardPowers.SingleOrDefault(c => c.PowerId == powerId && c.CardId == Id);
+			if (power != null)
+			{
+				int powervalue = power.value;
+				return powervalue;
+			}
+			return null;
+		}
 
 
 		//Verification si la carte contient le power demandé. Si on veut voir si la carte a charge il faut juste entrer Power.CHARGE.ID
-        public bool HasPower(int powerId)
+		public bool HasPower(int powerId)
 		{
-			return cardPowers.Any(c => c.PowerId == powerId && c.CardId == Id);
+			//return cardPowers.Any(c => c.PowerId == powerId && c.CardId == this.Id);
+			var result = cardPowers.SingleOrDefault(c => c.PowerId == powerId && c.CardId == this.Id);
+			if (result == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 
 

@@ -7,13 +7,13 @@ namespace Super_Cartes_Infinies.Combat
         public int PlayerId { get; set; }
         public int OppositCardId { get; set; }
 
-        public CardDeathEvent(PlayableCard oppositeCard, MatchPlayerData opposingPlayerData)
+        public CardDeathEvent(PlayableCard playableCard, MatchPlayerData playerData)
         {
             Events = new List<Event>();
-            OppositCardId = oppositeCard.Id;
+            OppositCardId = playableCard.Id;
 
-            opposingPlayerData.BattleField.Remove(oppositeCard);
-            opposingPlayerData.Graveyard.Add(oppositeCard);
+            playerData.BattleField.Remove(playableCard);
+            playerData.Graveyard.Add(playableCard);
 
         }
     }

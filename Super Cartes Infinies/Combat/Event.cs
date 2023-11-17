@@ -4,9 +4,15 @@ using System.Text.Json.Serialization;
 namespace Super_Cartes_Infinies.Combat
 {
     [JsonDerivedType(typeof(CardActivationEvent), typeDiscriminator: "CardActivation")]
+    [JsonDerivedType(typeof(CardDamageEvent), typeDiscriminator: "CardDamage")]
+    [JsonDerivedType(typeof(CardDeathEvent), typeDiscriminator: "CardDeath")]
     [JsonDerivedType(typeof(CombatEvent), typeDiscriminator: "Combat")]
     [JsonDerivedType(typeof(DrawCardEvent), typeDiscriminator: "DrawCard")]
+    [JsonDerivedType(typeof(GainManaEvent), typeDiscriminator: "GainMana")]
+    [JsonDerivedType(typeof(LoseManaEvent), typeDiscriminator: "LoseMana")]
     [JsonDerivedType(typeof(PlayCardEvent), typeDiscriminator: "PlayCard")]
+    [JsonDerivedType(typeof(PlayerDamageEvent), typeDiscriminator: "PlayerDamage")]
+    [JsonDerivedType(typeof(PlayerDeathEvent), typeDiscriminator: "PlayerDeath")]
     [JsonDerivedType(typeof(PlayerTurnEvent), typeDiscriminator: "PlayerTurn")]
     [JsonDerivedType(typeof(StartMatchEvent), typeDiscriminator: "StartMatch")]
     public abstract class Event

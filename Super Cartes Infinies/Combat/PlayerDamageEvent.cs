@@ -19,7 +19,7 @@ namespace Super_Cartes_Infinies.Combat
             }
             else
             {
-                opposingPlayerData.Health = opposingPlayerData.Health - Damage;
+                opposingPlayerData.Health -= Damage;
             }
 
         }
