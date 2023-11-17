@@ -29,11 +29,10 @@ namespace Super_Cartes_Infinies.Controllers
             return await _storeService.BuyCard(UserId, card);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<String>> SellCard(int cardId)
+        [HttpPost("{ownedCardId}")]
+        public async Task<ActionResult<String>> SellCard(int ownedCardId)
         {
-            StoreCard card = _context.StoreCards.Where(x => x.Id == cardId).FirstOrDefault();
-            return await _storeService.SellCard(UserId, cardId);
+            return await _storeService.SellCard(UserId, ownedCardId);
         }
 
         [HttpGet]

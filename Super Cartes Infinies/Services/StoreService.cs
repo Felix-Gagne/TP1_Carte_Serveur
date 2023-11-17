@@ -52,9 +52,9 @@ namespace Super_Cartes_Infinies.Services
             OwnedCard ownedCard = await _context.OwnedCards.Where(x => x.Id == ownedCardId).FirstOrDefaultAsync();
             StoreCard sellPriceCard = await _context.StoreCards.Where(x => x.CardId == ownedCard.CardId).FirstOrDefaultAsync();
 
-            if (sellPriceCard == null)
+            if (currentPlayer.Id != ownedCard.PlayerId)
             {
-                throw new Exception("T'est null");
+                throw new Exception("Heille t'essaye de vendre la carte de ton homeboy la. Vent tes propres cartes.");
             }
 
             _context.OwnedCards.Remove(ownedCard);
