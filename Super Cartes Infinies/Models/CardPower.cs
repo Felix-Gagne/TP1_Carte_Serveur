@@ -7,10 +7,12 @@ namespace Super_Cartes_Infinies.Models
     {
         public int Id { get; set; }
 
+        //La carte en question
         [ForeignKey(nameof(Card))]
         public int CardId { get; set; }
         public virtual Card Card { get; set; }
 
+        //Le power qui lui est donné
         [ForeignKey(nameof(Power))]
         public int PowerId { get; set; }
         public virtual Power Power { get; set; }

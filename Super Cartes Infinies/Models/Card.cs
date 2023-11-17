@@ -9,6 +9,7 @@ namespace Super_Cartes_Infinies.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } = "";
+		//Coût en mana de la carte
 		public int ManaCost { get; set; }
 		public int Attack { get; set; }
 		public int Defense { get; set; }
@@ -21,14 +22,14 @@ namespace Super_Cartes_Infinies.Models
 					.Equals((Id, Name, Attack, Defense, ImageUrl));
 		}
 
-		//Cherche la valeur du power de la carte EX:(Thorn 2)
+		//Cherche la valeur du power de la carte EX:(Thorn 2) dans ce cas si la méthode retuorne 2
         public int GetPowerValue(int powerId)
         {
             return cardPowers.Single(c => c.PowerId == powerId && c.CardId == Id).value;
         }
 
 
-		//Verification si la carte contient le power demander
+		//Verification si la carte contient le power demandé. Si on veut voir si la carte a charge il faut juste entrer Power.CHARGE.ID
         public bool HasPower(int powerId)
 		{
 			return cardPowers.Any(c => c.PowerId == powerId && c.CardId == Id);
