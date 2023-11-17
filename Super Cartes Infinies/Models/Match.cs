@@ -37,6 +37,8 @@ namespace Super_Cartes_Infinies.Models
 
         public virtual List<SerializedMatchEvent> SerializedEvents { get; set; }
 
+
+        //Ajouter un event dans la liste d'event du match
         public string AddEvent(Event e)
         {
             string serializedEvent = JsonSerializer.Serialize(e);
