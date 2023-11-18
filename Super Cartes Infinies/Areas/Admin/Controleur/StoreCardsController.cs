@@ -11,6 +11,7 @@ using Super_Cartes_Infinies.Models;
 namespace Super_Cartes_Infinies.Areas.Admin.Controleur
 {
     [Area("Admin")]
+    [Route("Admin/[controller]/[action]")]
     public class StoreCardsController : Controller
     {
         private readonly ApplicationDbContext _context;
