@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "180d8540-1912-485d-bfa2-e2ff7bdee56c",
+                            ConcurrencyStamp = "b4e7c8ce-9222-4ac5-a31b-a88ec21e64e6",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA7BZlsetZsaqLSNl2YYXKPIYYhEpE9i2VhIN7MkNI7rJivOgHAJUKFBf5nMPfvGag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMn7OuzlHNoHRJnwhevZM0ozyG0Vserb058MrP5qOv14HxrMPtRQ9OBuMH5x4dv0Hg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ccc25b2e-c428-49dd-b32e-ff9906817d46",
+                            SecurityStamp = "49ab4129-c64f-460c-8246-ee3c8a83dd0f",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -771,28 +771,7 @@ namespace Super_Cartes_Infinies.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId");
-
                     b.ToTable("MatchPlayersData");
-                });
-
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("OwnedCards");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
@@ -973,58 +952,6 @@ namespace Super_Cartes_Infinies.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.StoreCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BuyAmount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SellAmount")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.ToTable("StoreCards");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BuyAmount = 500,
-                            CardId = 1,
-                            SellAmount = 200
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BuyAmount = 500,
-                            CardId = 2,
-                            SellAmount = 200
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BuyAmount = 500,
-                            CardId = 3,
-                            SellAmount = 200
-                        },
-                        new
-                        {
-                            Id = 15,
-                            BuyAmount = 250,
-                            CardId = 15,
-                            SellAmount = 100
-                        });
-                });
-
             modelBuilder.Entity("CardPlayer", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", null)
@@ -1129,26 +1056,6 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("PlayerDataB");
                 });
 
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.MatchPlayerData", b =>
-                {
-                    b.HasOne("Super_Cartes_Infinies.Models.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Player");
-                });
-
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.OwnedCard", b =>
-                {
-                    b.HasOne("Super_Cartes_Infinies.Models.Player", null)
-                        .WithMany("OwnedCard")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
@@ -1205,17 +1112,6 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("Card");
                 });
 
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.StoreCard", b =>
-                {
-                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card");
-                });
-
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
                 {
                     b.Navigation("cardPowers");
@@ -1235,11 +1131,6 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
-                });
-
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
-                {
-                    b.Navigation("OwnedCard");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Power", b =>

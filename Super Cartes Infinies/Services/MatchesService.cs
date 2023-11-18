@@ -147,9 +147,9 @@ namespace Super_Cartes_Infinies.Services
             return serializedEvents;
         }
 
-        // Si l'id est zéro, le joueur passe simplement son tour
-        // (N'oubliez pas de mettre le eventIndex du match sur le CLIENT à jour après avoir appelé cette méthode)
-        public async Task<string> PlayCard(string userId, int matchId, int cardId)
+            // Si l'id est zéro, le joueur passe simplement son tour
+            // (N'oubliez pas de mettre le eventIndex du match sur le CLIENT à jour après avoir appelé cette méthode)
+            public async Task<string> PlayCard(string userId, int matchId, int cardId)
         {
             // TODO: Implémenter la logique pour jouer une carte
             // N'oubliez pas de (entre autres):
@@ -212,6 +212,42 @@ namespace Super_Cartes_Infinies.Services
 
             var playCardEvent = new PlayCardEvent(match, opposingPlayerData, currentPlayerData, playableCard.Id);
             string serializedEvent = match.AddEvent(playCardEvent);
+
+            await _context.SaveChangesAsync();
+
+            return serializedEvent;
+        }
+
+        public async Task<string> EndTurn(string userId, int matchId)
+        {
+            Match? match = await _context.Matches.FindAsync(matchId);
+            MatchPlayerData currentPlayerData;
+            MatchPlayerData opposingPlayerData;
+
+            if (match == null)
+            {
+                throw new Exception("Aucun match n'est en cours donc impossible de finir le tour.");
+            }
+
+            if (match.IsMatchCompleted == true)
+            {
+                throw new Exception("Le match est terminer il est impossible de finir le tour.");
+            }
+
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+                opposingPlayerData = match.PlayerDataB;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+                opposingPlayerData = match.PlayerDataA;
+            }
+
+            var EndturnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            string serializedEvent = match.AddEvent(EndturnEvent);
 
             await _context.SaveChangesAsync();
 
