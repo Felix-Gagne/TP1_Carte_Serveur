@@ -26,27 +26,8 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
         // GET: Admin/StoreCards
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.StoreCards.Include(s => s.Card);
+            var applicationDbContext = _context.StoreCards.OrderBy(x => x.CardId);
             return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Admin/StoreCards/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.StoreCards == null)
-            {
-                return NotFound();
-            }
-
-            var storeCard = await _context.StoreCards
-                .Include(s => s.Card)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (storeCard == null)
-            {
-                return NotFound();
-            }
-
-            return View(storeCard);
         }
 
         // GET: Admin/StoreCards/Create
@@ -63,12 +44,19 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BuyAmount,SellAmount,CardId")] StoreCard storeCard)
         {
-            if (ModelState.IsValid)
+            StoreCard dupes = await _context.StoreCards.Where(x => x.CardId == storeCard.CardId).FirstOrDefaultAsync();
+
+            if (ModelState.IsValid && dupes == null)
             {
                 _context.Add(storeCard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                throw new Exception("Le modele n'est pas valide");
+            }
+
             ViewData["CardId"] = new SelectList(_context.Cards, "Id", "Id", storeCard.CardId);
             return View(storeCard);
         }
