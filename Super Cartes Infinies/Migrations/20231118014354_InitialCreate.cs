@@ -444,7 +444,7 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "d09a073f-82ca-4efd-a31f-5598392e944a", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEEpomE9wGo2U7w3a649ot8+e1BZ/D8oBupMrWfdqa8HYtHoKXjF5Jp33p8k1v02YyQ==", null, false, "a93c2a2b-88df-4c80-9660-6c2c0f7b7158", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "2c3fab7a-2d17-45d6-8518-6be67f46a591", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEKKtMW++7xQSw4HfueZiUFYe5SXIHTSKNifwN9Xc2nRes4H71/g6qASAs9b48Uuwlw==", null, false, "867ff46d-590b-4992-b689-f2db15b30202", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
