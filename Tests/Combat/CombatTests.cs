@@ -1390,6 +1390,141 @@ namespace Tests.Services
 			Assert.AreEqual(2, opposingPlayerData.Graveyard.Count);
 		}
 
+        [TestMethod]
+        public void AbilityDoubleExplosionTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 7,
+                ManaCost = 1
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 4,
+                ManaCost = 1,
+                cardPowers = new List<CardPower>()
+            };
+
+            var cardC = new Card
+            {
+                Id = 44,
+                Attack = 7,
+                Defense = 10,
+                ManaCost = 1
+            };
+
+            var cardD = new Card
+            {
+                Id = 45,
+                Attack = 1,
+                Defense = 6,
+                ManaCost = 1,
+                cardPowers = new List<CardPower>()
+            };
+
+            var Explosion = new Power
+            {
+                Id = Power.EXPLOSION_ID,
+                Name = "Explosion",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 45,
+                PowerId = Power.EXPLOSION_ID,
+                value = 0
+            };
+
+            var cardPower2 = new CardPower
+            {
+                Id = 2,
+                CardId = 43,
+                PowerId = Power.EXPLOSION_ID,
+                value = 0
+            };
+
+            cardD.cardPowers.Add(cardPower);
+			cardB.cardPowers.Add(cardPower2);
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1,
+                SummonSickness = false
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+            var playableCardC = new PlayableCard(cardC)
+            {
+                Id = 3,
+                SummonSickness = false
+            };
+            var playableCardD = new PlayableCard(cardD)
+            {
+                Id = 4
+            };
+
+            currentPlayerData.BattleField.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+            currentPlayerData.BattleField.Add(playableCardC);
+            opposingPlayerData.BattleField.Add(playableCardD);
+
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
+
+            // Test que la carte D possède le power Explosion.
+            Assert.IsTrue(playableCardD.Card.HasPower(Power.EXPLOSION_ID));
+
+            // Test que la carte B possède le power Explosion.
+            Assert.IsTrue(playableCardB.Card.HasPower(Power.EXPLOSION_ID));
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+			// Tout les monstres sont morts
+            Assert.AreEqual(0, playableCardA.Health);
+            Assert.AreEqual(0, playableCardB.Health);
+            Assert.AreEqual(0, playableCardC.Health);
+            Assert.AreEqual(0, playableCardD.Health);
+
+            // Explosion fait 5 damage a tout les monstres donc ils sont tous morts. Car il y a eu 2 EXPLOSION      
+            Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(2, currentPlayerData.Graveyard.Count);
+
+            // Comme playableCardB n'a plus de Health, elle est morte et doit se retrouver dans le Graveyard (Activant son ability)
+            // Cela tue tout les monstres de opposingPlayer
+            Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(2, opposingPlayerData.Graveyard.Count);
+        }
+
         #endregion
 
         #region GreedTest
