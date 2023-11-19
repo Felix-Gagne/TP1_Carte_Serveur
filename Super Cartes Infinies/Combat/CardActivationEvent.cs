@@ -4,7 +4,7 @@ namespace Super_Cartes_Infinies.Combat
 {
     public class CardActivationEvent : Event
     {
-        public int PlayableCardId { get; set; }
+        public PlayableCard PlayableCard { get; set; }
         public int PlayerId { get; set; }
         
         // C'est important d'avir un CardActivationEvent pour permettre de jouer une animation sur la carte quand elle s'active
@@ -12,7 +12,7 @@ namespace Super_Cartes_Infinies.Combat
         {
             Events = new List<Event>();
 
-            PlayableCardId = playableCard.Id;
+            PlayableCard = playableCard;
             PlayerId = currentPlayerData.PlayerId;
 
             // TODO: Implémenter la logique de combat du jeu (Il faut créer de nombreux énênements comme CardDamageEvent, PlayerDamageEvent, etc...)
@@ -23,8 +23,36 @@ namespace Super_Cartes_Infinies.Combat
             }
             else
             {
-                Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
-                Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                if (playableCard.Card.HasPower(Power.FIRSTSTRIKE_ID))
+                {
+
+                    Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                    if (opposingCard.Health > 0)
+                    {
+                        Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                    }
+                }
+                else
+                {
+                    if (opposingCard.Card.HasPower(Power.THORNS_ID))
+                    {
+                        Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                    }
+                    else
+                    {
+                        if (playableCard.Card.HasPower(Power.HEAL_ID))
+                        {
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));                           
+                        }
+                        else
+                        {
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                        }
+
+                    }
+                }
             }
         }
     }

@@ -5,27 +5,42 @@ namespace Super_Cartes_Infinies.Combat
 {
     public class PlayCardEvent : Event
     {
-        public int PlayableCardId { get; set; }
+        public PlayableCard LaCarte { get; set; }
         public int PlayerId { get; set; }
 
         // L'évènement lorsqu'un joueur joue une carte
-        public PlayCardEvent(Match match, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData, int playableCardId)
+        public PlayCardEvent(Match match, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData, PlayableCard playableCard)
         {
-            this.PlayableCardId = playableCardId;
+            this.LaCarte = playableCard;
             this.PlayerId = currentPlayerData.PlayerId;
             this.Events = new List<Event>();
 
-            if(playableCardId != 0)
+            if(LaCarte.Id != 0)
             {
                 // TODO: Utiliser le mana du joueur pour jouer la carte.
+                this.Events.Add(new LoseManaEvent(currentPlayerData, LaCarte));
+
+                //Enlever le summon sickness des monstres qui ont Charge
+                if(LaCarte.Card.HasPower(Power.CHARGE_ID))
+                {
+                    LaCarte.SummonSickness = false;
+                }
+
                 // TODO: Déplacer la carte sur le BattleField
-                currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
-                currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
+                currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
+                currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
+
+                if (LaCarte.Card.HasPower(Power.GREED_ID))
+                {
+                    Events.Add(new GainManaEvent(currentPlayerData));
+                    Events.Add(new DrawCardEvent(currentPlayerData));
+                    Events.Add(new DrawCardEvent(currentPlayerData));
+                }
                 
             }
 
             // Pour l'instant le joueur ne peut jouer qu'une seule carte, alors on termine le tour!
-            this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
+            //this.Events.Add(new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData));
         }
     }
 }

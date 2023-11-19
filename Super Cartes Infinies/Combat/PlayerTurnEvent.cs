@@ -9,17 +9,22 @@ namespace Super_Cartes_Infinies.Combat
         public PlayerTurnEvent(Match match, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData)
         {
             this.PlayerId = currentPlayerData.PlayerId;
-            this.Events = new List<Event>();
+            Events = new List<Event>();
 
-            this.Events.Add(new CombatEvent(match, currentPlayerData, opposingPlayerData));
+            //Combat
+            Events.Add(new CombatEvent(match, currentPlayerData, opposingPlayerData));
 
             // TODO: Faire piger une carte à l'adversaire
-            Events.Add(new DrawCardEvent(currentPlayerData));
-            // TODO: C'est la fin du tour du joueurCourrant, il faut mettre match à jour!
-            // TODO: Le joueur qui commence son tour gagne du Mana. (Voir MatchPlayerData)
+            Events.Add(new DrawCardEvent(opposingPlayerData));
+            // Joueur Opposé gagne du Mana
+            Events.Add(new GainManaEvent(opposingPlayerData));
             if (!match.IsPlayerATurn)
             {
                 match.IsPlayerATurn = true;
+            }
+            else
+            {
+                match.IsPlayerATurn = false;
             }
         }
 
