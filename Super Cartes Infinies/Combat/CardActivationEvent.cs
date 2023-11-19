@@ -23,16 +23,35 @@ namespace Super_Cartes_Infinies.Combat
             }
             else
             {
-                Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
-                Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                if (playableCard.Card.HasPower(Power.FIRSTSTRIKE_ID))
+                {
 
-                if (opposingCard.Health <= 0)
-                {
-                    Events.Add(new CardDeathEvent(opposingCard, opposingPlayerData));
+                    Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                    if (opposingCard.Health > 0)
+                    {
+                        Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                    }
                 }
-                if (playableCard.Health <= 0)
+                else
                 {
-                    Events.Add(new CardDeathEvent(playableCard, currentPlayerData));
+                    if (opposingCard.Card.HasPower(Power.THORNS_ID))
+                    {
+                        Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                    }
+                    else
+                    {
+                        if (playableCard.Card.HasPower(Power.HEAL_ID))
+                        {
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));                           
+                        }
+                        else
+                        {
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                        }
+
+                    }
                 }
             }
         }

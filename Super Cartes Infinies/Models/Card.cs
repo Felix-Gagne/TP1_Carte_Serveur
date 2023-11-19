@@ -23,15 +23,15 @@ namespace Super_Cartes_Infinies.Models
 		}
 
 		//Cherche la valeur du power de la carte EX:(Thorn 2) dans ce cas si la méthode retuorne 2
-		public int? GetPowerValue(int powerId)
+		public int GetPowerValue(int powerId)
 		{
-			var power = cardPowers.SingleOrDefault(c => c.PowerId == powerId && c.CardId == Id);
+			var power = cardPowers?.SingleOrDefault(c => c.PowerId == powerId && c.CardId == Id);
 			if (power != null)
 			{
 				int powervalue = power.value;
 				return powervalue;
 			}
-			return null;
+			return 0;
 		}
 
 
@@ -39,7 +39,7 @@ namespace Super_Cartes_Infinies.Models
 		public bool HasPower(int powerId)
 		{
 			//return cardPowers.Any(c => c.PowerId == powerId && c.CardId == this.Id);
-			var result = cardPowers.SingleOrDefault(c => c.PowerId == powerId && c.CardId == this.Id);
+			var result = cardPowers?.SingleOrDefault(c => c.PowerId == powerId && c.CardId == this.Id);
 			if (result == null)
 			{
 				return false;

@@ -92,9 +92,83 @@ namespace Tests.Services
 			Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
 		}
 
-		#region CombatSimpleTests
+        [TestMethod]
+        // Une invocation de Carte (NE FAIT PAS DE COMBAT)
+        public void CardsHaveSummoningSickness()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
 
-		[TestMethod]
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3,
+                ManaCost = 1
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 5,
+                ManaCost = 1
+            };
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+
+            currentPlayerData.Hand.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+
+            var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            //Le mana à été utilisé
+            Assert.AreEqual(1, currentPlayerData.Mana);
+
+            Assert.AreEqual(3, playableCardA.Health);
+            Assert.AreEqual(5, playableCardB.Health);
+
+            // Les 2 cartes sont encore en vie et doivent rester sur le BattleField            
+            Assert.AreEqual(1, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(0, currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(0, currentPlayerData.Hand.Count);
+            Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
+        }
+
+        #region CombatSimpleTests
+
+        [TestMethod]
 		// Un combat simple entre 2 cartes qui recoivent des dégâts toutes les 2
 		public void TurnWithBasicFightTest()
 		{
@@ -132,7 +206,8 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
+				Id = 1,
+				SummonSickness = false
 			};
 			var playableCardB = new PlayableCard(cardB)
 			{
@@ -202,8 +277,9 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
 				Id = 2
@@ -263,8 +339,9 @@ namespace Tests.Services
 
 			var playableCard = new PlayableCard(card)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 
 			currentPlayerData.BattleField.Add(playableCard);
 
@@ -464,18 +541,20 @@ namespace Tests.Services
 			opposingPlayerData.Hand.Add(playableCardB);
 
 			var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
+            var playCardEvent2 = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardB);
 
-			Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
+            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
+            Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent2.PlayerId);
 
-			// Vérification du Mana du joueur A. 
-			Assert.AreEqual(0, currentPlayerData.Mana);
+            // Vérification du Mana du joueur A. 
+            Assert.AreEqual(0, currentPlayerData.Mana);
 
 			// Les 2 joueurs ne sont pas blessés
 			Assert.AreEqual(1, opposingPlayerData.Health);
 			Assert.AreEqual(1, currentPlayerData.Health);
 
-			// Aucune Carte sur le BattleField            
-			Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+			// Aucune Carte sur le BattleField ennemie et 2 monstres sur le currentplayer battlefield            
+			Assert.AreEqual(2, currentPlayerData.BattleField.Count);
 			Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
 		}
 
@@ -541,7 +620,8 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
+				Id = 1,
+				SummonSickness = false
 			};
 			var playableCardB = new PlayableCard(cardB)
 			{
@@ -574,7 +654,99 @@ namespace Tests.Services
 			Assert.AreEqual(1, opposingPlayerData.Graveyard.Count);
 		}
 
-		[TestMethod]
+        [TestMethod]
+        // Test d'un combat de une carte avec First Strike contre une carte normale.
+        public void AbilityFirstStrikeNoKillThenDiesTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 1,
+                ManaCost = 2,
+                cardPowers = new List<CardPower>()
+            };
+
+            var FirstStrike = new Power
+            {
+                Id = Power.FIRSTSTRIKE_ID,
+                Name = "First Strike",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 42,
+                PowerId = 2,
+                value = 0
+            };
+
+            cardA.cardPowers.Add(cardPower);
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 4,
+                ManaCost = 1
+            };
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1,
+                SummonSickness = false
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+
+            currentPlayerData.BattleField.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+
+            var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
+
+            // Test que la carte A possède le power First Strike.
+            Assert.IsTrue(playableCardA.Card.HasPower(Power.FIRSTSTRIKE_ID));
+
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            Assert.AreEqual(0, playableCardA.Health);
+            Assert.AreEqual(2, playableCardB.Health);
+
+            // PlayableCardA est encore en vie et doivent rester sur le BattleField            
+            Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(1, currentPlayerData.Graveyard.Count);
+
+            // Comme playableCardB n'a plus de Health, elle est morte et doit se retrouver dans le Graveyard
+            Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
+        }
+
+        [TestMethod]
 		// Test d'un combat de une carte avec Charge contre une carte normale.
 		public void AbilityChargeTest()
 		{
@@ -633,7 +805,8 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
+				Id = 1,
+				SummonSickness = true
 			};
 			var playableCardB = new PlayableCard(cardB)
 			{
@@ -659,8 +832,8 @@ namespace Tests.Services
 			//Le mana à été utilisé
 			Assert.AreEqual(1, currentPlayerData.Mana);
 
-			Assert.AreEqual(3, playableCardA.Health);
-			Assert.AreEqual(5, playableCardB.Health);
+			Assert.AreEqual(2, playableCardA.Health);
+			Assert.AreEqual(0, playableCardB.Health);
 
 			// La carte ennemi est morte et doit aller au Graveyard            
 			Assert.AreEqual(1, currentPlayerData.BattleField.Count);
@@ -732,8 +905,9 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
 				Id = 2
@@ -759,11 +933,11 @@ namespace Tests.Services
 			// La carte B n'a pas recu de dommages.
 			Assert.AreEqual(1, playableCardB.Health);
 
-			// La carte ennemi est morte et doit aller au Graveyard            
-			Assert.AreEqual(1, currentPlayerData.BattleField.Count);
-			Assert.AreEqual(0, currentPlayerData.Graveyard.Count);
-			Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
-			Assert.AreEqual(1, opposingPlayerData.Graveyard.Count);
+			// La carte du currentplayer est morte et doit aller au Graveyard            
+			Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+			Assert.AreEqual(1, currentPlayerData.Graveyard.Count);
+			Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+			Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
 		}
 
 		[TestMethod]
@@ -793,7 +967,7 @@ namespace Tests.Services
 			{
 				Id = 42,
 				Attack = 9,
-				Defense = 5,
+				Defense = 6,
 				ManaCost = 5
 			};
 
@@ -826,8 +1000,9 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
 				Id = 2
@@ -849,9 +1024,8 @@ namespace Tests.Services
 			Assert.AreEqual(1, opposingPlayerData.Health);
 			Assert.AreEqual(1, currentPlayerData.Health);
 
-
-			// La carte B n'a pas recu de dommages.
-			Assert.AreEqual(1, playableCardB.Health);
+			//La carte qui attaque a 1 health
+			Assert.AreEqual(1, playableCardA.Health);
 
 			// La carte ennemi est morte et doit aller au Graveyard            
 			Assert.AreEqual(1, currentPlayerData.BattleField.Count);
@@ -873,7 +1047,7 @@ namespace Tests.Services
 
 			var opposingPlayerData = new MatchPlayerData(2)
 			{
-				Health = 1,
+				Health = 2,
 			};
 
 			var match = new Match
@@ -897,7 +1071,7 @@ namespace Tests.Services
 			{
 				Id = 43,
 				Attack = 1,
-				Defense = 99,
+				Defense = 9,
 				ManaCost = 1
 			};
 
@@ -929,26 +1103,26 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
-				Id = 2
-			};
+				Id = 2,
+            };
 			var playableCardC = new PlayableCard(cardC)
 			{
 				Id = 2,
-				Health = 5
-			};
+				Health = 5,
+                SummonSickness = false
+            };
 
-			currentPlayerData.Hand.Add(playableCardA);
+			currentPlayerData.BattleField.Add(playableCardA);
 			opposingPlayerData.BattleField.Add(playableCardB);
 			currentPlayerData.BattleField.Add(playableCardC);
 
-			var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
 			var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
 
-			Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
 			Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
 
 			// Test que la carte A possède le power Heal.
@@ -956,13 +1130,13 @@ namespace Tests.Services
 			// Vérifie si la value du power est de 1.
 			Assert.AreEqual(1, playableCardA.Card.GetPowerValue(Power.HEAL_ID));
 
-			// Les 2 joueurs ne sont pas blessés
+			// Le joueur ennemie a recu un dommage
 			Assert.AreEqual(1, opposingPlayerData.Health);
 			Assert.AreEqual(1, currentPlayerData.Health);
 
 
-			// Les cartes se sont fait Heal.
-			Assert.AreEqual(99, playableCardB.Health);
+			// La carte ennemie ne se fait pas Heal.
+			Assert.AreEqual(4, playableCardB.Health);
 
 			// La carte A c'est Heal de 1, Mais a reçu 1 damage après son Heal.
 			Assert.AreEqual(1, playableCardA.Health);
@@ -988,7 +1162,7 @@ namespace Tests.Services
 
 			var opposingPlayerData = new MatchPlayerData(2)
 			{
-				Health = 1,
+				Health = 2,
 			};
 
 			var match = new Match
@@ -1012,7 +1186,7 @@ namespace Tests.Services
 			{
 				Id = 43,
 				Attack = 1,
-				Defense = 99,
+				Defense = 9,
 				ManaCost = 1
 			};
 
@@ -1044,8 +1218,9 @@ namespace Tests.Services
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
 				Id = 2
@@ -1053,36 +1228,35 @@ namespace Tests.Services
 			var playableCardC = new PlayableCard(cardC)
 			{
 				Id = 2,
-				Health = 5
-			};
+				Health = 6,
+                SummonSickness = false
+            };
 
-			currentPlayerData.Hand.Add(playableCardA);
+			currentPlayerData.BattleField.Add(playableCardA);
 			opposingPlayerData.BattleField.Add(playableCardB);
 			currentPlayerData.BattleField.Add(playableCardC);
 
-			var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
 			var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
 
-			Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
 			Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
 
 			// Test que la carte A possède le power Heal.
 			Assert.IsTrue(playableCardA.Card.HasPower(Power.HEAL_ID));
 			// Vérifie si la value du power est de 2.
-			Assert.AreEqual(1, playableCardA.Card.GetPowerValue(Power.HEAL_ID));
+			Assert.AreEqual(2, playableCardA.Card.GetPowerValue(Power.HEAL_ID));
 
-			// Les 2 joueurs ne sont pas blessés
-			Assert.AreEqual(1, opposingPlayerData.Health);
-			Assert.AreEqual(1, currentPlayerData.Health);
+            // Le joueur ennemie a recu un dommage
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
 
 
-			// Les cartes se sont fait Heal.
-			Assert.AreEqual(99, playableCardB.Health);
+            // Les cartes se sont fait Heal.
+            Assert.AreEqual(4, playableCardB.Health);
 
-			// La carte A c'est Heal de 1, Mais a reçu 1 damage après son Heal.
+			// La carte A c'est Heal de 2, Mais a reçu 1 damage après son Heal.
 			Assert.AreEqual(1, playableCardA.Health);
 
-			// La carte C c'est Heal de 1.
+			// La carte C c'est Heal de 2. laissant sa vie au maximum qui est 7.
 			Assert.AreEqual(7, playableCardC.Health);
 
 			// Rien meurt.           
@@ -1092,11 +1266,11 @@ namespace Tests.Services
 			Assert.AreEqual(0, opposingPlayerData.Graveyard.Count);
 		}
 
-		#endregion
+        #endregion
 
-		#region ExplosionTest
-
-		public void AbilityExplosionTest()
+        #region ExplosionTest
+        [TestMethod]
+        public void AbilityExplosionTest()
 		{
 			var currentPlayerData = new MatchPlayerData(1)
 			{
@@ -1127,16 +1301,15 @@ namespace Tests.Services
 			{
 				Id = 43,
 				Attack = 1,
-				Defense = 2,
-				ManaCost = 1,
-				cardPowers = new List<CardPower>()
+				Defense = 3,
+				ManaCost = 1
 			};
 
 			var cardC = new Card
 			{
 				Id = 44,
-				Attack = 2,
-				Defense = 5,
+				Attack = 7,
+				Defense = 7,
 				ManaCost = 1
 			};
 
@@ -1145,8 +1318,9 @@ namespace Tests.Services
 				Id = 45,
 				Attack = 1,
 				Defense = 6,
-				ManaCost = 1
-			};
+				ManaCost = 1,
+                cardPowers = new List<CardPower>()
+            };
 
 			var Explosion = new Power
 			{
@@ -1159,25 +1333,27 @@ namespace Tests.Services
 			var cardPower = new CardPower
 			{
 				Id = 1,
-				CardId = 43,
+				CardId = 45,
 				PowerId = Power.EXPLOSION_ID,
 				value = 0
 			};
 
-			cardB.cardPowers.Add(cardPower);
+			cardD.cardPowers.Add(cardPower);
 
 			var playableCardA = new PlayableCard(cardA)
 			{
-				Id = 1
-			};
+				Id = 1,
+                SummonSickness = false
+            };
 			var playableCardB = new PlayableCard(cardB)
 			{
 				Id = 2
 			};
 			var playableCardC = new PlayableCard(cardC)
 			{
-				Id = 3
-			};
+				Id = 3,
+                SummonSickness = false
+            };
 			var playableCardD = new PlayableCard(cardD)
 			{
 				Id = 4
@@ -1193,30 +1369,32 @@ namespace Tests.Services
 			Assert.AreEqual(currentPlayerData.PlayerId, EndTurnEvent.PlayerId);
 
 			// Test que la carte A possède le power Charge.
-			Assert.IsTrue(playableCardB.Card.HasPower(Power.EXPLOSION_ID));
+			Assert.IsTrue(playableCardD.Card.HasPower(Power.EXPLOSION_ID));
 
 			// Les 2 joueurs ne sont pas blessés
 			Assert.AreEqual(1, opposingPlayerData.Health);
 			Assert.AreEqual(1, currentPlayerData.Health);
 
-			Assert.AreEqual(2, playableCardA.Health);
+			Assert.AreEqual(0, playableCardA.Health);
 			Assert.AreEqual(0, playableCardB.Health);
+            Assert.AreEqual(1, playableCardC.Health);
+            Assert.AreEqual(0, playableCardD.Health);
 
-			// Explosion fait 5 damage a tout les monstres donc les deux monstres de currentPlayer sont morts.           
-			Assert.AreEqual(0, currentPlayerData.BattleField.Count);
-			Assert.AreEqual(2, currentPlayerData.Graveyard.Count);
+            // Explosion fait 5 damage a tout les monstres donc un monstre de currentPlayer est mort.           
+            Assert.AreEqual(1, currentPlayerData.BattleField.Count);
+			Assert.AreEqual(1, currentPlayerData.Graveyard.Count);
 
 			// Comme playableCardB n'a plus de Health, elle est morte et doit se retrouver dans le Graveyard (Activant son ability)
-			// Vu que playableCardD a plus que 5 points de vie elle ne meurt pas.
-			Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
-			Assert.AreEqual(1, opposingPlayerData.Graveyard.Count);
+			// Cela tue tout les monstres de opposingPlayer
+			Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
+			Assert.AreEqual(2, opposingPlayerData.Graveyard.Count);
 		}
 
-		#endregion
+        #endregion
 
-		#region GreedTest
-
-		public void AbilityGreedTest()
+        #region GreedTest
+        [TestMethod]
+        public void AbilityGreedTest()
 		{
 			var currentPlayerData = new MatchPlayerData(1)
 			{
@@ -1282,11 +1460,10 @@ namespace Tests.Services
 
 			currentPlayerData.Hand.Add(playableCardA);
 			opposingPlayerData.BattleField.Add(playableCardB);
+            currentPlayerData.CardsPile.Add(playableCardB);
+            currentPlayerData.CardsPile.Add(playableCardA);
 
-			var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
-
-			currentPlayerData.Hand.Add(playableCardB);
-			currentPlayerData.Hand.Add(playableCardA);
+            var playCardEvent = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
 
 			Assert.AreEqual(currentPlayerData.PlayerId, playCardEvent.PlayerId);
 
@@ -1307,6 +1484,7 @@ namespace Tests.Services
 			// En plus le currentPlayer doit avoir recu 2 cartes de plus a sa main grace a Greed
 			Assert.AreEqual(1, currentPlayerData.BattleField.Count);
 			Assert.AreEqual(2, currentPlayerData.Hand.Count);
+			Assert.AreEqual(0, currentPlayerData.CardsPile.Count);
 			Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
 		}
 

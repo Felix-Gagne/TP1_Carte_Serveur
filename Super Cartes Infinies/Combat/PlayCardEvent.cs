@@ -19,9 +19,23 @@ namespace Super_Cartes_Infinies.Combat
             {
                 // TODO: Utiliser le mana du joueur pour jouer la carte.
                 this.Events.Add(new LoseManaEvent(currentPlayerData, LaCarte));
+
+                //Enlever le summon sickness des monstres qui ont Charge
+                if(LaCarte.Card.HasPower(Power.CHARGE_ID))
+                {
+                    LaCarte.SummonSickness = false;
+                }
+
                 // TODO: Déplacer la carte sur le BattleField
                 currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
                 currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
+
+                if (LaCarte.Card.HasPower(Power.GREED_ID))
+                {
+                    Events.Add(new GainManaEvent(currentPlayerData));
+                    Events.Add(new DrawCardEvent(currentPlayerData));
+                    Events.Add(new DrawCardEvent(currentPlayerData));
+                }
                 
             }
 
