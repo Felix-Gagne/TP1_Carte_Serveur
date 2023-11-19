@@ -1444,6 +1444,14 @@ namespace Tests.Services
                 cardPowers = new List<CardPower>()
             };
 
+            var cardE = new Card
+            {
+                Id = 44,
+                Attack = 1,
+                Defense = 1,
+                ManaCost = 1
+            };
+
             var Explosion = new Power
             {
                 Id = Power.EXPLOSION_ID,
@@ -1489,11 +1497,18 @@ namespace Tests.Services
             {
                 Id = 4
             };
+			var playableCardE = new PlayableCard(cardE)
+			{
+				Id = 5,
+			};
 
             currentPlayerData.BattleField.Add(playableCardA);
             opposingPlayerData.BattleField.Add(playableCardB);
             currentPlayerData.BattleField.Add(playableCardC);
             opposingPlayerData.BattleField.Add(playableCardD);
+            opposingPlayerData.BattleField.Add(playableCardE);
+            currentPlayerData.BattleField.Add(playableCardE);
+
 
             var EndTurnEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
 
@@ -1517,12 +1532,12 @@ namespace Tests.Services
 
             // Explosion fait 5 damage a tout les monstres donc ils sont tous morts. Car il y a eu 2 EXPLOSION      
             Assert.AreEqual(0, currentPlayerData.BattleField.Count);
-            Assert.AreEqual(2, currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(3, currentPlayerData.Graveyard.Count);
 
             // Comme playableCardB n'a plus de Health, elle est morte et doit se retrouver dans le Graveyard (Activant son ability)
             // Cela tue tout les monstres de opposingPlayer
             Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
-            Assert.AreEqual(2, opposingPlayerData.Graveyard.Count);
+            Assert.AreEqual(3, opposingPlayerData.Graveyard.Count);
         }
 
         #endregion
