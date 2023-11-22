@@ -176,25 +176,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-<<<<<<< HEAD
-                            ConcurrencyStamp = "2c3fab7a-2d17-45d6-8518-6be67f46a591",
-=======
-                            ConcurrencyStamp = "e4cf108b-9230-46d2-8703-863006bf0a08",
->>>>>>> FCT_Deck
+                            ConcurrencyStamp = "5cbe8af2-805e-49d9-9660-0d830295c7cc",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-<<<<<<< HEAD
-                            PasswordHash = "AQAAAAIAAYagAAAAEKKtMW++7xQSw4HfueZiUFYe5SXIHTSKNifwN9Xc2nRes4H71/g6qASAs9b48Uuwlw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIgls4U5ikXauh5xBXwQdmPY+JVED7aqwkvuuXX93jguKZlTWpNNXxMeEms4kE0baA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "867ff46d-590b-4992-b689-f2db15b30202",
-=======
-                            PasswordHash = "AQAAAAIAAYagAAAAEEl2L+zCe018JwJUmzORSC0ItdIu5Cj6oG+fxLLKPkbJmXsNhGYq0LmiUI90GNqWYg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "1600a964-08ad-4ea7-89af-463d0c6d87d8",
->>>>>>> FCT_Deck
+                            SecurityStamp = "9001a629-008e-48cf-8a7d-574558044427",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
