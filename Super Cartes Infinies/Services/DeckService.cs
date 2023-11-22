@@ -62,7 +62,7 @@ namespace Super_Cartes_Infinies.Services
         public async Task<ActionResult<String>> DeleteDeck(int deckId, string userId)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
-            Deck deleteDeck = await _context.Decks.Where(x => x.Id == deckId).FirstOrDefaultAsync();
+            Deck deleteDeck = await _context.Decks.Where(x => x.Id == deckId).Where(y => y.PlayerId == currentPlayer.Id).FirstOrDefaultAsync();
 
             if(deleteDeck.PlayerId != currentPlayer.Id)
             {
@@ -76,10 +76,18 @@ namespace Super_Cartes_Infinies.Services
         }
 
 
-        public async Task<ActionResult<String>> EditDeck(int deckId, string userId)
+        public async Task<ActionResult<String>> EditDeck(int deckId, string userId, DeckDTO deckDto)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
-            Deck editDeck = await _context.Decks.Where(x => x.Id == deckId).FirstOrDefaultAsync();
+            Deck editDeck = await _context.Decks.Where(x => x.Id == deckId).Where(y => y.PlayerId == currentPlayer.Id).FirstOrDefaultAsync();
+
+            if(deckDto == null)
+            {
+                return "Le deck est null";
+            }
+
+            _context.Decks.Update(editDeck);
+            await _context.SaveChangesAsync();
 
             return "";
         }
