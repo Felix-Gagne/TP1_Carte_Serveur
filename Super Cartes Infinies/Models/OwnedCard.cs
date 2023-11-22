@@ -7,5 +7,7 @@
         public int PlayerId { get; set; }
 
         public int CardId { get; set; }
+
+        public virtual Card Card { get; set; }
     }
 }
