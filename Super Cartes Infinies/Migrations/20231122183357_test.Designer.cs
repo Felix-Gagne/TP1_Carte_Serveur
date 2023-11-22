@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Super_Cartes_Infinies.Data;
 
@@ -10,9 +11,11 @@ using Super_Cartes_Infinies.Data;
 namespace Super_Cartes_Infinies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231122183357_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,15 +179,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ca8a5d34-d826-485f-b7c5-8888c09acf78",
+                            ConcurrencyStamp = "d7d1a23c-d972-4628-8f0a-fd7f94445a15",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHVuU9K+ME2DcOais2003vUZN7fWWJ3LKcQ7Rcanz8PL0bGYBuPOoQUi6ep0er7qFw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDzTQgwrfHEl3SQtkX40fbsAg0nmJxvT/5NvtBtzc18bzdNrgk1T2bk1p2FkH17Cvg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "25e3239f-beea-4272-ac6d-d61622983186",
+                            SecurityStamp = "c8e32ee0-659b-4536-a96b-5fe2b0a7ae8d",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

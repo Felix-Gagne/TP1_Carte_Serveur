@@ -63,15 +63,35 @@ namespace Super_Cartes_Infinies.Controllers
 
         #region Inventory
         [HttpGet]
-        public List<Card> GetInventory()
+        public async Task<List<OwnedCard>> GetInventory()
         {
+            try
+            {
+                Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefault();
+
+                List<OwnedCard> result = new List<OwnedCard>();
+
+                result = await _deckService.GetInventory(currentPlayer.Id);
+
+                return result;
+            }
+            catch (AucunJoueruTrouver e)
+            {
+                throw e; 
+            }
+            catch (ListeDeCarteVide a)
+            {
+                throw a;
+            }
+            //Test : utiliser des owner card a la place de cards
+            /*
             Player currentPlayer = _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefault();
 
-            List<Card> result = new List<Card>();
+            List<OwnedCard> result = new List<OwnedCard>();
 
             result = _deckService.GetInventory(currentPlayer.Id).ToList();
 
-            return result;
+            return result;*/
         }
 
         [HttpGet]

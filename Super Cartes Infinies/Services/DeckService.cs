@@ -96,18 +96,34 @@ namespace Super_Cartes_Infinies.Services
 
         #region Inventory
 
-        public IEnumerable<Card> GetInventory(int playerId)
+        public async Task<List<OwnedCard>> GetInventory(int playerId)
         {
-            List<OwnedCard> owned = _context.OwnedCards.Where(x => x.PlayerId == playerId).ToList();
+            if(playerId != 0)
+            {
+                List<OwnedCard> owned = await _context.OwnedCards.Where(x => x.PlayerId == playerId).ToListAsync();
+                if(owned != null)
+                {
+                    return owned;
+                }
+                else
+                {
+                    throw new ListeDeCarteVide();
+                }
+            }
+            else
+            {
+                throw new AucunJoueruTrouver();
+            }
+            //Test : utiliser des ownerCards a la place de cards
+            /*
             List<Card> returnedCards = new List<Card>();
-
             foreach (var item in owned)
             {
                 returnedCards.Add(_context.Cards.Where(x => x.Id == item.CardId).FirstOrDefault());
             }
 
 
-            return returnedCards;
+            return returnedCards;*/
         }
 
         public IEnumerable<Card> GetFilteredCards(string filtre)
@@ -131,4 +147,14 @@ namespace Super_Cartes_Infinies.Services
         #endregion
 
     }
+
+}
+public class ListeDeCarteVide : Exception
+{
+    public ListeDeCarteVide() : base("No cards found in the inventory.") { }
+}
+
+public class AucunJoueruTrouver : Exception
+{
+    public AucunJoueruTrouver() : base("Player not found.") { }
 }

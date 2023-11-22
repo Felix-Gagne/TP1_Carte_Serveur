@@ -135,7 +135,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 3,
             Defense = 3,
             ManaCost = 2,
-            ImageUrl = imageUrlBase
+            ImageUrl = imageUrlBase,
         };
         cards.Add( C1 );
         builder.Entity<Card>().HasData(C1);
@@ -718,6 +718,11 @@ public class ApplicationDbContext : IdentityDbContext
         };
         cards.Add(C50);
         builder.Entity<Card>().HasData(C50);
+
+        foreach (var card in cards)
+        {
+            card.prixVente = 250;
+        }
 
         #endregion
 

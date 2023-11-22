@@ -15,6 +15,7 @@ namespace Super_Cartes_Infinies.Models
 		public int Defense { get; set; }
 		public string ImageUrl { get; set; } = "";
 
+		public int prixVente { get; set; }
 		public override bool Equals(object other)
 		{
 			return other is Card c &&
@@ -41,7 +42,8 @@ namespace Super_Cartes_Infinies.Models
 		public virtual List<Player> Players { get; set; }
 
 		[ValidateNever]
-		public virtual List<CardPower> cardPowers { get; set; }
+        [JsonIgnore]
+        public virtual List<CardPower> cardPowers { get; set; }
 	}
 			
 }
