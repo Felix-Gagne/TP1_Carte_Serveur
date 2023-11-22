@@ -27,7 +27,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Injection de dépendance
-builder.Services.AddScoped<CardService>();
+builder.Services.AddScoped<DeckService>();
 builder.Services.AddScoped<PlayersService>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddSingleton<WaitingUserService>();
