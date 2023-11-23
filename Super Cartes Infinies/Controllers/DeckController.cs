@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
+using Super_Cartes_Infinies.Models.Message;
 using Super_Cartes_Infinies.Services;
 
 namespace Super_Cartes_Infinies.Controllers
@@ -57,6 +59,12 @@ namespace Super_Cartes_Infinies.Controllers
         public async Task<ActionResult<String>> DeleteDeck(int deckId)
         {
             return await _deckService.DeleteDeck(deckId, UserId);
+        }
+
+        [HttpPut("{deckId}")]
+        public async Task<ActionResult<Message>> EditDeck(int deckId, EditDeckDTO deckDTO)
+        {
+            return await _deckService.EditDeck(deckId, UserId, deckDTO);
         }
 
         #endregion
