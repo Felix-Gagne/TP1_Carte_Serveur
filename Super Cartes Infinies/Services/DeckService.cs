@@ -34,6 +34,19 @@ namespace Super_Cartes_Infinies.Services
             return decks;
         }
 
+        public async Task<ActionResult<Deck>> GetSelectedDeck(string userId)
+        {
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+
+            if (currentPlayer == null)
+            {
+                throw new Exception("Joueur null");
+            }
+
+            Deck deck = await _context.Decks.Where(x => x.PlayerId == currentPlayer.Id).Where(y => y.Id == currentPlayer.SelectedDeckId).FirstOrDefaultAsync();
+            return deck;
+        }
+
         public async Task<ActionResult<String>> CreateDeck(DeckDTO deckDTO, string userId) 
         {
             if(deckDTO == null)
@@ -98,6 +111,24 @@ namespace Super_Cartes_Infinies.Services
             await _context.SaveChangesAsync();
 
             msg.msg = "Deck successfully updated";
+            return msg;
+        }
+
+        public async Task<ActionResult<Message>> EditSelectedDeck(int deckId, string userId)
+        {
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+
+            if(currentPlayer == null)
+            {
+                msg.msg = "Aucun joueur cibler.";
+                return msg;
+            }
+
+            currentPlayer.SelectedDeckId = deckId;
+            _context.Players.Update(currentPlayer);
+            await _context.SaveChangesAsync();
+
+            msg.msg = "Selected deck successfully changed";
             return msg;
         }
 
