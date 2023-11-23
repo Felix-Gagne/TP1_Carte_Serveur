@@ -93,15 +93,14 @@ namespace Super_Cartes_Infinies.Services
         }
 
 
-        public async Task<ActionResult<Message>> EditDeck(int deckId, string userId, EditDeckDTO deckDto)
+        public async Task<ActionResult<String>> EditDeck(int deckId, string userId, EditDeckDTO deckDto)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
             Deck editDeck = await _context.Decks.Where(x => x.Id == deckId).Where(y => y.PlayerId == currentPlayer.Id).FirstOrDefaultAsync();
 
             if(deckDto == null)
             {
-                msg.msg = "Le deck est null.";
-                return msg;
+                return "Le deck est null.";
             }
 
             editDeck.Cards = deckDto.Cards;
@@ -110,26 +109,23 @@ namespace Super_Cartes_Infinies.Services
             _context.Decks.Update(editDeck);
             await _context.SaveChangesAsync();
 
-            msg.msg = "Deck successfully updated";
-            return msg;
+            return "";
         }
 
-        public async Task<ActionResult<Message>> EditSelectedDeck(int deckId, string userId)
+        public async Task<ActionResult<String>> EditSelectedDeck(int deckId, string userId)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
 
             if(currentPlayer == null)
             {
-                msg.msg = "Aucun joueur cibler.";
-                return msg;
+                return "Aucun joueur cibler.";
             }
 
             currentPlayer.SelectedDeckId = deckId;
             _context.Players.Update(currentPlayer);
             await _context.SaveChangesAsync();
 
-            msg.msg = "Selected deck successfully changed";
-            return msg;
+            return "";
         }
 
         #endregion

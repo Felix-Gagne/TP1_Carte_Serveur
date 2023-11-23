@@ -32,7 +32,7 @@ namespace Super_Cartes_Infinies.Services
                 IdentityUserId = user.Id,
                 IdentityUser = user,
                 Name = register.Username,
-                DeckCard = new List<Card>(),
+                DeckCard = new List<Deck>(),
                 Money = 500,
                 OwnedCard = new List<OwnedCard>()
             };

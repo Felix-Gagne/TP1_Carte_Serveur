@@ -34,9 +34,9 @@ namespace Super_Cartes_Infinies.Controllers
         #region Deck
 
         [HttpGet]
-        public List<Card> GetPlayerDeck()
+        public List<Deck> GetPlayerDeck()
         {
-            List<Card> result = new List<Card>();
+            List<Deck> result = new List<Deck>();
 
             result = playersService.GetPlayerFromUserId(UserId).DeckCard;
 
@@ -52,7 +52,7 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpGet]
         public async Task<ActionResult<Deck>> GetSelectedDeck()
         {
-            return null;
+            return await _deckService.GetSelectedDeck(UserId);
         }
 
         [HttpPost]
@@ -68,13 +68,13 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpPut("{deckId}")]
-        public async Task<ActionResult<Message>> EditDeck(int deckId, EditDeckDTO deckDTO)
+        public async Task<ActionResult<String>> EditDeck(int deckId, EditDeckDTO deckDTO)
         {
             return await _deckService.EditDeck(deckId, UserId, deckDTO);
         }
 
         [HttpPut("{deckId}")]
-        public async Task<ActionResult<Message>> EditSelectedDeck(int deckId)
+        public async Task<ActionResult<String>> EditSelectedDeck(int deckId)
         {
             return await _deckService.EditSelectedDeck(deckId, UserId);
         }
