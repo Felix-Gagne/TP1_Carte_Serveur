@@ -61,6 +61,7 @@ public class ApplicationDbContext : IdentityDbContext
 
         //Cartes de jeu
         const String imageUrlBase = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png";
+        const String serverURL = "https://localhost:7219/images/";
         const String iconPower = "https://static.thenounproject.com/png/1776468-200.png";
 
         #region Powers
@@ -135,7 +136,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 3,
             Defense = 3,
             ManaCost = 2,
-            ImageUrl = imageUrlBase,
+            ImageUrl = serverURL + "Stickly_Steve.png"
         };
         cards.Add( C1 );
         builder.Entity<Card>().HasData(C1);
@@ -146,7 +147,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 2,
             Defense = 4,
             ManaCost = 1,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Sketchy_Sarah.png"
         };
         cards.Add(C2);
         builder.Entity<Card>().HasData(C2);
@@ -157,7 +158,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 4,
             Defense = 2,
             ManaCost = 2,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Doodle_Dave.png"
         };
         cards.Add(C3);
         builder.Entity<Card>().HasData(C3);
@@ -168,7 +169,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 3,
             Defense = 5,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Pencil_Pete.png"
         };
         cards.Add(C4);
         builder.Entity<Card>().HasData(C4);
@@ -179,7 +180,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 4,
             Defense = 4,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Marker_Mike.png"
         };
         cards.Add(C5);
         builder.Entity<Card>().HasData(C5);
@@ -190,7 +191,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 2,
             Defense = 6,
             ManaCost = 2,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Eraser_Edith.png"
         };
         cards.Add(C6);
         builder.Entity<Card>().HasData(C6);
@@ -201,7 +202,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 5,
             Defense = 3,
             ManaCost = 4,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Crayon_Carla.png"
         };
         cards.Add(C7);
         builder.Entity<Card>().HasData(C7);
@@ -212,7 +213,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 4,
             Defense = 5,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Scribble_Sam.png"
         };
         cards.Add(C8);
         builder.Entity<Card>().HasData(C8);
@@ -223,7 +224,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 6,
             Defense = 2,
             ManaCost = 2,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Inkwell_Ivan.png"
         };
         cards.Add(C9);
         builder.Entity<Card>().HasData(C9);
@@ -234,7 +235,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 5,
             Defense = 4,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Paintbrush_Penny.png"
         };
         cards.Add(C10);
         builder.Entity<Card>().HasData(C10);
@@ -246,7 +247,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 4,
             Defense = 6,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Sketchpad_Sally.png"
         };
         cards.Add(C11);
         builder.Entity<Card>().HasData(C11);
@@ -258,7 +259,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 6,
             Defense = 3,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Chalkboard_Chuck.png"
         };
         cards.Add(C12);
         builder.Entity<Card>().HasData(C12);
@@ -270,7 +271,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 5,
             Defense = 5,
             ManaCost = 3,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Notebook_Ned.png"
         };
         cards.Add(C13);
         builder.Entity<Card>().HasData(C13);
@@ -330,7 +331,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 5,
             Defense = 6,
             ManaCost = 5,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Paperclip_Paula.png"
         };
         cards.Add(C18);
         builder.Entity<Card>().HasData(C18);
@@ -438,7 +439,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 7,
             Defense = 5,
             ManaCost = 5,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Crayonbox_Casey.png"
         };
         cards.Add(C27);
         builder.Entity<Card>().HasData(C27);
@@ -462,7 +463,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 6,
             Defense = 7,
             ManaCost = 5,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Quill_Quentin.png"
         };
         cards.Add(C29);
         builder.Entity<Card>().HasData(C29);
@@ -486,7 +487,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 7,
             Defense = 6,
             ManaCost = 4,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Canvas_Cathy.png"
         };
         cards.Add(C31);
         builder.Entity<Card>().HasData(C31);
@@ -498,7 +499,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 11,
             Defense = 10,
             ManaCost = 8,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Fountain_Pen_Fred.png"
         };
         cards.Add(C32);
         builder.Entity<Card>().HasData(C32);
@@ -510,7 +511,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 6,
             Defense = 8,
             ManaCost = 6,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Sticky_Note_Steve.png"
         };
         cards.Add(C33);
         builder.Entity<Card>().HasData(C33);
@@ -530,11 +531,11 @@ public class ApplicationDbContext : IdentityDbContext
         Card C35 = new Card
         {
             Id = 35,
-            Name = "Paint Can Patrick",
+            Name = "Spray Paint Patrick",
             Attack = 7,
             Defense = 7,
             ManaCost = 7,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Spray_Paint_Patrick.png"
         };
         cards.Add(C35);
         builder.Entity<Card>().HasData(C35);
@@ -666,7 +667,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 7,
             Defense = 9,
             ManaCost = 5,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Glue_Gun_Garry.png"
         };
         cards.Add(C46);
         builder.Entity<Card>().HasData(C46);
@@ -690,7 +691,7 @@ public class ApplicationDbContext : IdentityDbContext
             Attack = 8,
             Defense = 8,
             ManaCost = 7,
-            ImageUrl = imageUrlBase
+            ImageUrl = serverURL + "Pixel_Pete.png"
         };
         cards.Add(C48);
         builder.Entity<Card>().HasData(C48);
