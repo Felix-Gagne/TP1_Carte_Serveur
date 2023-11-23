@@ -49,7 +49,7 @@ namespace Super_Cartes_Infinies.Services
         public async Task<ActionResult<String>> SellCard(string userId, int ownedCardId) 
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
-            OwnedCard ownedCard = await _context.OwnedCards.Where(x => x.Id == ownedCardId).FirstOrDefaultAsync();
+            OwnedCard ownedCard = await _context.OwnedCards.Where(x => x.Id == ownedCardId).Where(y => y.PlayerId == currentPlayer.Id).FirstOrDefaultAsync();
             StoreCard sellPriceCard = await _context.StoreCards.Where(x => x.CardId == ownedCard.CardId).FirstOrDefaultAsync();
 
             if (currentPlayer.Id != ownedCard.PlayerId)
