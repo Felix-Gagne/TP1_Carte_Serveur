@@ -125,6 +125,12 @@ namespace Super_Cartes_Infinies.Controllers
         public async Task<int> GetMoney()
         {
             Player player = await _context.Players.Where(x => x.IdentityUserId == UserId).FirstOrDefaultAsync();
+
+            if (player == null)
+            {
+                throw new Exception("Non connecter");
+            }
+
             return player.Money;
         }
     }
