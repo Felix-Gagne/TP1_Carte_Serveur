@@ -21,7 +21,7 @@ namespace Super_Cartes_Infinies.Models
 		[JsonIgnore]
 		public virtual IdentityUser? IdentityUser { get; set; }
 		// TODO: Ajouter les cartes du joueur	
-		public virtual List<Card> DeckCard { get; set; }
+		public virtual List<Deck> DeckCard { get; set; }
 		public virtual List<OwnedCard> OwnedCard { get; set;}
 	}
 }
