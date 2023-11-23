@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
+using Super_Cartes_Infinies.Models.Message;
 
 namespace Super_Cartes_Infinies.Services
 {
@@ -12,6 +13,9 @@ namespace Super_Cartes_Infinies.Services
         #region Service
 
         private ApplicationDbContext _context;
+
+        private Message msg;
+
         public DeckService(ApplicationDbContext context)
         {
             _context = context;
@@ -76,20 +80,25 @@ namespace Super_Cartes_Infinies.Services
         }
 
 
-        public async Task<ActionResult<String>> EditDeck(int deckId, string userId, DeckDTO deckDto)
+        public async Task<ActionResult<Message>> EditDeck(int deckId, string userId, EditDeckDTO deckDto)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
             Deck editDeck = await _context.Decks.Where(x => x.Id == deckId).Where(y => y.PlayerId == currentPlayer.Id).FirstOrDefaultAsync();
 
             if(deckDto == null)
             {
-                return "Le deck est null";
+                msg.msg = "Le deck est null.";
+                return msg;
             }
+
+            editDeck.Cards = deckDto.Cards;
+            editDeck.Name = deckDto.Name;
 
             _context.Decks.Update(editDeck);
             await _context.SaveChangesAsync();
 
-            return "";
+            msg.msg = "Deck successfully updated";
+            return msg;
         }
 
         #endregion
