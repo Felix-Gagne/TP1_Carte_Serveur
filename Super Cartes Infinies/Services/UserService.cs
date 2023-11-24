@@ -48,10 +48,28 @@ namespace Super_Cartes_Infinies.Services
                 player.OwnedCard.Add(card);
             }
 
+            var cardDeckDepart = new List<OwnedCard>();
+            for(int i = 1; i <= 10; i++)
+            {
+                cardDeckDepart.Add(player.OwnedCard[i]);
+            }
+
+            Deck deckDepart = new Deck
+            {
+                Cards = cardDeckDepart,
+                Name = "Starter Deck",
+                PlayerId = player.Id,
+            };
+
+            player.DeckCard.Add(deckDepart);
+
+
+
 
             if (user.UserName != null && user.Email != null && player != null && _context.StartingCards.Count() != 0)
             {
                 await _context.Players.AddAsync(player);
+                await _context.Decks.AddAsync(deckDepart);
                 await _context.SaveChangesAsync();
 
                 // Return IdentityResult.Success to indicate success.

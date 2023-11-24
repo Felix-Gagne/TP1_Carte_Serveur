@@ -19,8 +19,8 @@ namespace Super_Cartes_Infinies.Combat
             {
                 // TODO: Utiliser le mana du joueur pour jouer la carte.
                 // TODO: Déplacer la carte sur le BattleField
-                currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
-                currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == PlayableCardId).SingleOrDefault());
+                currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Card.Id == PlayableCardId).SingleOrDefault());
+                currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Card.Id == PlayableCardId).SingleOrDefault());
                 
             }
 

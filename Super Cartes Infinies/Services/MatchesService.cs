@@ -210,7 +210,7 @@ namespace Super_Cartes_Infinies.Services
                 throw new Exception("Le jouer adverse n'est plus la");
             }
 
-            var playCardEvent = new PlayCardEvent(match, opposingPlayerData, currentPlayerData, playableCard.Id);
+            var playCardEvent = new PlayCardEvent(match, opposingPlayerData, currentPlayerData, playableCard.Card.Id);
             string serializedEvent = match.AddEvent(playCardEvent);
 
             await _context.SaveChangesAsync();
@@ -258,8 +258,8 @@ namespace Super_Cartes_Infinies.Services
         {
             Match? match = await _context.Matches.FindAsync(matchId);
 
-            Player playerA = await _context.Players.FindAsync(match.UserAId);
-            Player playerB = await _context.Players.FindAsync(match.UserBId);
+            Player playerA = await _context.Players.FindAsync(match.PlayerDataA.Id);
+            Player playerB = await _context.Players.FindAsync(match.PlayerDataB.Id);
 
             Random rnd = new Random();
 
@@ -277,7 +277,7 @@ namespace Super_Cartes_Infinies.Services
             match.IsMatchCompleted = true;
             _context.SaveChangesAsync();
 
-            return "match finito";
+            return "";
         }
     }
 }

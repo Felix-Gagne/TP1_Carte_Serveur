@@ -27,12 +27,12 @@ namespace Super_Cartes_Infinies.Models
         // Utilisé lors de la création d'un nouveau Match
         public MatchPlayerData(Player p) : this(p.Id)
         {
-            // TODO: Ajouter les PlayableCards dans CardsPile à partir des cartes du joueur
-            //foreach(Card card in p.DeckCard)
-            //{
-            //    PlayableCard playable = new PlayableCard(card);
-            //    CardsPile.Add(playable);
-            //}
+            //TODO: Ajouter les PlayableCards dans CardsPile à partir des cartes du joueur
+            foreach(OwnedCard card in p.OwnedCard)
+            {
+                PlayableCard playable = new PlayableCard(card.Card);
+                CardsPile.Add(playable);
+            }
             
         }
 
