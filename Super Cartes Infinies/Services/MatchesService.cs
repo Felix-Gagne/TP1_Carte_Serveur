@@ -257,12 +257,6 @@ namespace Super_Cartes_Infinies.Services
 			return serializedEvent;
 		}
 
-		public async Task<string> EndMatch(int matchId)
-		{
-			Match? match = await _context.Matches.FindAsync(matchId);
-			match.IsMatchCompleted = true;
-			_context.SaveChangesAsync();
-
         public async Task<string> EndMatch(int matchId)
         {
             Match? match = await _context.Matches.FindAsync(matchId);
@@ -286,7 +280,7 @@ namespace Super_Cartes_Infinies.Services
             match.IsMatchCompleted = true;
             _context.SaveChangesAsync();
 
-            return "match finito";
+            return "";
         }
     }
 }
