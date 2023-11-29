@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "22709e21-6431-4174-afcf-5ca7e7c1733d",
+                            ConcurrencyStamp = "4beff6f6-b59c-4d4c-bf0f-d8996901c4d8",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP+K5lrvWdfxOHajBfJrNJ0zkJD2cMX/PhiCduFDMsIvA0L/AfwZ9XoyFii6lLSkdg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIFmyz3Y9/Syr+dikow1xRqX4mO3TcYFpliT3V9RDCASzuiN1q/qjYD4Nbk3wEcZgw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc14519e-eb3b-404f-b55c-177090e4ea73",
+                            SecurityStamp = "13032867-ed0d-435b-b51b-cb1c3ef08280",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
