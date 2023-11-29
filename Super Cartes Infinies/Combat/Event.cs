@@ -15,6 +15,11 @@ namespace Super_Cartes_Infinies.Combat
     [JsonDerivedType(typeof(PlayerDeathEvent), typeDiscriminator: "PlayerDeath")]
     [JsonDerivedType(typeof(PlayerTurnEvent), typeDiscriminator: "PlayerTurn")]
     [JsonDerivedType(typeof(StartMatchEvent), typeDiscriminator: "StartMatch")]
+    [JsonDerivedType(typeof(CardDamageEvent), typeDiscriminator: "CardDamage")]
+    [JsonDerivedType(typeof(CardDeathEvent), typeDiscriminator: "CardDeath")]
+    [JsonDerivedType(typeof(PlayerDamageEvent), typeDiscriminator: "PlayerDamage")]
+    [JsonDerivedType(typeof(PlayerDeathEvent), typeDiscriminator: "PlayerDeath")]
+    [JsonDerivedType(typeof(EndMatchEvent), typeDiscriminator: "EndMatch")]
     public abstract class Event
     {
         public Event()

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Super_Cartes_Infinies.Models.StoreCard>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" style="font-size: 20px">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CardId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Card.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SellAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Card.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Card.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SellAmount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

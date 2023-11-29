@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Super_Cartes_Infinies.Migrations
 {
     /// <inheritdoc />
-    public partial class initialeCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,26 +62,12 @@ namespace Super_Cartes_Infinies.Migrations
                     ManaCost = table.Column<int>(type: "INTEGER", nullable: false),
                     Attack = table.Column<int>(type: "INTEGER", nullable: false),
                     Defense = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false)
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
+                    prixVente = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cards", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MatchPlayersData",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Health = table.Column<int>(type: "INTEGER", nullable: false),
-                    Mana = table.Column<int>(type: "INTEGER", nullable: false),
-                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MatchPlayersData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,7 +198,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Money = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdentityUserId = table.Column<string>(type: "TEXT", nullable: false)
+                    SelectedDeckId = table.Column<int>(type: "INTEGER", nullable: true),
+                    IdentityUserId = table.Column<string>(type: "TEXT", nullable: false),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,6 +211,11 @@ namespace Super_Cartes_Infinies.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Players_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -240,6 +233,121 @@ namespace Super_Cartes_Infinies.Migrations
                         name: "FK_StartingCards_Cards_CardId",
                         column: x => x.CardId,
                         principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StoreCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BuyAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    SellAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StoreCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StoreCards_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CardPowers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PowerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    value = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardPowers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CardPowers_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CardPowers_Powers_PowerId",
+                        column: x => x.PowerId,
+                        principalTable: "Powers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Decks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Decks_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MatchPlayersData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Health = table.Column<int>(type: "INTEGER", nullable: false),
+                    Mana = table.Column<int>(type: "INTEGER", nullable: false),
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MatchPlayersData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MatchPlayersData_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OwnedCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OwnedCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OwnedCards_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OwnedCards_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -319,52 +427,25 @@ namespace Super_Cartes_Infinies.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardPowers",
+                name: "DeckOwnedCard",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PowerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    value = table.Column<int>(type: "INTEGER", nullable: false)
+                    CardsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DecksId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardPowers", x => x.Id);
+                    table.PrimaryKey("PK_DeckOwnedCard", x => new { x.CardsId, x.DecksId });
                     table.ForeignKey(
-                        name: "FK_CardPowers_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
+                        name: "FK_DeckOwnedCard_Decks_DecksId",
+                        column: x => x.DecksId,
+                        principalTable: "Decks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CardPowers_Powers_PowerId",
-                        column: x => x.PowerId,
-                        principalTable: "Powers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CardPlayer",
-                columns: table => new
-                {
-                    DeckCardId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PlayersId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CardPlayer", x => new { x.DeckCardId, x.PlayersId });
-                    table.ForeignKey(
-                        name: "FK_CardPlayer_Cards_DeckCardId",
-                        column: x => x.DeckCardId,
-                        principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CardPlayer_Players_PlayersId",
-                        column: x => x.PlayersId,
-                        principalTable: "Players",
+                        name: "FK_DeckOwnedCard_OwnedCards_CardsId",
+                        column: x => x.CardsId,
+                        principalTable: "OwnedCards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -397,63 +478,63 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "73f6993d-8f76-4523-9920-e27ada8327b2", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEKBHY5ZdmRJXvAxiCJOAhjZ7Zvdj7eudcAPVDwJ6KGrxUWbeUXe+dBh9nNT47lI6kg==", null, false, "985dcbf8-d481-46d2-9fc4-79d807b23948", false, "admin@admin.com" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "4beff6f6-b59c-4d4c-bf0f-d8996901c4d8", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEIFmyz3Y9/Syr+dikow1xRqX4mO3TcYFpliT3V9RDCASzuiN1q/qjYD4Nbk3wEcZgw==", null, false, "13032867-ed0d-435b-b51b-cb1c3ef08280", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Cards",
-                columns: new[] { "Id", "Attack", "Defense", "ImageUrl", "ManaCost", "Name" },
+                columns: new[] { "Id", "Attack", "Defense", "ImageUrl", "ManaCost", "Name", "prixVente" },
                 values: new object[,]
                 {
-                    { 1, 3, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Stickly Steve" },
-                    { 2, 2, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 1, "Sketchy Sarah" },
-                    { 3, 4, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Doodle Dave" },
-                    { 4, 3, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Pencil Pete" },
-                    { 5, 4, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Marker Mike" },
-                    { 6, 2, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Eraser Edith" },
-                    { 7, 5, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Crayon Carla" },
-                    { 8, 4, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Scribble Sam" },
-                    { 9, 6, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Inkwell Ivan" },
-                    { 10, 5, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Paintbrush Penny" },
-                    { 11, 4, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Sketchpad Sally" },
-                    { 12, 6, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Chalkboard Chuck" },
-                    { 13, 5, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Notebook Ned" },
-                    { 14, 7, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Penelope Pencil" },
-                    { 15, 3, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Highlighter Hank" },
-                    { 16, 6, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Marker Mary" },
-                    { 17, 7, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Crayola Carl" },
-                    { 18, 5, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Paperclip Paula" },
-                    { 19, 8, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Paint Paddy" },
-                    { 20, 6, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Pencil Shavings Pete" },
-                    { 21, 7, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Sticky Stan" },
-                    { 22, 5, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Charcoal Charlie" },
-                    { 23, 8, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Watercolor Wendy" },
-                    { 24, 6, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Notebook Nikki" },
-                    { 25, 9, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Etch-a-Sketch Eddie" },
-                    { 26, 4, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Glitter Glenda" },
-                    { 27, 7, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Crayonbox Casey" },
-                    { 28, 8, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Sketchbook Simon" },
-                    { 29, 6, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Quill Quentin" },
-                    { 30, 9, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Sidewalk Chalk Chloe" },
-                    { 31, 7, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Canvas Cathy" },
-                    { 32, 11, 10, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 8, "Fountain Pen Fred" },
-                    { 33, 6, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 6, "Sticky Note Steve" },
-                    { 34, 9, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Doodle Pad Donna" },
-                    { 35, 7, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Paint Can Patrick" },
-                    { 36, 5, 9, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Marker Maze Max" },
-                    { 37, 8, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Etch-a-Sketch Emma" },
-                    { 38, 9, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Charcoal Chip" },
-                    { 39, 8, 9, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 10, "Graphite Gabby" },
-                    { 40, 10, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Inkwell Ike" },
-                    { 41, 7, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Sketchbook Skyler" },
-                    { 42, 10, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Chalky Charles" },
-                    { 43, 8, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 6, "Color Wheel Casey" },
-                    { 44, 9, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Canvas Cleo" },
-                    { 45, 6, 10, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 8, "Sticker Sue" },
-                    { 46, 7, 9, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Glue Gun Gary" },
-                    { 47, 10, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Markerboard Molly" },
-                    { 48, 8, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Pixel Pete" },
-                    { 49, 15, 15, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 20, "Lithography Lily" },
-                    { 50, 10, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 8, "Silkscreening Simon" }
+                    { 1, 3, 3, "https://localhost:7219/images/Stickly_Steve.png", 2, "Stickly Steve", 250 },
+                    { 2, 2, 4, "https://localhost:7219/images/Sketchy_Sarah.png", 1, "Sketchy Sarah", 250 },
+                    { 3, 4, 2, "https://localhost:7219/images/Doodle_Dave.png", 2, "Doodle Dave", 250 },
+                    { 4, 3, 5, "https://localhost:7219/images/Pencil_Pete.png", 3, "Pencil Pete", 250 },
+                    { 5, 4, 4, "https://localhost:7219/images/Marker_Mike.png", 3, "Marker Mike", 250 },
+                    { 6, 2, 6, "https://localhost:7219/images/Eraser_Edith.png", 2, "Eraser Edith", 250 },
+                    { 7, 5, 3, "https://localhost:7219/images/Crayon_Carla.png", 4, "Crayon Carla", 250 },
+                    { 8, 4, 5, "https://localhost:7219/images/Scribble_Sam.png", 3, "Scribble Sam", 250 },
+                    { 9, 6, 2, "https://localhost:7219/images/Inkwell_Ivan.png", 2, "Inkwell Ivan", 250 },
+                    { 10, 5, 4, "https://localhost:7219/images/Paintbrush_Penny.png", 3, "Paintbrush Penny", 250 },
+                    { 11, 4, 6, "https://localhost:7219/images/Sketchpad_Sally.png", 3, "Sketchpad Sally", 250 },
+                    { 12, 6, 3, "https://localhost:7219/images/Chalkboard_Chuck.png", 3, "Chalkboard Chuck", 250 },
+                    { 13, 5, 5, "https://localhost:7219/images/Notebook_Ned.png", 3, "Notebook Ned", 250 },
+                    { 14, 7, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Penelope Pencil", 250 },
+                    { 15, 3, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Highlighter Hank", 250 },
+                    { 16, 6, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Marker Mary", 250 },
+                    { 17, 7, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Crayola Carl", 250 },
+                    { 18, 5, 6, "https://localhost:7219/images/Paperclip_Paula.png", 5, "Paperclip Paula", 250 },
+                    { 19, 8, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Paint Paddy", 250 },
+                    { 20, 6, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Pencil Shavings Pete", 250 },
+                    { 21, 7, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Sticky Stan", 250 },
+                    { 22, 5, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Charcoal Charlie", 250 },
+                    { 23, 8, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 2, "Watercolor Wendy", 250 },
+                    { 24, 6, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Notebook Nikki", 250 },
+                    { 25, 9, 2, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 3, "Etch-a-Sketch Eddie", 250 },
+                    { 26, 4, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Glitter Glenda", 250 },
+                    { 27, 7, 5, "https://localhost:7219/images/Crayonbox_Casey.png", 5, "Crayonbox Casey", 250 },
+                    { 28, 8, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Sketchbook Simon", 250 },
+                    { 29, 6, 7, "https://localhost:7219/images/Quill_Quentin.png", 5, "Quill Quentin", 250 },
+                    { 30, 9, 3, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Sidewalk Chalk Chloe", 250 },
+                    { 31, 7, 6, "https://localhost:7219/images/Canvas_Cathy.png", 4, "Canvas Cathy", 250 },
+                    { 32, 11, 10, "https://localhost:7219/images/Fountain_Pen_Fred.png", 8, "Fountain Pen Fred", 250 },
+                    { 33, 6, 8, "https://localhost:7219/images/Sticky_Note_Steve.png", 6, "Sticky Note Steve", 250 },
+                    { 34, 9, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Doodle Pad Donna", 250 },
+                    { 35, 7, 7, "https://localhost:7219/images/Spray_Paint_Patrick.png", 7, "Spray Paint Patrick", 250 },
+                    { 36, 5, 9, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Marker Maze Max", 250 },
+                    { 37, 8, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 4, "Etch-a-Sketch Emma", 250 },
+                    { 38, 9, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Charcoal Chip", 250 },
+                    { 39, 8, 9, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 10, "Graphite Gabby", 250 },
+                    { 40, 10, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Inkwell Ike", 250 },
+                    { 41, 7, 8, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Sketchbook Skyler", 250 },
+                    { 42, 10, 5, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Chalky Charles", 250 },
+                    { 43, 8, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 6, "Color Wheel Casey", 250 },
+                    { 44, 9, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 5, "Canvas Cleo", 250 },
+                    { 45, 6, 10, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 8, "Sticker Sue", 250 },
+                    { 46, 7, 9, "https://localhost:7219/images/Glue_Gun_Garry.png", 5, "Glue Gun Gary", 250 },
+                    { 47, 10, 6, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 7, "Markerboard Molly", 250 },
+                    { 48, 8, 8, "https://localhost:7219/images/Pixel_Pete.png", 7, "Pixel Pete", 250 },
+                    { 49, 15, 15, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 20, "Lithography Lily", 250 },
+                    { 50, 10, 7, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png", 8, "Silkscreening Simon", 250 }
                 });
 
             migrationBuilder.InsertData(
@@ -531,6 +612,17 @@ namespace Super_Cartes_Infinies.Migrations
                     { 11, 1 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "StoreCards",
+                columns: new[] { "Id", "BuyAmount", "CardId", "SellAmount" },
+                values: new object[,]
+                {
+                    { 1, 500, 1, 200 },
+                    { 2, 500, 2, 200 },
+                    { 3, 500, 3, 200 },
+                    { 15, 250, 15, 100 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -569,11 +661,6 @@ namespace Super_Cartes_Infinies.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CardPlayer_PlayersId",
-                table: "CardPlayer",
-                column: "PlayersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CardPowers_CardId",
                 table: "CardPowers",
                 column: "CardId");
@@ -584,6 +671,16 @@ namespace Super_Cartes_Infinies.Migrations
                 column: "PowerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeckOwnedCard_DecksId",
+                table: "DeckOwnedCard",
+                column: "DecksId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Decks_PlayerId",
+                table: "Decks",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Matches_PlayerDataAId",
                 table: "Matches",
                 column: "PlayerDataAId");
@@ -592,6 +689,21 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "IX_Matches_PlayerDataBId",
                 table: "Matches",
                 column: "PlayerDataBId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MatchPlayersData_PlayerId",
+                table: "MatchPlayersData",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnedCards_CardId",
+                table: "OwnedCards",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnedCards_PlayerId",
+                table: "OwnedCards",
+                column: "PlayerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlayableCard_CardId",
@@ -619,6 +731,11 @@ namespace Super_Cartes_Infinies.Migrations
                 column: "MatchPlayerDataId3");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Players_CardId",
+                table: "Players",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_IdentityUserId",
                 table: "Players",
                 column: "IdentityUserId");
@@ -631,6 +748,11 @@ namespace Super_Cartes_Infinies.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StartingCards_CardId",
                 table: "StartingCards",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreCards_CardId",
+                table: "StoreCards",
                 column: "CardId");
         }
 
@@ -653,10 +775,10 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CardPlayer");
+                name: "CardPowers");
 
             migrationBuilder.DropTable(
-                name: "CardPowers");
+                name: "DeckOwnedCard");
 
             migrationBuilder.DropTable(
                 name: "PlayableCard");
@@ -668,25 +790,34 @@ namespace Super_Cartes_Infinies.Migrations
                 name: "StartingCards");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "StoreCards");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Powers");
 
             migrationBuilder.DropTable(
+                name: "Decks");
+
+            migrationBuilder.DropTable(
+                name: "OwnedCards");
+
+            migrationBuilder.DropTable(
                 name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "Cards");
+                name: "MatchPlayersData");
+
+            migrationBuilder.DropTable(
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "MatchPlayersData");
+                name: "Cards");
         }
     }
 }

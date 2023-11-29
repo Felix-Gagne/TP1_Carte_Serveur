@@ -1,4 +1,4 @@
-﻿using Super_Cartes_Infinies.Services.Interfaces;
+using Super_Cartes_Infinies.Services.Interfaces;
 
 namespace Super_Cartes_Infinies.Models
 {
@@ -24,23 +24,24 @@ namespace Super_Cartes_Infinies.Models
 			Graveyard = new List<PlayableCard>();
 		}
 
-		// Utilisé lors de la création d'un nouveau Match
-		public MatchPlayerData(Player p) : this(p.Id)
-		{
-			// TODO: Ajouter les PlayableCards dans CardsPile à partir des cartes du joueur
-			foreach(Card card in p.DeckCard)
-			{
-				PlayableCard playable = new PlayableCard(card);
-				CardsPile.Add(playable);
-			}
-			
-		}
+        // Utilisé lors de la création d'un nouveau Match
+        public MatchPlayerData(Player p) : this(p.Id)
+        {
+            // TODO: Ajouter les PlayableCards dans CardsPile à partir des cartes du joueur
+            //foreach(Card card in p.DeckCard)
+            //{
+            //    PlayableCard playable = new PlayableCard(card);
+            //    CardsPile.Add(playable);
+            //}
+            
+        }
 
 		public int Id { get; set; }
 		public int Health { get; set; }
 		public int Mana { get; set; }
 
-		public int PlayerId { get; set; }
+        public virtual Player Player { get; set; }
+        public int PlayerId { get; set; }
 
 		public virtual List<PlayableCard> CardsPile { get; set; }
 		public virtual List<PlayableCard> Hand { get; set; }

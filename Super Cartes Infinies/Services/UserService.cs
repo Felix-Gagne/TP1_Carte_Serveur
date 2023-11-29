@@ -32,13 +32,20 @@ namespace Super_Cartes_Infinies.Services
                 IdentityUserId = user.Id,
                 IdentityUser = user,
                 Name = register.Username,
-                DeckCard = new List<Card>(),
-                Money = 0
+                DeckCard = new List<Deck>(),
+                Money = 500,
+                OwnedCard = new List<OwnedCard>()
             };
 
             foreach (StartingCards startingCard in list)
             {
-                player.DeckCard.Add(startingCard.Card);
+                OwnedCard card = new OwnedCard
+                {
+                    PlayerId = player.Id,
+                    CardId = startingCard.Id,
+                };
+
+                player.OwnedCard.Add(card);
             }
 
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Razor.Language;
 using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -263,8 +263,31 @@ namespace Super_Cartes_Infinies.Services
 			match.IsMatchCompleted = true;
 			_context.SaveChangesAsync();
 
-			return "match finito";
-		}
-	}
+        public async Task<string> EndMatch(int matchId)
+        {
+            Match? match = await _context.Matches.FindAsync(matchId);
+
+            Player playerA = await _context.Players.FindAsync(match.UserAId);
+            Player playerB = await _context.Players.FindAsync(match.UserBId);
+
+            Random rnd = new Random();
+
+            if (match.WinnerUserId == playerA.IdentityUserId)
+            {
+                playerA.Money += rnd.Next(100, 200);
+                playerB.Money += rnd.Next(0, 100);
+            }
+            else
+            {
+                playerA.Money += rnd.Next(0, 100);
+                playerB.Money += rnd.Next(100, 200);
+            }
+
+            match.IsMatchCompleted = true;
+            _context.SaveChangesAsync();
+
+            return "match finito";
+        }
+    }
 }
 
