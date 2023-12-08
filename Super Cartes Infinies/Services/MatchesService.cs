@@ -73,6 +73,11 @@ namespace Super_Cartes_Infinies.Services
 			return null;
 		}
 
+		public async Task CancelQueue()
+		{
+			_waitingUserService.CancelQueue();
+		}
+
 		// Le user qui est le premier joueur d'un match doit appeler cette fonction pour démarrer le match
 		// L'action retourne le json de l'event de création de match (StartMatchEvent)
 		// (N'oubliez pas de mettre le eventIndex du match sur le CLIENT à jour après avoir appelé cette méthode)
@@ -256,6 +261,39 @@ namespace Super_Cartes_Infinies.Services
 
 			return serializedEvent;
 		}
+
+		public async Task Surrender(int matchId, string userId)
+		{
+            Match? match = await _context.Matches.FindAsync(matchId);
+
+            MatchPlayerData currentPlayerData;
+            MatchPlayerData opposingPlayerData;
+
+            if (match == null)
+            {
+                throw new Exception("Aucun match n'est en cours donc impossible de finir le tour.");
+            }
+
+            if (match.IsMatchCompleted == true)
+            {
+                throw new Exception("Le match est terminer il est impossible de finir le tour.");
+            }
+
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+                opposingPlayerData = match.PlayerDataB;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+                opposingPlayerData = match.PlayerDataA;
+            }
+
+			currentPlayerData.Health = 0;
+
+            var EndturnEvent = new PlayerDeathEvent(match, currentPlayerData);
+        }
 
         public async Task<string> EndMatch(int matchId)
         {

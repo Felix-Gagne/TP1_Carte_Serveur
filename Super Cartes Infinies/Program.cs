@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
+using Super_Cartes_Infinies.Hubs;
 using Super_Cartes_Infinies.Services;
 using Super_Cartes_Infinies.Services.Interfaces;
 
@@ -25,6 +26,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Project use SignalR
+builder.Services.AddSignalR();
 
 // Injection de dépendance
 builder.Services.AddScoped<DeckService>();
@@ -93,6 +96,8 @@ app.MapControllerRoute(
     name: "Admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+//Ajout du path pour ouvrir le matchhub
+app.MapHub<MatchHub>("/matchHub");
 
 app.Run();
 
