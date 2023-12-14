@@ -61,6 +61,11 @@ namespace Super_Cartes_Infinies.Hubs
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var events = await _matchService.PlayCard(UserId, matchId, playableCardId);
+
+            var match = await _context.Matches.FindAsync(matchId);
+
+            await Clients.User(match.UserAId).SendAsync("NeedUpdateMatch");
+            await Clients.User(match.UserBId).SendAsync("NeedUpdateMatch");
         }
 
         public async Task Surrender(int matchId)
@@ -75,6 +80,11 @@ namespace Super_Cartes_Infinies.Hubs
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var events = await _matchService.EndTurn(UserId, matchId);
+
+            var match =  await _context.Matches.FindAsync(matchId);
+
+            await Clients.User(match.UserAId).SendAsync("NeedUpdateMatch");
+            await Clients.User(match.UserBId).SendAsync("NeedUpdateMatch");
         }
 
         public async Task EndMatch(int matchId)
