@@ -48,6 +48,7 @@ namespace Super_Cartes_Infinies.Hubs
 
                 var start = await _matchService.StartMatch(UserId, result.Match.Id);
             }
+
         }
 
         public async Task CancelQueue()
@@ -74,6 +75,11 @@ namespace Super_Cartes_Infinies.Hubs
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var events = await _matchService.EndTurn(UserId, matchId);
+        }
+
+        public async Task EndMatch(int matchId)
+        {
+            _matchService.EndMatch(matchId);
         }
 
     }
