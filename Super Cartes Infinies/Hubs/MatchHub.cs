@@ -65,6 +65,8 @@ namespace Super_Cartes_Infinies.Hubs
         public async Task Surrender(int matchId)
         {
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _matchService.Surrender(matchId, UserId);
         }
 
         public async Task EndTurn(int matchId)
