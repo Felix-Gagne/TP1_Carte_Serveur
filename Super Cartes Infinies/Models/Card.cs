@@ -9,6 +9,8 @@ namespace Super_Cartes_Infinies.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } = "";
+		//Rareté de la carte
+		public string Rarety { get; set; } = "";
 		//Coût en mana de la carte
 		public int ManaCost { get; set; }
 		public int Attack { get; set; }

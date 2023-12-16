@@ -64,6 +64,12 @@ public class ApplicationDbContext : IdentityDbContext
         const String serverURL = "https://localhost:7219/images/";
         const String iconPower = "https://static.thenounproject.com/png/1776468-200.png";
 
+        //Constante au cas ou il faut changer le nom de la rareté
+        const String raretyTier1 = "Common";
+        const String raretyTier2 = "Rare";
+        const String raretyTier3 = "Epic";
+        const String raretyTier4 = "Legendary";
+
         #region Powers
 
         List<Power> powers = new List<Power>();
@@ -723,6 +729,30 @@ public class ApplicationDbContext : IdentityDbContext
         foreach (var card in cards)
         {
             card.prixVente = 250;
+        }
+
+        #endregion
+
+        #region Card Rarety
+
+        foreach (var card in cards)
+        {
+            if(card.Id <= 20)
+            {
+                card.Rarety = raretyTier1;
+
+            } else if(card.Id <= 35)
+            {
+                card.Rarety = raretyTier2;
+
+            }else if(card.Id <= 45)
+            {
+                card.Rarety = raretyTier3;
+
+            }else if (card.Id <= 50)
+            {
+                card.Rarety = raretyTier4;
+            }
         }
 
         #endregion
