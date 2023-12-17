@@ -84,6 +84,14 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
             {
                 return NotFound();
             }
+
+            ViewBag.RaretyDropdown = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Common", Value = "Common" },
+                new SelectListItem { Text = "Rare", Value = "Rare" },
+                new SelectListItem { Text = "Epic", Value = "Epic" },
+                new SelectListItem { Text = "Legendary", Value = "Legendary" },
+            };
             return View(card);
         }
 
@@ -92,7 +100,7 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Attack,Defense,ImageUrl")] Card card)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Rarety,Name,Attack,Defense,ImageUrl")] Card card)
         {
             if (id != card.Id)
             {
