@@ -100,7 +100,7 @@ namespace Super_Cartes_Infinies.Areas.Admin.Controleur
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rarety,Name,Attack,Defense,ImageUrl")] Card card)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Rarity,Name,Attack,Defense,ImageUrl")] Card card)
         {
             if (id != card.Id)
             {

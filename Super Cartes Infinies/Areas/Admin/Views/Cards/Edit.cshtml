@@ -19,11 +19,11 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rarety" class="control-label"></label>
-                <select asp-for="Rarety" asp-items="@((IEnumerable<SelectListItem>)ViewBag.RaretyDropdown)" class="form-control">
-                    <option disabled selected>Please select a rarity</option>
+                <label asp-for="Rarity" class="control-label"></label>
+                <select asp-for="Rarity" asp-items="Html.GetEnumSelectList<Super_Cartes_Infinies.Models.Rarity>()" class="form-control">
+                    <option value="" disabled selected>Please select a rarity</option>
                 </select>
-                <span asp-validation-for="Rarety" class="text-danger"></span>
+                <span asp-validation-for="Rarity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Attack" class="control-label"></label>
@@ -52,5 +52,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
