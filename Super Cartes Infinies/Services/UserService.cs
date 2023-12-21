@@ -34,6 +34,8 @@ namespace Super_Cartes_Infinies.Services
                 Name = register.Username,
                 DeckCard = new List<Deck>(),
                 Money = 500,
+                Wins = 0,
+                Loses = 0,
                 OwnedCard = new List<OwnedCard>()
             };
 
