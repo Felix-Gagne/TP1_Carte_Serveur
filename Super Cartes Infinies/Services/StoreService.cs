@@ -65,5 +65,89 @@ namespace Super_Cartes_Infinies.Services
 
             return "";
         }
+
+        public IEnumerable<Pack> GetPacks(String userId)
+        {
+            return _context.Packs.OrderBy(x => x.Id);
+        }
+
+        public async Task<ActionResult<List<Card>>> BuyPack(string userId, Pack pack)
+        {
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefaultAsync();
+            List<Card> cards = new List<Card>();
+            Random random = new Random();
+
+            if (currentPlayer.Money < pack.Price)
+            {
+                throw new Exception("Not enough money to buy this card brokie. Go get your money up.");
+            }
+            else
+            {
+
+                Rarity? GetRandomRarity(List<Probability> probabilities)
+                {
+                    
+                    foreach (var p in probabilities)
+                    {
+                        double x = random.NextDouble();
+                        if (p.value > x)
+                        {
+                            return p.rarity;
+                        }
+                    }
+
+                    return null;
+                }
+
+                List<Rarity> GenerateRarities(int nbCards, Rarity defaultRarity, List<Probability> probabilities)
+                {
+                    List<Rarity> rarities = new List<Rarity>();
+
+                    foreach(var p in probabilities)
+                    {
+                        if(p.baseQty == 1)
+                        {
+                            rarities.Add(p.rarity);
+                        }
+                    }
+
+                    while(rarities.Count < nbCards)
+                    {
+                        Rarity? rarity = GetRandomRarity(probabilities);
+
+                        if(rarity == null)
+                        {
+                            rarities.Add(defaultRarity);
+                        }
+                        else
+                        {
+                            rarities.Add((Rarity)rarity);
+                        }
+                    };
+
+                    return rarities;
+                }
+
+                //Trouver les rareté obtenus
+                var result = GenerateRarities(pack.NbCards, pack.BaseRarity, pack.Probabilities);
+
+                //Choisir les carets avec les raretés
+
+                foreach (var r in result)
+                {
+                    List<Card> cardsOfRarity = _context.Cards.Where(c => c.Rarity == r).ToList();
+
+                    int index = random.Next(cardsOfRarity.Count);
+                    cards.Add(cardsOfRarity[index]);
+                }
+
+                /*
+                currentPlayer.OwnedCard.Add(carteAcheter);
+                currentPlayer.Money -= storeCard.BuyAmount;
+                await _context.SaveChangesAsync();*/
+            }
+
+            return cards;
+        }
     }
 }
