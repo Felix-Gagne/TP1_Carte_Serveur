@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f63b43b7-f41e-4c8e-9502-273b1be2c866",
+                            ConcurrencyStamp = "e91aeac2-514d-4b36-92ba-79a7ef0c76a4",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBcIQPkuIjcZWwWpmVX5voNE/81RvETKIgFYpYD1ZWZNkrfeD3hQNET1B4Ya65VfQA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAuUH44BMr60sH0qk3gi4hQ9osFeci3EV+3m7K+1/javC+PCILQM6qKF1yFCUU3Stw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc55c50b-d180-42a6-8fd0-4bd70e2d37bc",
+                            SecurityStamp = "8fe20d3f-47fd-41f5-84ae-ce1ce0452b06",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -1225,6 +1225,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Loses")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Money")
                         .HasColumnType("INTEGER");
 
@@ -1233,6 +1236,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("SelectedDeckId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Wins")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

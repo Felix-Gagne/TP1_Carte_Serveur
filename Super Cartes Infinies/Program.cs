@@ -37,6 +37,7 @@ builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<StoreService>();
+builder.Services.AddScoped<StatsService>();
 
 
 //Ajout de la permission des cookies

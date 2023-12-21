@@ -10,6 +10,11 @@ namespace Super_Cartes_Infinies.Services
     {
         private ApplicationDbContext _context;
 
+        public StatsService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public async Task<ActionResult<StatsDTO>> GetGeneralStats(string uId)
         {
             Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == uId).FirstOrDefaultAsync();
