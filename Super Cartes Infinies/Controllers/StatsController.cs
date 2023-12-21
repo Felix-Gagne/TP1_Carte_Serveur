@@ -23,11 +23,7 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpGet]
         public Task<ActionResult<StatsDTO>> GetGeneralStats()
         {
-            StatsDTO statsDTO = new StatsDTO();
-
-            statsDTO = _statsService.GetGeneralStats(UserId);
-
-            return statsDTO;
+            return _statsService.GetGeneralStats(UserId);
         }
     }
 }
