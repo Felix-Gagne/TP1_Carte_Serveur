@@ -1136,5 +1136,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Deck> Decks { get; set; } = default!;
 
+    public DbSet<MatchTask> MatchTasks { get; set; } = default!;
+
 }
 

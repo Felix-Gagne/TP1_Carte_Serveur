@@ -41,6 +41,11 @@
 				return matchCreationResult;
 			}
 		}
+
+		public void CancelQueue()
+		{
+			_waitingUserId = null;
+		}
 	}
 }
 
