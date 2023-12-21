@@ -120,6 +120,14 @@ public class ApplicationDbContext : IdentityDbContext
             Icon = iconPower
         };
         powers.Add(Greed);
+
+        Power Poison = new Power
+        {
+            Id = Power.POISON_ID,
+            Name = "Poison",
+            Icon = iconPower
+        };
+        powers.Add(Poison);
         builder.Entity<Power>().HasData(Greed);
 
         #endregion

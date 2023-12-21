@@ -12,7 +12,27 @@ namespace Super_Cartes_Infinies.Combat
             Events = new List<Event>();
 
             //Combat
+            
             Events.Add(new CombatEvent(match, currentPlayerData, opposingPlayerData));
+            
+
+            foreach(PlayableCard card in opposingPlayerData.BattleField)
+            {
+                if(card.StunTurnLeft > 0)
+                {
+                    card.StunTurnLeft--;
+                }
+
+                if(card.StunTurnLeft == 0)
+                {
+                    card.Stuned = false;
+                }
+
+                if (card.Poisoned)
+                {
+                    card.Health -= card.PoisonedLevel;
+                }
+            }
 
             // TODO: Faire piger une carte à l'adversaire
             Events.Add(new DrawCardEvent(opposingPlayerData));

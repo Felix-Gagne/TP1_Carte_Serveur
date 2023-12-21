@@ -25,7 +25,10 @@ namespace Super_Cartes_Infinies.Combat
                 }
                 if (!currentPlayerData.BattleField[i].SummonSickness)
                 {
-                    Events.Add(new CardActivationEvent(match, currentCard, opposingCard, currentPlayerData, opposingPlayerData));
+                    if(!currentCard.Stuned)
+                    {
+                        Events.Add(new CardActivationEvent(match, currentCard, opposingCard, currentPlayerData, opposingPlayerData));
+                    }
                 }
             }
         }

@@ -20,6 +20,9 @@ namespace Super_Cartes_Infinies.Models
         // Lorsque le monstre est joué. Le joueur peut piger 2 cartes depuis son deck et obtient 3 mana.
         public const int GREED_ID = 6;
 
+        public const int POISON_ID = 7;
+        public const int STUN_ID = 8;
+
         [ValidateNever]
         public virtual List<CardPower> cardPowers { get; set; }
     }

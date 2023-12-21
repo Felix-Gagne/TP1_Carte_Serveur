@@ -43,6 +43,8 @@ namespace Super_Cartes_Infinies.Combat
                     }
                 }
 
+                
+
                 if (Damage >= opposingCard.Health)
                 {
                     opposingCard.Health = 0;
@@ -51,6 +53,19 @@ namespace Super_Cartes_Infinies.Combat
                 else
                 {
                     opposingCard.Health -= Damage;
+
+                    
+                    if (playableCard.Card.HasPower(Power.STUN_ID))
+                    {
+                        opposingCard.Stuned = true;
+                        opposingCard.StunTurnLeft += 2;
+                    }
+
+                    if (playableCard.Card.HasPower(Power.POISON_ID))
+                    {
+                        opposingCard.Poisoned = true;
+                        opposingCard.PoisonedLevel += 1;
+                    }
                 }
             }
         }

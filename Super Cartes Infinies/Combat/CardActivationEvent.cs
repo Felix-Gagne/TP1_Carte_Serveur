@@ -22,7 +22,9 @@ namespace Super_Cartes_Infinies.Combat
                 Events.Add(new PlayerDamageEvent(match, playableCard,currentPlayerData, opposingPlayerData));
             }
             else
-            {
+            
+                if(playableCard.Stuned == false)
+                {
                 if (playableCard.Card.HasPower(Power.FIRSTSTRIKE_ID))
                 {
 
@@ -43,14 +45,23 @@ namespace Super_Cartes_Infinies.Combat
                         if (playableCard.Card.HasPower(Power.HEAL_ID))
                         {
                             Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
-                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));                           
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                        }
+                        else if (playableCard.Card.HasPower(Power.POISON_ID))
+                        {
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                        }
+                        else if (playableCard.Card.HasPower(Power.STUN_ID) && opposingCard.Stuned != false)
+                        {
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
+                            Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
                         }
                         else
                         {
                             Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
                             Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
                         }
-
                     }
                 }
             }
