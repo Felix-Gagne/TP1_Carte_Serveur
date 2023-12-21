@@ -1151,8 +1151,8 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 1,
             Name = "Pack Basic",
-            Price = 1,
-            ImageURL = "",
+            Price = 100,
+            ImageURL = serverURL + "BASIC_PACK.png",
             NbCards = 3,
             BaseRarity = Rarity.Common
         };
@@ -1175,8 +1175,8 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 2,
             Name = "Pack Normal",
-            Price = 1,
-            ImageURL = "",
+            Price = 300,
+            ImageURL = serverURL + "NORMAL_PACK.png",
             NbCards = 4,
             BaseRarity = Rarity.Common
         };
@@ -1217,8 +1217,8 @@ public class ApplicationDbContext : IdentityDbContext
         {
             Id = 3,
             Name = "Pack Super",
-            Price = 1,
-            ImageURL = "",
+            Price = 500,
+            ImageURL = serverURL + "SUPER_PACK.png",
             NbCards = 5,
             BaseRarity = Rarity.Rare
         };

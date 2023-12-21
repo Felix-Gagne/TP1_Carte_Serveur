@@ -141,10 +141,19 @@ namespace Super_Cartes_Infinies.Services
                     cards.Add(cardsOfRarity[index]);
                 }
 
-                /*
-                currentPlayer.OwnedCard.Add(carteAcheter);
-                currentPlayer.Money -= storeCard.BuyAmount;
-                await _context.SaveChangesAsync();*/
+
+                foreach(var c in cards)
+                {
+                    OwnedCard newOwnedCard = new OwnedCard()
+                    {
+                        PlayerId = currentPlayer.Id,
+                        CardId = c.Id,
+                    };
+                    currentPlayer.OwnedCard.Add(newOwnedCard);
+                };
+
+                currentPlayer.Money -= pack.Price;
+                await _context.SaveChangesAsync();
             }
 
             return cards;
