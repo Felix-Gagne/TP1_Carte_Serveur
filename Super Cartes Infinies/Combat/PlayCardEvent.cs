@@ -30,6 +30,17 @@ namespace Super_Cartes_Infinies.Combat
                 currentPlayerData.BattleField.Add(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
                 currentPlayerData.Hand.Remove(currentPlayerData.Hand.Where(x => x.Id == LaCarte.Id).SingleOrDefault());
 
+                if(playableCard.Card.HasPower(Power.EARTHQUAKE_ID))
+                {
+                    playableCard.QuickPlayCard = true;
+                }
+
+                if (playableCard.Card.HasPower(Power.LIGHTINGSTRIKE_ID))
+                {
+                    playableCard.QuickPlayCard = true;
+
+                }
+
                 if (LaCarte.Card.HasPower(Power.GREED_ID))
                 {
                     Events.Add(new GainManaEvent(currentPlayerData));

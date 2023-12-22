@@ -23,6 +23,9 @@ namespace Super_Cartes_Infinies.Models
         public const int POISON_ID = 7;
         public const int STUN_ID = 8;
 
+        public const int EARTHQUAKE_ID = 9;
+        public const int LIGHTINGSTRIKE_ID = 10;
+
         [ValidateNever]
         public virtual List<CardPower> cardPowers { get; set; }
     }

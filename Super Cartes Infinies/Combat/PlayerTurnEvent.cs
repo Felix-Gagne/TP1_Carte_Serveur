@@ -14,38 +14,48 @@ namespace Super_Cartes_Infinies.Combat
             //Combat
             
             Events.Add(new CombatEvent(match, currentPlayerData, opposingPlayerData));
-            
 
-            foreach(PlayableCard card in opposingPlayerData.BattleField)
+            if (!match.IsMatchCompleted)
             {
-                if(card.StunTurnLeft > 0)
+                foreach (PlayableCard card in opposingPlayerData.BattleField)
                 {
-                    card.StunTurnLeft--;
+                    if (card.StunTurnLeft > 0)
+                    {
+                        card.StunTurnLeft--;
+                    }
+
+                    if (card.StunTurnLeft == 0)
+                    {
+                        card.Stuned = false;
+                    }
+
+                    if (card.Poisoned)
+                    {
+                        card.Health -= card.PoisonedLevel;
+                    }
                 }
 
-                if(card.StunTurnLeft == 0)
+                foreach (PlayableCard card in currentPlayerData.BattleField)
                 {
-                    card.Stuned = false;
+                    if (card.Poisoned)
+                    {
+                        card.Health -= card.PoisonedLevel;
+                    }
                 }
 
-                if (card.Poisoned)
+                // TODO: Faire piger une carte à l'adversaire
+                Events.Add(new DrawCardEvent(opposingPlayerData));
+                // Joueur Opposé gagne du Mana
+                Events.Add(new GainManaEvent(opposingPlayerData));
+                if (!match.IsPlayerATurn)
                 {
-                    card.Health -= card.PoisonedLevel;
+                    match.IsPlayerATurn = true;
                 }
-            }
-
-            // TODO: Faire piger une carte à l'adversaire
-            Events.Add(new DrawCardEvent(opposingPlayerData));
-            // Joueur Opposé gagne du Mana
-            Events.Add(new GainManaEvent(opposingPlayerData));
-            if (!match.IsPlayerATurn)
-            {
-                match.IsPlayerATurn = true;
-            }
-            else
-            {
-                match.IsPlayerATurn = false;
-            }
+                else
+                {
+                    match.IsPlayerATurn = false;
+                }
+            }  
         }
 
     }

@@ -26,6 +26,7 @@ namespace Super_Cartes_Infinies.Models
         public int PoisonedLevel { get; set; }
         public bool Stuned { get; set; }
         public int StunTurnLeft { get; set; }
+        public bool QuickPlayCard { get; set; }
 
         public int Attack { get { return Card.Attack; } }
     }

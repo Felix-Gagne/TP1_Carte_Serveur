@@ -43,30 +43,80 @@ namespace Super_Cartes_Infinies.Combat
                     }
                 }
 
-                
-
-                if (Damage >= opposingCard.Health)
+                if(playableCard.Card.HasPower(Power.EARTHQUAKE_ID))
                 {
-                    opposingCard.Health = 0;
-                    Events.Add(new CardDeathEvent(opposingCard, opposingPlayerData, currentPlayerData));
+                    int valueOfEarthquake = playableCard.Card.GetPowerValue(Power.EARTHQUAKE_ID);
+                    foreach(var card in opposingPlayerData.BattleField.ToList())
+                    {
+                        if (card.QuickPlayCard)
+                        {
+                            card.Health = 0;
+                            Events.Add(new CardDeathEvent(card, opposingPlayerData, currentPlayerData));
+                        }
+                        else
+                        {
+                            if (card.Health > valueOfEarthquake)
+                            {
+                                card.Health -= valueOfEarthquake;
+                            }
+                            else
+                            {
+                                card.Health = 0;
+                                Events.Add(new CardDeathEvent(card, opposingPlayerData, currentPlayerData));
+                            }
+                        }
+                        
+                    }
+
+                    foreach(var card in currentPlayerData.BattleField.ToList())
+                    {
+                        if (card.QuickPlayCard)
+                        {
+                            card.Health = 0;
+                            Events.Add(new CardDeathEvent(card, currentPlayerData, opposingPlayerData));
+                        }
+                        else
+                        {
+                            if (card.Health > valueOfEarthquake)
+                            {
+                                card.Health -= valueOfEarthquake;
+                            }
+                            else
+                            {
+                                card.Health = 0;
+                                Events.Add(new CardDeathEvent(card, currentPlayerData, opposingPlayerData));
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    opposingCard.Health -= Damage;
-
-                    
-                    if (playableCard.Card.HasPower(Power.STUN_ID))
+                    if (Damage >= opposingCard.Health)
                     {
-                        opposingCard.Stuned = true;
-                        opposingCard.StunTurnLeft += 2;
+                        opposingCard.Health = 0;
+                        Events.Add(new CardDeathEvent(opposingCard, opposingPlayerData, currentPlayerData));
                     }
-
-                    if (playableCard.Card.HasPower(Power.POISON_ID))
+                    else
                     {
-                        opposingCard.Poisoned = true;
-                        opposingCard.PoisonedLevel += 1;
+                        opposingCard.Health -= Damage;
+
+
+                        if (playableCard.Card.HasPower(Power.STUN_ID))
+                        {
+                            opposingCard.Stuned = true;
+                            opposingCard.StunTurnLeft += 2;
+                        }
+
+                        if (playableCard.Card.HasPower(Power.POISON_ID))
+                        {
+                            opposingCard.Poisoned = true;
+                            opposingCard.PoisonedLevel += 1;
+                        }
                     }
                 }
+
+
+                
             }
         }
     }

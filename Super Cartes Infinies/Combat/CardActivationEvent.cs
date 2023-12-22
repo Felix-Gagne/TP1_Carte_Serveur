@@ -34,6 +34,10 @@ namespace Super_Cartes_Infinies.Combat
                         Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
                     }
                 }
+                else if (playableCard.Card.HasPower(Power.LIGHTINGSTRIKE_ID))
+                {
+                    Events.Add(new PlayerDamageEvent(match, playableCard, currentPlayerData, opposingPlayerData));
+                }
                 else
                 {
                     if (opposingCard.Card.HasPower(Power.THORNS_ID))
@@ -56,6 +60,10 @@ namespace Super_Cartes_Infinies.Combat
                         {
                             Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
                             Events.Add(new CardDamageEvent(opposingCard, playableCard, currentPlayerData, opposingPlayerData));
+                        }
+                        else if (playableCard.Card.HasPower(Power.EARTHQUAKE_ID))
+                        {
+                            Events.Add(new CardDamageEvent(playableCard, opposingCard, opposingPlayerData, currentPlayerData));
                         }
                         else
                         {

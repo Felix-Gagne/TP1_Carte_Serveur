@@ -20,6 +20,7 @@ namespace Super_Cartes_Infinies.Combat
     [JsonDerivedType(typeof(PlayerDamageEvent), typeDiscriminator: "PlayerDamage")]
     [JsonDerivedType(typeof(PlayerDeathEvent), typeDiscriminator: "PlayerDeath")]
     [JsonDerivedType(typeof(EndMatchEvent), typeDiscriminator: "EndMatch")]
+
     public abstract class Event
     {
         public Event()

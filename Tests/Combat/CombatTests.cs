@@ -1822,6 +1822,8 @@ namespace Tests.Services
             Assert.IsTrue(playableCardB.Stuned);
 			//La carte ce fait bien attaquer et perds hp de l attaque et du poison
             Assert.AreEqual(playableCardB.Health, 14);
+            //Verification que la carte a prend des degats
+            Assert.AreEqual(playableCardA.Health, 2);
 
             var EndTurnEvent2 = new PlayerTurnEvent(match, opposingPlayerData, currentPlayerData);
 
@@ -1830,10 +1832,241 @@ namespace Tests.Services
 			Assert.IsTrue(playableCardB.Stuned);
 			//Compteur Carte B qui descend
 			Assert.AreEqual(playableCardB.StunTurnLeft, 1);
-			//Verification que la carte du player A ne c'est pas fait attaquer
-			Assert.AreEqual(playableCardA.Health, 5);
+            //Verification que la carte a possede encore les meme hp
+            Assert.AreEqual(playableCardA.Health, 2);
 			//Hp carte B apres effet poison
-            Assert.AreEqual(playableCardA.Health, 13);
+            Assert.AreEqual(playableCardB.Health, 13);
+        }
+
+        #endregion
+
+        #region EarthQuake
+
+        [TestMethod]
+        public void EarthQuakeTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3,
+                ManaCost = 1
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 3,
+                ManaCost = 1
+            };
+
+            var cardC = new Card
+            {
+                Id = 44,
+                Attack = 7,
+                Defense = 7,
+                ManaCost = 1
+            };
+
+            var cardD = new Card
+            {
+                Id = 45,
+                Attack = 1,
+                Defense = 6,
+                ManaCost = 1,
+                cardPowers = new List<CardPower>()
+            };
+
+            var EarthQuake = new Power
+            {
+                Id = Power.EARTHQUAKE_ID,
+                Name = "EarthQuake",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 45,
+                PowerId = Power.EARTHQUAKE_ID,
+                value = 5
+            };
+
+            cardD.cardPowers.Add(cardPower);
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1,
+                SummonSickness = false
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+            var playableCardC = new PlayableCard(cardC)
+            {
+                Id = 3,
+                SummonSickness = false
+            };
+            var playableCardD = new PlayableCard(cardD)
+            {
+                Id = 4,
+            };
+
+            currentPlayerData.BattleField.Add(playableCardA);
+            opposingPlayerData.BattleField.Add(playableCardB);
+            currentPlayerData.BattleField.Add(playableCardC);
+			opposingPlayerData.Hand.Add(playableCardD);
+			var playCard = new PlayCardEvent(match, opposingPlayerData, currentPlayerData, playableCardD);
+            var palyCardEvent = new PlayerTurnEvent(match, opposingPlayerData, currentPlayerData);
+
+            Assert.AreEqual(opposingPlayerData.PlayerId, palyCardEvent.PlayerId);
+
+            // Test que la carte A possède le power Charge.
+            Assert.IsTrue(playableCardD.Card.HasPower(Power.EARTHQUAKE_ID));
+			//S'assurer que la carte a bien ete jouer
+            Assert.IsTrue(playableCardD.QuickPlayCard);
+            // Les 2 joueurs ne sont pas blessés
+            Assert.AreEqual(1, opposingPlayerData.Health);
+            Assert.AreEqual(1, currentPlayerData.Health);
+
+            Assert.AreEqual(0, playableCardA.Health);
+            Assert.AreEqual(0, playableCardB.Health);
+            Assert.AreEqual(2, playableCardC.Health);
+            Assert.AreEqual(0, playableCardD.Health);
+
+            // Explosion fait 5 damage a tout les monstres donc un monstre de currentPlayer est mort.           
+            Assert.AreEqual(1, currentPlayerData.BattleField.Count);
+            Assert.AreEqual(0, opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(1, currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(2, opposingPlayerData.Graveyard.Count);
+        }
+
+        #endregion
+
+        #region LightingAttack
+
+        [TestMethod]
+        public void LightingAttackTest()
+        {
+            var currentPlayerData = new MatchPlayerData(1)
+            {
+                Health = 1,
+            };
+            var opposingPlayerData = new MatchPlayerData(2)
+            {
+                Health = 1,
+            };
+
+			
+
+            var match = new Match
+            {
+                UserAId = "UserAId",
+                UserBId = "UserBId",
+                PlayerDataA = currentPlayerData,
+                PlayerDataB = opposingPlayerData
+            };
+
+
+			Player player1 = new Player() { IdentityUserId = match.UserAId };
+			Player player2 = new Player() { IdentityUserId = match.UserBId };
+
+
+
+            var cardA = new Card
+            {
+                Id = 42,
+                Attack = 2,
+                Defense = 3,
+                ManaCost = 1,
+				cardPowers = new List<CardPower>()
+            };
+
+            var cardB = new Card
+            {
+                Id = 43,
+                Attack = 1,
+                Defense = 3,
+                ManaCost = 1
+            };
+
+           
+
+            var LightingStrike = new Power
+            {
+                Id = Power.LIGHTINGSTRIKE_ID,
+                Name = "EarthQuake",
+                Icon = "https://static.vecteezy.com/system/resources/previews/005/455/799/original/casual-game-power-icon-isolated-golden-symbol-gui-ui-for-web-or-app-interface-element-vector.jpg"
+            };
+
+
+            var cardPower = new CardPower
+            {
+                Id = 1,
+                CardId = 42,
+                PowerId = Power.LIGHTINGSTRIKE_ID,
+                value = 5
+            };
+
+            cardA.cardPowers.Add(cardPower);
+
+            var playableCardA = new PlayableCard(cardA)
+            {
+                Id = 1,
+                SummonSickness = false
+            };
+            var playableCardB = new PlayableCard(cardB)
+            {
+                Id = 2
+            };
+
+
+			currentPlayerData.Player = player1;
+            opposingPlayerData.Player = player2;
+
+
+            opposingPlayerData.BattleField.Add(playableCardB);
+			currentPlayerData.Hand.Add(playableCardA);
+
+            var playCard = new PlayCardEvent(match, currentPlayerData, opposingPlayerData, playableCardA);
+            var palyCardEvent = new PlayerTurnEvent(match, currentPlayerData, opposingPlayerData);
+
+            Assert.AreEqual(currentPlayerData.PlayerId, palyCardEvent.PlayerId);
+            Assert.AreEqual(0, currentPlayerData.Hand.Count);
+            Assert.IsTrue(playableCardA.QuickPlayCard);
+
+			Assert.AreEqual(0, playableCardA.Health);
+			Assert.AreEqual(3, playableCardB.Health);
+
+			Assert.AreEqual(0, currentPlayerData.BattleField.Count);
+			Assert.AreEqual(1, currentPlayerData.Graveyard.Count);
+
+			Assert.AreEqual(1, opposingPlayerData.BattleField.Count);
+
+			Assert.AreEqual(0, opposingPlayerData.Health);
+			Assert.AreEqual(match.WinnerUserId, match.UserAId);
+
+			Assert.IsTrue(match.IsMatchCompleted);
         }
 
         #endregion
