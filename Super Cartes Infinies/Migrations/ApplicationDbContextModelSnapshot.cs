@@ -161,15 +161,15 @@ namespace Super_Cartes_Infinies.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f63b43b7-f41e-4c8e-9502-273b1be2c866",
+                            ConcurrencyStamp = "339c374b-65e8-46c1-8252-1c9a49e7a841",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBcIQPkuIjcZWwWpmVX5voNE/81RvETKIgFYpYD1ZWZNkrfeD3hQNET1B4Ya65VfQA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEJ0UphZKIjHSAbxmZ/44quI8IxpdzHTNFHeyUVfFvN88DnayQav1U0fvzh33Eqjgg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc55c50b-d180-42a6-8fd0-4bd70e2d37bc",
+                            SecurityStamp = "0755c8a9-fcbc-4f9b-aec0-b54717d292ae",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -288,6 +288,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("prixVente")
                         .HasColumnType("INTEGER");
 
@@ -304,6 +307,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Stickly_Steve.png",
                             ManaCost = 2,
                             Name = "Stickly Steve",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -314,6 +318,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Sketchy_Sarah.png",
                             ManaCost = 1,
                             Name = "Sketchy Sarah",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -324,6 +329,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Doodle_Dave.png",
                             ManaCost = 2,
                             Name = "Doodle Dave",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -334,6 +340,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Pencil_Pete.png",
                             ManaCost = 3,
                             Name = "Pencil Pete",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -344,6 +351,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Marker_Mike.png",
                             ManaCost = 3,
                             Name = "Marker Mike",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -354,6 +362,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Eraser_Edith.png",
                             ManaCost = 2,
                             Name = "Eraser Edith",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -364,6 +373,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Crayon_Carla.png",
                             ManaCost = 4,
                             Name = "Crayon Carla",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -374,6 +384,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Scribble_Sam.png",
                             ManaCost = 3,
                             Name = "Scribble Sam",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -384,6 +395,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Inkwell_Ivan.png",
                             ManaCost = 2,
                             Name = "Inkwell Ivan",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -394,6 +406,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Paintbrush_Penny.png",
                             ManaCost = 3,
                             Name = "Paintbrush Penny",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -404,6 +417,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Sketchpad_Sally.png",
                             ManaCost = 3,
                             Name = "Sketchpad Sally",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -414,6 +428,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Chalkboard_Chuck.png",
                             ManaCost = 3,
                             Name = "Chalkboard Chuck",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -424,6 +439,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Notebook_Ned.png",
                             ManaCost = 3,
                             Name = "Notebook Ned",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -434,6 +450,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 2,
                             Name = "Penelope Pencil",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -444,6 +461,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Highlighter Hank",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -454,6 +472,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Marker Mary",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -464,6 +483,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 2,
                             Name = "Crayola Carl",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -474,6 +494,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Paperclip_Paula.png",
                             ManaCost = 5,
                             Name = "Paperclip Paula",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -484,6 +505,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 3,
                             Name = "Paint Paddy",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -494,6 +516,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Pencil Shavings Pete",
+                            Rarity = 0,
                             prixVente = 250
                         },
                         new
@@ -504,6 +527,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 3,
                             Name = "Sticky Stan",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -514,6 +538,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 7,
                             Name = "Charcoal Charlie",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -524,6 +549,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 2,
                             Name = "Watercolor Wendy",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -534,6 +560,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Notebook Nikki",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -544,6 +571,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 3,
                             Name = "Etch-a-Sketch Eddie",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -554,6 +582,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Glitter Glenda",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -564,6 +593,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Crayonbox_Casey.png",
                             ManaCost = 5,
                             Name = "Crayonbox Casey",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -574,6 +604,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Sketchbook Simon",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -584,6 +615,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Quill_Quentin.png",
                             ManaCost = 5,
                             Name = "Quill Quentin",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -594,6 +626,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Sidewalk Chalk Chloe",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -604,6 +637,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Canvas_Cathy.png",
                             ManaCost = 4,
                             Name = "Canvas Cathy",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -614,6 +648,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Fountain_Pen_Fred.png",
                             ManaCost = 8,
                             Name = "Fountain Pen Fred",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -624,6 +659,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Sticky_Note_Steve.png",
                             ManaCost = 6,
                             Name = "Sticky Note Steve",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -634,6 +670,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Doodle Pad Donna",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -644,6 +681,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Spray_Paint_Patrick.png",
                             ManaCost = 7,
                             Name = "Spray Paint Patrick",
+                            Rarity = 1,
                             prixVente = 250
                         },
                         new
@@ -654,6 +692,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 7,
                             Name = "Marker Maze Max",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -664,6 +703,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 4,
                             Name = "Etch-a-Sketch Emma",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -674,6 +714,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Charcoal Chip",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -684,6 +725,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 10,
                             Name = "Graphite Gabby",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -694,6 +736,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Inkwell Ike",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -704,6 +747,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Sketchbook Skyler",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -714,6 +758,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 7,
                             Name = "Chalky Charles",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -724,6 +769,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 6,
                             Name = "Color Wheel Casey",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -734,6 +780,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 5,
                             Name = "Canvas Cleo",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -744,6 +791,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 8,
                             Name = "Sticker Sue",
+                            Rarity = 2,
                             prixVente = 250
                         },
                         new
@@ -754,6 +802,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Glue_Gun_Garry.png",
                             ManaCost = 5,
                             Name = "Glue Gun Gary",
+                            Rarity = 3,
                             prixVente = 250
                         },
                         new
@@ -764,6 +813,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 7,
                             Name = "Markerboard Molly",
+                            Rarity = 3,
                             prixVente = 250
                         },
                         new
@@ -774,6 +824,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://localhost:7219/images/Pixel_Pete.png",
                             ManaCost = 7,
                             Name = "Pixel Pete",
+                            Rarity = 3,
                             prixVente = 250
                         },
                         new
@@ -784,6 +835,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 20,
                             Name = "Lithography Lily",
+                            Rarity = 3,
                             prixVente = 250
                         },
                         new
@@ -794,6 +846,7 @@ namespace Super_Cartes_Infinies.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png",
                             ManaCost = 8,
                             Name = "Silkscreening Simon",
+                            Rarity = 3,
                             prixVente = 250
                         });
                 });
@@ -1170,6 +1223,63 @@ namespace Super_Cartes_Infinies.Migrations
                     b.ToTable("OwnedCards");
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Pack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BaseRarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NbCards")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Packs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BaseRarity = 0,
+                            ImageURL = "https://localhost:7219/images/BASIC_PACK.png",
+                            Name = "Pack Basic",
+                            NbCards = 3,
+                            Price = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BaseRarity = 0,
+                            ImageURL = "https://localhost:7219/images/NORMAL_PACK.png",
+                            Name = "Pack Normal",
+                            NbCards = 4,
+                            Price = 300
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BaseRarity = 1,
+                            ImageURL = "https://localhost:7219/images/SUPER_PACK.png",
+                            Name = "Pack Super",
+                            NbCards = 5,
+                            Price = 500
+                        });
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
                 {
                     b.Property<int>("Id")
@@ -1225,6 +1335,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Loses")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Money")
                         .HasColumnType("INTEGER");
 
@@ -1233,6 +1346,9 @@ namespace Super_Cartes_Infinies.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("SelectedDeckId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Wins")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -1298,6 +1414,81 @@ namespace Super_Cartes_Infinies.Migrations
                             Id = 6,
                             Icon = "https://static.thenounproject.com/png/1776468-200.png",
                             Name = "Greed"
+                        });
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Probability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PackId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("baseQty")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("rarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PackId");
+
+                    b.ToTable("Probability");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PackId = 1,
+                            baseQty = 0,
+                            rarity = 1,
+                            value = 0.29999999999999999
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PackId = 2,
+                            baseQty = 1,
+                            rarity = 1,
+                            value = 0.29999999999999999
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PackId = 2,
+                            baseQty = 0,
+                            rarity = 2,
+                            value = 0.10000000000000001
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PackId = 2,
+                            baseQty = 0,
+                            rarity = 3,
+                            value = 0.02
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PackId = 3,
+                            baseQty = 1,
+                            rarity = 2,
+                            value = 0.25
+                        },
+                        new
+                        {
+                            Id = 6,
+                            PackId = 3,
+                            baseQty = 0,
+                            rarity = 3,
+                            value = 0.02
                         });
                 });
 
@@ -1632,6 +1823,17 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("IdentityUser");
                 });
 
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Probability", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Pack", "Pack")
+                        .WithMany("Probabilities")
+                        .HasForeignKey("PackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pack");
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.SerializedMatchEvent", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Match", null)
@@ -1682,6 +1884,11 @@ namespace Super_Cartes_Infinies.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Pack", b =>
+                {
+                    b.Navigation("Probabilities");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>

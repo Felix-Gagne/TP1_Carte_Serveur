@@ -15,13 +15,14 @@ namespace Super_Cartes_Infinies.Combat
 
         public EndMatchEvent(Match match, MatchPlayerData winner, MatchPlayerData loser)
         {
-            Random rnd = new Random();
-
             winningMoney = 150;
             losingMoney = 50;
 
             winner.Player.Money += winningMoney;
             loser.Player.Money += losingMoney;
+
+            winner.Player.Wins += 1;
+            loser.Player.Loses += 1;
 
             match.IsMatchCompleted = true;
         }
