@@ -335,6 +335,12 @@ namespace Tests.Services
 				PlayerDataB = opposingPlayerData
 			};
 
+            Player player1 = new Player() { IdentityUserId = match.UserAId };
+            Player player2 = new Player() { IdentityUserId = match.UserBId };
+
+			currentPlayerData.Player = player1;
+			opposingPlayerData.Player = player2;
+
 			var card = new Card
 			{
 				Id = 42,

@@ -1304,7 +1304,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<MatchTask> MatchTasks { get; set; } = default!;
 
     public DbSet<Pack> Packs { get; set; } = default;
-    public DbSet<MatchTask> MatchTasks { get; set; } = default!;
 
 }
 
