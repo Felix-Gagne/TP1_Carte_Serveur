@@ -83,6 +83,16 @@ namespace Super_Cartes_Infinies.Controllers
 
         #region Inventory
         [HttpGet]
+        public async Task<List<Card>> GetAllCards()
+        {
+            List<Card> result = new List<Card>();
+
+            result = await _deckService.GetAllCards();
+
+            return result;
+        }
+
+        [HttpGet]
         public async Task<List<OwnedCard>> GetInventory()
         {
             try
