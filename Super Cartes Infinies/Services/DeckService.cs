@@ -25,6 +25,8 @@ namespace Super_Cartes_Infinies.Services
 
         #region Deck
 
+        
+
         public List<Deck> GetDecks(string userId)
         {
             Player player = _context.Players.Where(x => x.IdentityUserId == userId).FirstOrDefault();
@@ -131,6 +133,12 @@ namespace Super_Cartes_Infinies.Services
         #endregion
 
         #region Inventory
+
+        public async Task<List<Card>> GetAllCards()
+        {
+            List<Card> cards = await _context.Cards.ToListAsync();
+            return cards;
+        }
 
         public async Task<List<OwnedCard>> GetInventory(int playerId)
         {
