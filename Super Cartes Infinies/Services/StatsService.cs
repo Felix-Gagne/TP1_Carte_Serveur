@@ -37,5 +37,28 @@ namespace Super_Cartes_Infinies.Services
 
             return stats;
         }
+
+        public async Task<ActionResult<StatsDTO>> GetDeckStats(string uId, int deckId)
+        {
+            Player currentPlayer = await _context.Players.Where(x => x.IdentityUserId == uId).FirstOrDefaultAsync();
+
+            Deck playerDeck = await _context.Decks.Where(x => x.Id == deckId).FirstOrDefaultAsync();
+
+            List<Card> deckCards = new List<Card>();
+
+            foreach(var c in playerDeck.Cards)
+            {
+                deckCards.Add(c.Card);
+            }
+
+            StatsDTO stats = new StatsDTO
+            {
+                Wins = currentPlayer.Wins,
+                Loses = currentPlayer.Loses,
+                Cards = deckCards
+            };
+
+            return stats;
+        }
     }
 }

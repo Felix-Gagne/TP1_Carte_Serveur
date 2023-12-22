@@ -28,5 +28,11 @@ namespace Super_Cartes_Infinies.Controllers
         {
             return await _statsService.GetGeneralStats(UserId);
         }
+
+        [HttpGet("{deckId}")]
+        public async Task<ActionResult<StatsDTO>> GetDeckStats(int deckId)
+        {
+            return await _statsService.GetDeckStats(UserId, deckId);
+        }
     }
 }
