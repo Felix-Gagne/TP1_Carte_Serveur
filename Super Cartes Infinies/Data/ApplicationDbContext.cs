@@ -120,6 +120,40 @@ public class ApplicationDbContext : IdentityDbContext
             Icon = iconPower
         };
         powers.Add(Greed);
+
+        Power Poison = new Power
+        {
+            Id = Power.POISON_ID,
+            Name = "Poison",
+            Icon = iconPower
+        };
+        powers.Add(Poison);
+
+        Power Stun = new Power
+        {
+            Id = Power.STUN_ID,
+            Name = "Stun",
+            Icon = iconPower
+        };
+        powers.Add(Stun);
+
+        Power Earthquake = new Power
+        {
+            Id = Power.EARTHQUAKE_ID,
+            Name = "Stun",
+            Icon = iconPower
+        };
+        powers.Add(Earthquake);
+
+        Power Lighting_Strike = new Power
+        {
+            Id = Power.LIGHTINGSTRIKE_ID,
+            Name = "Lighting-Strike",
+            Icon = iconPower
+        };
+        powers.Add(Lighting_Strike);
+
+
         builder.Entity<Power>().HasData(Greed);
 
         #endregion

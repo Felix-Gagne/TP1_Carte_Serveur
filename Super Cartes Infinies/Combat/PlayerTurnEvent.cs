@@ -12,20 +12,50 @@ namespace Super_Cartes_Infinies.Combat
             Events = new List<Event>();
 
             //Combat
+            
             Events.Add(new CombatEvent(match, currentPlayerData, opposingPlayerData));
 
-            // TODO: Faire piger une carte à l'adversaire
-            Events.Add(new DrawCardEvent(opposingPlayerData));
-            // Joueur Opposé gagne du Mana
-            Events.Add(new GainManaEvent(opposingPlayerData));
-            if (!match.IsPlayerATurn)
+            if (!match.IsMatchCompleted)
             {
-                match.IsPlayerATurn = true;
-            }
-            else
-            {
-                match.IsPlayerATurn = false;
-            }
+                foreach (PlayableCard card in opposingPlayerData.BattleField)
+                {
+                    if (card.StunTurnLeft > 0)
+                    {
+                        card.StunTurnLeft--;
+                    }
+
+                    if (card.StunTurnLeft == 0)
+                    {
+                        card.Stuned = false;
+                    }
+
+                    if (card.Poisoned)
+                    {
+                        card.Health -= card.PoisonedLevel;
+                    }
+                }
+
+                foreach (PlayableCard card in currentPlayerData.BattleField)
+                {
+                    if (card.Poisoned)
+                    {
+                        card.Health -= card.PoisonedLevel;
+                    }
+                }
+
+                // TODO: Faire piger une carte à l'adversaire
+                Events.Add(new DrawCardEvent(opposingPlayerData));
+                // Joueur Opposé gagne du Mana
+                Events.Add(new GainManaEvent(opposingPlayerData));
+                if (!match.IsPlayerATurn)
+                {
+                    match.IsPlayerATurn = true;
+                }
+                else
+                {
+                    match.IsPlayerATurn = false;
+                }
+            }  
         }
 
     }

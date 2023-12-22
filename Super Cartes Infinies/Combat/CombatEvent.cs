@@ -14,8 +14,10 @@ namespace Super_Cartes_Infinies.Combat
             // L'opposingCard c'est la carte qui a le même index sur le BattleField de l'adversaire
             // Si il n'y en a pas, on passe simplement null
 
+            //Il n'y a aucune carte avec effet imediat qui viens d etre jouer
+            bool noQuickPlay = true;
 
-            for (int i = 0; i < currentPlayerData.BattleField.Count; i++)
+            for(int i = 0; i < currentPlayerData.BattleField.Count; i++)
             {
                 var currentCard = currentPlayerData.BattleField[i];
                 var opposingCard = (dynamic)null;
@@ -23,11 +25,36 @@ namespace Super_Cartes_Infinies.Combat
                 {
                     opposingCard = opposingPlayerData.BattleField[i];
                 }
-                if (!currentPlayerData.BattleField[i].SummonSickness)
+
+                if (currentCard.QuickPlayCard)
                 {
+                    noQuickPlay = false;
                     Events.Add(new CardActivationEvent(match, currentCard, opposingCard, currentPlayerData, opposingPlayerData));
                 }
             }
+
+
+            if(noQuickPlay)
+            {
+                for (int i = 0; i < currentPlayerData.BattleField.Count; i++)
+                {
+                    var currentCard = currentPlayerData.BattleField[i];
+                    var opposingCard = (dynamic)null;
+                    if (i < opposingPlayerData.BattleField.Count)
+                    {
+                        opposingCard = opposingPlayerData.BattleField[i];
+                    }
+
+                    if (!currentPlayerData.BattleField[i].SummonSickness)
+                    {
+                        if (!currentCard.Stuned)
+                        {
+                            Events.Add(new CardActivationEvent(match, currentCard, opposingCard, currentPlayerData, opposingPlayerData));
+                        }
+                    }
+                }
+            }            
+            
         }
     }
 }

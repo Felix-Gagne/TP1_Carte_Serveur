@@ -11,17 +11,36 @@ namespace Super_Cartes_Infinies.Combat
         {
             Events = new List<Event>();
             Damage = playableCard.Attack;
-
-            if (Damage >= opposingPlayerData.Health)
+            if(playableCard.Card.HasPower(Power.LIGHTINGSTRIKE_ID))
             {
-                opposingPlayerData.Health = 0;
-                Events.Add(new PlayerDeathEvent(match, currentPlayerData));
+                if(playableCard.Card.GetPowerValue(Power.LIGHTINGSTRIKE_ID) < opposingPlayerData.Health)
+                {
+                    opposingPlayerData.Health -= playableCard.Card.GetPowerValue(Power.LIGHTINGSTRIKE_ID);
+                    playableCard.Health = 0;
+                    currentPlayerData.BattleField.Remove(playableCard);
+                    currentPlayerData.Graveyard.Add(playableCard);
+                }
+                else
+                {
+                    opposingPlayerData.Health = 0;
+                    playableCard.Health = 0;
+                    currentPlayerData.BattleField.Remove(playableCard);
+                    currentPlayerData.Graveyard.Add(playableCard);
+                    Events.Add(new PlayerDeathEvent(match, currentPlayerData));
+                }
             }
             else
             {
-                opposingPlayerData.Health -= Damage;
+                if (Damage >= opposingPlayerData.Health)
+                {
+                    opposingPlayerData.Health = 0;
+                    Events.Add(new PlayerDeathEvent(match, currentPlayerData));
+                }
+                else
+                {
+                    opposingPlayerData.Health -= Damage;
+                }
             }
-
         }
     }
 }
