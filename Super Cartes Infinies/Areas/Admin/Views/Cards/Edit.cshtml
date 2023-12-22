@@ -19,6 +19,13 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Rarity" class="control-label"></label>
+                <select asp-for="Rarity" asp-items="Html.GetEnumSelectList<Super_Cartes_Infinies.Models.Rarity>()" class="form-control">
+                    <option value="" disabled selected>Please select a rarity</option>
+                </select>
+                <span asp-validation-for="Rarity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Attack" class="control-label"></label>
                 <input asp-for="Attack" class="form-control" />
                 <span asp-validation-for="Attack" class="text-danger"></span>
@@ -45,5 +52,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

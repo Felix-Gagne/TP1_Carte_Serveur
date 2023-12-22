@@ -723,12 +723,36 @@ public class ApplicationDbContext : IdentityDbContext
         foreach (var card in cards)
         {
             card.prixVente = 250;
-        }
-
+        }
+
         #endregion
-
+
+        #region Card Rarety
+
+        foreach (var card in cards)
+        {
+            if(card.Id <= 20)
+            {
+                card.Rarity = Rarity.Common;
+
+            } else if(card.Id <= 35)
+            {
+                card.Rarity = Rarity.Rare;
+
+            }else if(card.Id <= 45)
+            {
+                card.Rarity = Rarity.Epic;
+
+            }else if (card.Id <= 50)
+            {
+                card.Rarity = Rarity.Legendary;
+            }
+        }
+
+        #endregion
+
         #region CardPower
-
+
         List<CardPower> cardPowers = new List<CardPower>();
 
         CardPower SticklySteveCharge = new CardPower
@@ -1070,6 +1094,7 @@ public class ApplicationDbContext : IdentityDbContext
         };
         builder.Entity<StartingCards>().HasData(startingCards2);
 
+        //Store Cards
         List<StoreCard> StoreCards = new List<StoreCard>();
 
         StoreCard Sc1 = new StoreCard
@@ -1111,10 +1136,116 @@ public class ApplicationDbContext : IdentityDbContext
             CardId = C15.Id,
         };
         StoreCards.Add(Sc15);
-        builder.Entity<StoreCard>().HasData(Sc15);
+        builder.Entity<StoreCard>().HasData(Sc15);
+
+        //Packs
+        List<Pack> Packs = new List<Pack>();
+
+        builder.Entity<Pack>()
+        .HasMany(p => p.Probabilities)
+        .WithOne(p => p.Pack)
+        .HasForeignKey(p => p.PackId);
+
+        //Pack 1
+        Pack pack1 = new Pack
+        {
+            Id = 1,
+            Name = "Pack Basic",
+            Price = 100,
+            ImageURL = serverURL + "BASIC_PACK.png",
+            NbCards = 3,
+            BaseRarity = Rarity.Common
+        };
+        Packs.Add(pack1);
+        builder.Entity<Pack>().HasData(pack1);
+
+        Probability probPack1 = new Probability
+        {
+            Id = 1,
+            value = 0.3,
+            rarity = Rarity.Rare,
+            baseQty = 0,
+            PackId = pack1.Id,
+        };
+        builder.Entity<Probability>().HasData(probPack1);
+
+
+        //Pack 2
+        Pack pack2 = new Pack
+        {
+            Id = 2,
+            Name = "Pack Normal",
+            Price = 300,
+            ImageURL = serverURL + "NORMAL_PACK.png",
+            NbCards = 4,
+            BaseRarity = Rarity.Common
+        };
+        Packs.Add(pack2);
+        builder.Entity<Pack>().HasData(pack2);
+
+        Probability probPack2A = new Probability
+        {
+            Id = 2,
+            value = 0.3,
+            rarity = Rarity.Rare,
+            baseQty = 1,
+            PackId = pack2.Id,
+        };
+        builder.Entity<Probability>().HasData(probPack2A);
+        Probability probPack2B = new Probability
+        {
+            Id = 3,
+            value = 0.1,
+            rarity = Rarity.Epic,
+            baseQty = 0,
+            PackId= pack2.Id,
+        };
+        builder.Entity<Probability>().HasData(probPack2B);
+        Probability probPack2C = new Probability
+        {
+            Id = 4,
+            value = 0.02,
+            rarity = Rarity.Legendary,
+            baseQty = 0,
+            PackId= pack2.Id,
+        };
+        builder.Entity<Probability>().HasData(probPack2C);
+
+
+        //Pack 3
+        Pack pack3 = new Pack
+        {
+            Id = 3,
+            Name = "Pack Super",
+            Price = 500,
+            ImageURL = serverURL + "SUPER_PACK.png",
+            NbCards = 5,
+            BaseRarity = Rarity.Rare
+        };
+        Packs.Add(pack3);
+        builder.Entity<Pack>().HasData(pack3);
+
+        Probability probPack3A = new Probability
+        {
+            Id = 5,
+            value = 0.25,
+            rarity = Rarity.Epic,
+            baseQty = 1,
+            PackId = pack3.Id,
+        };
+        builder.Entity<Probability>().HasData(probPack3A);
+        Probability probPack3B = new Probability
+        {
+            Id = 6,
+            value = 0.02,
+            rarity = Rarity.Legendary,
+            baseQty = 0,
+            PackId= pack3.Id
+        };
+        builder.Entity<Probability>().HasData(probPack3B);
     }
 
-
+    
 
     public DbSet<Card> Cards { get; set; } = default!;
 
@@ -1138,5 +1269,6 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<MatchTask> MatchTasks { get; set; } = default!;
 
+    public DbSet<Pack> Packs { get; set; } = default;
 }
 

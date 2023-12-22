@@ -44,5 +44,22 @@ namespace Super_Cartes_Infinies.Controllers
 
             return storeCards;
         }
+
+        [HttpGet]
+        public List<Pack> GetPacks()
+        {
+            List<Pack> packs = new List<Pack>();
+
+            packs = _storeService.GetPacks(UserId).ToList();
+
+            return packs;
+        }
+
+        [HttpPost("{packId}")]
+        public async Task<ActionResult<List<Card>>> BuyPack(int packId)
+        {
+            Pack pack = await _context.Packs.Where(x => x.Id == packId).FirstOrDefaultAsync();
+            return await _storeService.BuyPack(UserId, pack);
+        }
     }
 }
